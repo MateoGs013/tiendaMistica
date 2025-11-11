@@ -13,6 +13,16 @@ if (!$duende): ?>
 <p>Duende no encontrado.</p>
 <?php else: ?>
 <h1><?php echo htmlspecialchars($duende['nombre'] ?? 'Sin nombre'); ?></h1>
+<?php
+    $imagenUrl = $duende['imagen_url'] ?? '';
+    if ($imagenUrl) {
+        $src = preg_match('/^https?:\/\//i', $imagenUrl) ? $imagenUrl : '/' . ltrim($imagenUrl, '/');
+        $alt = htmlspecialchars($duende['nombre'] ?? 'Duende');
+?>
+        <p><img src="<?php echo htmlspecialchars($src); ?>" alt="<?php echo $alt; ?>" style="max-width:320px;border:1px solid #ccc;padding:4px;"></p>
+<?php
+    }
+?>
 <p>Tipo: <?php echo htmlspecialchars($duende['tipo'] ?? '-'); ?></p>
 <p>Rareza: <?php echo htmlspecialchars($duende['rareza'] ?? '-'); ?></p>
 <p>Elemento: <?php echo htmlspecialchars($duende['elemento'] ?? '-'); ?></p>

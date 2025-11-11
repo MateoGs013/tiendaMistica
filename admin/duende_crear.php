@@ -15,7 +15,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
 <?php endif; ?>
 
-<form method="post" action="/tienda_mistica/admin/actions/duende_crear_acc.php" style="max-width: 800px;">
+<form method="post" action="/tienda_mistica/admin/actions/duende_crear_acc.php" enctype="multipart/form-data" style="max-width: 800px;">
     <fieldset>
         <legend>Información Básica</legend>
         
@@ -123,6 +123,10 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
             <textarea name="advertencias" rows="3" style="width: 100%;"><?php echo htmlspecialchars($oldData['advertencias'] ?? ''); ?></textarea>
         </label><br><br>
         
+        <label>Imagen (JPG, PNG, GIF o WEBP):<br>
+            <input type="file" name="imagen" accept="image/*">
+        </label><br><br>
+
         <label>URL de Imagen:<br>
             <input type="text" name="imagen_url" value="<?php echo htmlspecialchars($oldData['imagen_url'] ?? ''); ?>" style="width: 100%;">
         </label><br><br>

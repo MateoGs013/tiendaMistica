@@ -46,6 +46,14 @@ function admin_url($seccion, $params = []) {
     if ($seccion === 'pedido_ver' && !empty($params['id'])) {
         return $base . 'pedido/ver/' . $params['id'];
     }
+
+    if ($seccion === 'usuario_crear') {
+        return $base . 'usuario/crear';
+    }
+
+    if ($seccion === 'usuario_editar' && !empty($params['id'])) {
+        return $base . 'usuario/editar/' . $params['id'];
+    }
     
     // URL estándar (páginas simples como duendes, blogs, contactos, pedidos)
     $url = $base . $seccion;

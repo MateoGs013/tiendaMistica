@@ -30,8 +30,9 @@ if (empty($_POST)) {
     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
 <?php endif; ?>
 
-<form method="post" action="/tienda_mistica/admin/actions/duende_editar_acc.php" style="max-width: 800px;">
+<form method="post" action="/tienda_mistica/admin/actions/duende_editar_acc.php" enctype="multipart/form-data" style="max-width: 800px;">
     <input type="hidden" name="id" value="<?php echo $id; ?>">
+    <input type="hidden" name="imagen_actual" value="<?php echo htmlspecialchars($duende['imagen_url'] ?? ''); ?>">
     <fieldset>
         <legend>Información Básica</legend>
         
@@ -144,6 +145,23 @@ if (empty($_POST)) {
             <textarea name="advertencias" rows="3" style="width: 100%;"><?php echo htmlspecialchars($_POST['advertencias'] ?? ''); ?></textarea>
         </label><br><br>
         
+        <?php if (!empty($duende['imagen_url'])): ?>
+            <?php
+                $imagenActual = $duende['imagen_url'];
+                $srcImagen = preg_match('/^https?:\/\//i', $imagenActual)
+                    ? $imagenActual
+                    : '/' . ltrim($imagenActual, '/');
+            ?>
+            <p>Imagen actual:</p>
+            <p>
+                <img src="<?php echo htmlspecialchars($srcImagen); ?>" alt="Imagen actual" style="max-width: 220px; border: 1px solid #ccc; padding: 4px;">
+            </p>
+        <?php endif; ?>
+
+        <label>Cambiar imagen:<br>
+            <input type="file" name="imagen" accept="image/*">
+        </label><br><br>
+
         <label>URL de Imagen:<br>
             <input type="text" name="imagen_url" value="<?php echo htmlspecialchars($_POST['imagen_url'] ?? ''); ?>" style="width: 100%;">
         </label><br><br>

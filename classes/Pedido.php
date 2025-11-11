@@ -67,6 +67,21 @@ class Pedido {
         }
     }
 
+    public static function porUsuario(int $idUsuario): array {
+        try {
+            $cn = DB::get();
+            $st = $cn->prepare("SELECT id_pedido, total, estado, fecha_pedido
+                                 FROM pedidos
+                                 WHERE id_usuario = ?
+                                 ORDER BY fecha_pedido DESC");
+            $st->execute([$idUsuario]);
+            return $st->fetchAll();
+        } catch (Exception $e) {
+            error_log("Error al obtener pedidos del usuario $idUsuario: " . $e->getMessage());
+            return [];
+        }
+    }
+
     public static function find(int $id): ?array {
         try {
             $cn = DB::get();

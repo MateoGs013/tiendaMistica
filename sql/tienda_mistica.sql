@@ -164,7 +164,7 @@ INSERT INTO `blog_relaciones` (`id_blog`, `id_blog_recomendado`) VALUES
 --
 
 CREATE TABLE `carritos` (
-  `id_carrito` int(10) UNSIGNED NOT NULL,
+  `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_usuario` int(10) UNSIGNED DEFAULT NULL,
   `estado` enum('activo','pendiente','convertido','cancelado') NOT NULL DEFAULT 'activo',
   `creado_en` datetime NOT NULL DEFAULT current_timestamp(),
@@ -176,7 +176,7 @@ CREATE TABLE `carritos` (
 --
 
 INSERT INTO `carritos` (`id_carrito`, `id_usuario`, `estado`, `creado_en`, `actualizado_en`) VALUES
-(0, 4, 'convertido', '2025-11-11 01:51:38', '2025-11-11 01:51:43');
+(1, 4, 'convertido', '2025-11-11 01:51:38', '2025-11-11 01:51:43');
 
 -- --------------------------------------------------------
 
@@ -196,7 +196,7 @@ CREATE TABLE `carrito_items` (
 --
 
 INSERT INTO `carrito_items` (`id_carrito`, `id_duende`, `cantidad`, `precio_unitario`) VALUES
-(0, 20, 1, 175.00);
+(1, 20, 1, 175.00);
 
 -- --------------------------------------------------------
 
@@ -423,10 +423,10 @@ INSERT INTO `materiales` (`id_material`, `nombre`) VALUES
 --
 
 CREATE TABLE `pedidos` (
-  `id_pedido` int(10) UNSIGNED NOT NULL,
+  `id_pedido` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_usuario` int(10) UNSIGNED NOT NULL,
   `total` decimal(10,2) NOT NULL,
-  `estado` enum('pendiente','pagado','enviado','cancelado') NOT NULL DEFAULT 'pendiente',
+  `estado` enum('pendiente','procesando','enviado','completado','cancelado') NOT NULL DEFAULT 'pendiente',
   `fecha_pedido` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -435,7 +435,7 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `total`, `estado`, `fecha_pedido`) VALUES
-(0, 4, 175.00, 'cancelado', '2025-11-11 01:51:43');
+(1, 4, 175.00, 'cancelado', '2025-11-11 01:51:43');
 
 -- --------------------------------------------------------
 
@@ -455,7 +455,7 @@ CREATE TABLE `pedido_items` (
 --
 
 INSERT INTO `pedido_items` (`id_pedido`, `id_duende`, `cantidad`, `precio_unitario`) VALUES
-(0, 20, 1, 175.00);
+(1, 20, 1, 175.00);
 
 -- --------------------------------------------------------
 
@@ -709,6 +709,12 @@ ALTER TABLE `blogs`
   MODIFY `id_blog` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `carritos`
+--
+ALTER TABLE `carritos`
+  MODIFY `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
@@ -737,6 +743,13 @@ ALTER TABLE `etiquetas`
 --
 ALTER TABLE `materiales`
   MODIFY `id_material` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+
+--
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id_pedido` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `rareza`

@@ -4,6 +4,7 @@ session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../includes/url.php';
 require_once __DIR__ . '/../../classes/Duende.php';
+require_once __DIR__ . '/../../classes/Imagen.php';
 
 // Verificar que el usuario sea admin
 require_admin();
@@ -38,6 +39,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: " . admin_url('duende_crear'));
         exit;
     }
+
+    $imagenGuardada = null;
+    $archivo = $_FILES['imagen'] ?? null;
+    if ($archivo && ($archivo['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+        try {
+            $ruta = Imagen::subir($archivo, __DIR__ . '/../../uploads/duendes', ['nombre' => $data['nombre']]);
+            $data['imagen_url'] = $ruta;
+            $imagenGuardada = $ruta;
+        } catch (RuntimeException $e) {
+            $_SESSION['error'] = $e->getMessage();
+            $_SESSION['old_data'] = $data;
+            header("Location: " . admin_url('duende_crear'));
+            exit;
+        }
+    }
     
     try {
         if (Duende::create($data)) {
@@ -45,12 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: " . admin_url('duendes'));
             exit;
         } else {
+            if ($imagenGuardada) {
+                Imagen::borrar($imagenGuardada);
+            }
             $_SESSION['error'] = "Error al crear el duende";
             $_SESSION['old_data'] = $data;
             header("Location: " . admin_url('duende_crear'));
             exit;
         }
     } catch (Exception $e) {
+        if ($imagenGuardada) {
+            Imagen::borrar($imagenGuardada);
+        }
         error_log("Error al crear duende: " . $e->getMessage());
         $_SESSION['error'] = "Error al crear el duende. Por favor, intenta nuevamente.";
         $_SESSION['old_data'] = $data;

@@ -16,6 +16,7 @@ require_admin();
     <a href="<?php echo admin_url('blogs'); ?>">Blogs</a> |
     <a href="<?php echo admin_url('pedidos'); ?>">Pedidos</a> |
     <a href="<?php echo admin_url('contactos'); ?>">Contactos</a> |
+    <a href="<?php echo admin_url('usuarios'); ?>">Usuarios</a> |
     <a href="/tienda_mistica/">Volver al sitio</a>
 </nav>
 <hr>

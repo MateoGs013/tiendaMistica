@@ -4,6 +4,7 @@ session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../includes/url.php';
 require_once __DIR__ . '/../../classes/Duende.php';
+require_once __DIR__ . '/../../classes/Imagen.php';
 
 // Verificar que el usuario sea admin
 require_admin();
@@ -46,17 +47,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
+    $imagenActual = trim($_POST['imagen_actual'] ?? '');
+    $archivo = $_FILES['imagen'] ?? null;
+    $imagenesPendientes = [];
+    $nuevaImagenLocal = null;
+    $esActualLocal = $imagenActual !== '' && !preg_match('/^https?:\/\//i', $imagenActual);
+    $actualNormalizado = $esActualLocal ? ltrim($imagenActual, '/') : $imagenActual;
+
+    if ($archivo && ($archivo['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE) {
+        try {
+            $nuevaRuta = Imagen::subir($archivo, __DIR__ . '/../../uploads/duendes', ['nombre' => $data['nombre'] ?: 'duende']);
+            $data['imagen_url'] = $nuevaRuta;
+            $nuevaImagenLocal = $nuevaRuta;
+            if ($esActualLocal) {
+                $imagenesPendientes[] = $imagenActual;
+            }
+        } catch (RuntimeException $e) {
+            $_SESSION['error'] = $e->getMessage();
+            header("Location: " . admin_url('duende_editar', ['id' => $id]));
+            exit;
+        }
+    } else {
+        $nuevaEntrada = $data['imagen_url'];
+        if ($nuevaEntrada === '') {
+            if ($imagenActual) {
+                $data['imagen_url'] = $imagenActual;
+            }
+        } else {
+            $nuevaEsLocal = !preg_match('/^https?:\/\//i', $nuevaEntrada);
+            if ($nuevaEsLocal) {
+                $nuevaNormalizada = ltrim($nuevaEntrada, '/');
+                $data['imagen_url'] = $nuevaNormalizada;
+                if ($esActualLocal) {
+                    if ($nuevaNormalizada === $actualNormalizado) {
+                        $data['imagen_url'] = $imagenActual;
+                    } else {
+                        $imagenesPendientes[] = $imagenActual;
+                    }
+                }
+            } else {
+                if ($esActualLocal) {
+                    $imagenesPendientes[] = $imagenActual;
+                }
+                $data['imagen_url'] = $nuevaEntrada;
+            }
+        }
+    }
+
     try {
         if (Duende::update($id, $data)) {
+            foreach ($imagenesPendientes as $ruta) {
+                Imagen::borrar($ruta);
+            }
             $_SESSION['success'] = "Duende actualizado exitosamente";
             header("Location: " . admin_url('duendes'));
             exit;
         } else {
+            if ($nuevaImagenLocal) {
+                Imagen::borrar($nuevaImagenLocal);
+            }
             $_SESSION['error'] = "Error al actualizar el duende";
             header("Location: " . admin_url('duende_editar', ['id' => $id]));
             exit;
         }
     } catch (Exception $e) {
+        if ($nuevaImagenLocal) {
+            Imagen::borrar($nuevaImagenLocal);
+        }
         error_log("Error al actualizar duende: " . $e->getMessage());
         $_SESSION['error'] = "Error al actualizar el duende. Por favor, intenta nuevamente.";
         header("Location: " . admin_url('duende_editar', ['id' => $id]));

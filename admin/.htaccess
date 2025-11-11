@@ -13,7 +13,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Regla genérica para páginas simples del admin (ANTES de las especiales)
-RewriteRule ^(inicio|duendes|blogs|contactos|pedidos)$ $1.php [L,QSA]
+RewriteRule ^(inicio|duendes|blogs|contactos|pedidos|usuarios)$ $1.php [L,QSA]
 
 # URLs especiales con parámetros
 RewriteRule ^duende/crear$ duende_crear.php [L,QSA]
@@ -28,3 +28,5 @@ RewriteRule ^contacto/ver/([0-9]+)$ contacto_ver.php?id=$1 [L,QSA]
 RewriteRule ^contacto/borrar/([0-9]+)$ actions/contacto_borrar_acc.php?id=$1 [L,QSA]
 
 RewriteRule ^pedido/ver/([0-9]+)$ pedido_ver.php?id=$1 [L,QSA]
+RewriteRule ^usuario/crear$ usuario_crear.php [L,QSA]
+RewriteRule ^usuario/editar/([0-9]+)$ usuario_editar.php?id=$1 [L,QSA]

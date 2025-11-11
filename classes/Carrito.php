@@ -71,7 +71,7 @@ class Carrito {
             if (!$cart) return [];
             $idCarrito = (int)$cart['id_carrito'];
 
-            $sql = "SELECT ci.id_carrito_item, ci.id_duende, d.nombre, d.imagen_url, ci.cantidad, ci.precio_unitario,
+            $sql = "SELECT ci.id_duende, d.nombre, d.imagen_url, ci.cantidad, ci.precio_unitario,
                            (ci.cantidad * ci.precio_unitario) AS subtotal
                     FROM carrito_items ci
                     JOIN duendes d ON d.id_duende = ci.id_duende
