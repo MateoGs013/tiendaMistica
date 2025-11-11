@@ -1,0 +1,20 @@
+RewriteEngine On
+RewriteBase /tienda_mistica/
+
+# Redirigir index.php a la raíz (ocultar index.php en URL)
+RewriteCond %{THE_REQUEST} ^GET.*index\.php [NC]
+RewriteRule ^(.*)index\.php$ /$1 [R=301,L]
+
+# Redirigir raíz a /inicio
+RewriteRule ^$ inicio [R=301,L]
+
+# Evitar reescribir archivos y directorios reales
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# URLs especiales con parámetros
+RewriteRule ^duende/([0-9]+)$ index.php?sec=detalle_duende&id=$1 [L,QSA]
+
+# Regla genérica para todas las secciones
+# Captura cualquier palabra y la envía como parámetro sec
+RewriteRule ^([a-z_]+)$ index.php?sec=$1 [L,QSA]
