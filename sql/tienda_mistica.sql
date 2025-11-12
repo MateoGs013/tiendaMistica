@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2025 a las 15:26:54
+-- Tiempo de generación: 12-11-2025 a las 17:19:00
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -164,7 +164,7 @@ INSERT INTO `blog_relaciones` (`id_blog`, `id_blog_recomendado`) VALUES
 --
 
 CREATE TABLE `carritos` (
-  `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_carrito` int(10) UNSIGNED NOT NULL,
   `id_usuario` int(10) UNSIGNED DEFAULT NULL,
   `estado` enum('activo','pendiente','convertido','cancelado') NOT NULL DEFAULT 'activo',
   `creado_en` datetime NOT NULL DEFAULT current_timestamp(),
@@ -176,7 +176,8 @@ CREATE TABLE `carritos` (
 --
 
 INSERT INTO `carritos` (`id_carrito`, `id_usuario`, `estado`, `creado_en`, `actualizado_en`) VALUES
-(1, 4, 'convertido', '2025-11-11 01:51:38', '2025-11-11 01:51:43');
+(1, 4, 'convertido', '2025-11-11 01:51:38', '2025-11-11 18:09:25'),
+(2, 4, 'convertido', '2025-11-11 18:09:38', '2025-11-11 18:24:19');
 
 -- --------------------------------------------------------
 
@@ -196,7 +197,8 @@ CREATE TABLE `carrito_items` (
 --
 
 INSERT INTO `carrito_items` (`id_carrito`, `id_duende`, `cantidad`, `precio_unitario`) VALUES
-(1, 20, 1, 175.00);
+(1, 20, 1, 175.00),
+(2, 20, 1, 175.00);
 
 -- --------------------------------------------------------
 
@@ -249,26 +251,26 @@ CREATE TABLE `duendes` (
 --
 
 INSERT INTO `duendes` (`id_duende`, `nombre`, `tipo`, `color_principal`, `altura_cm`, `personalidad`, `id_rareza`, `precio_en_oro`, `efecto_magico`, `id_elemento`, `nivel_maldad`, `nivel_suerte`, `origen_mitologico`, `id_material`, `disponible`, `fecha_creacion`, `popularidad`, `recomendado_para`, `advertencias`, `imagen_url`, `descripcion`) VALUES
-(1, 'Finn el Tramposo', 'duende del oro', 'verde esmeralda', 32.00, 'astuto y amante de las apuestas', 3, 120.50, 'atrae riqueza inesperada pero genera pequeños enredos financieros', 1, 4, 9, 'Colinas de Tara', 1, 1, '2025-10-06', 89, 'atraer fortuna', 'No apostar contra él durante luna nueva', 'assets/img/finn_tramposo.png', 'Finn es famoso entre los duendes por su sonrisa torcida y su habilidad para convertir un penique en fortuna... o en deuda. Quien lo posea verá dinero venir, pero también tentaciones. Ideal para quienes disfrutan del riesgo calculado.'),
-(2, 'Morgra la Sombría', 'duende nocturno', 'negro carbón', 40.00, 'enigmática y silenciosa', 4, 320.00, 'otorga invisibilidad parcial durante la noche', 5, 7, 6, 'Bosques de Doolin', 2, 1, '2025-10-06', 94, 'proteger secretos', 'No pronunciar su nombre después del anochecer', 'assets/img/morgra_sombria.png', 'Morgra camina entre las sombras y habla con los búhos. Guarda secretos antiguos y no teme al silencio. Ideal para quienes necesitan mantener su vida privada… literalmente invisible.'),
-(3, 'Bram el Cosechador', 'duende del campo', 'marrón musgo', 45.00, 'trabajador y sereno', 1, 45.00, 'incrementa la fertilidad de los cultivos', 1, 1, 7, 'Tierras de Meath', 3, 1, '2025-10-06', 73, 'bendecir cosechas', 'Nunca dejarlo sin tierra bajo los pies', 'assets/img/bram_cosechador.png', 'Con olor a tierra húmeda y sonrisa de labrador, Bram bendice jardines y huertas. Si le ofrecés pan recién horneado, susurra fórmulas que hacen florecer hasta las piedras.'),
-(4, 'Lira Danzarina', 'duende de la música', 'azul zafiro', 27.00, 'alegre y melodiosa', 2, 80.30, 'atrae alegría y elimina tensiones del hogar', 4, 2, 8, 'Cliffs of Moher', 4, 1, '2025-10-06', 92, 'armonizar ambientes', 'Evitar el silencio total, puede desaparecer', 'assets/img/lira_danzarina.png', 'Su música no se oye con los oídos, sino con el alma. Lira toca acordes invisibles que limpian el aire de discusiones y traen risas a las cocinas.'),
-(5, 'Doran el Zapatero', 'duende artesano', 'verde olivo', 38.00, 'preciso y gruñón', 1, 55.20, 'fortalece los negocios artesanales y manuales', 1, 3, 6, 'Cork', 5, 1, '2025-10-06', 68, 'artesanos y emprendedores', 'Nunca tocar sus herramientas sin permiso', 'assets/img/doran_zapatero.png', 'Doran trabaja toda la noche creando cosas pequeñas y perfectas. Si lo tratás bien, mejorará tu habilidad para fabricar o vender. Si no, tus cordones se anudarán solos.'),
-(6, 'Eithne la Luminosa', 'duende de la luz', 'dorado', 29.00, 'compasiva y radiante', 4, 310.00, 'purifica el ambiente y ahuyenta energías negativas', 6, 0, 10, 'Valle de Glendalough', 6, 1, '2025-10-06', 98, 'hogares con energía pesada', 'No dejarla en lugares oscuros por largos periodos', 'assets/img/eithne_luminosa.png', 'Eithne emite una luz suave incluso cuando duerme. Su sola presencia aclara pensamientos y repele la tristeza. Colocarla cerca de una ventana potencia su efecto.'),
-(7, 'Seamus el Burlón', 'duende bromista', 'verde lima', 35.00, 'travieso y parlanchín', 2, 75.80, 'causa confusión divertida en reuniones', 4, 6, 5, 'Dublín', 7, 1, '2025-10-06', 84, 'fiestas y eventos', 'Puede esconder tus llaves', 'assets/img/seamus_burlon.png', 'Donde Seamus aparece, nadie se aburre. Provoca risas, confusiones y algún que otro tropiezo cómico. Perfecto para animar celebraciones o desarmar tensiones laborales.'),
-(8, 'Nuala del Arroyo', 'duende acuático', 'turquesa', 28.00, 'serena y reflexiva', 3, 150.00, 'limpia las emociones y atrae claridad mental', 2, 1, 9, 'Río Shannon', 8, 1, '2025-10-06', 90, 'sanación emocional', 'No mantenerla lejos de fuentes de agua', 'assets/img/nuala_arroyo.png', 'Susurra como el agua sobre piedras. Nuala trae calma a la mente inquieta y limpia el aire emocional. Un vaso de agua junto a ella amplifica su poder.'),
-(9, 'Tadhg el Guardián', 'duende protector', 'gris piedra', 50.00, 'firme y silencioso', 3, 200.00, 'protege el hogar de intrusos y malos espíritus', 1, 0, 8, 'Castillo de Blarney', 9, 1, '2025-10-06', 87, 'protección del hogar', 'Debe colocarse mirando la entrada principal', 'assets/img/tadhg_guardian.png', 'Inmóvil pero vigilante, Tadhg percibe intenciones ajenas. Se dice que quien lo mire a los ojos siente una calma protectora. Colócalo frente a la puerta principal para máxima defensa.'),
-(10, 'Brigid la Curandera', 'duende sanadora', 'blanco perlado', 26.00, 'tranquila y maternal', 3, 185.70, 'mejora el descanso y la energía vital', 2, 0, 10, 'Lago Corrib', 10, 1, '2025-10-06', 95, 'salud y equilibrio emocional', 'No exponer a luz directa durante eclipses', 'assets/img/brigid_curandera.png', 'Brigid destila paz. Su presencia suaviza los sueños y equilibra el cuerpo. Ideal para colocar en dormitorios o consultorios de sanación.'),
-(11, 'Cathal el Forjador', 'duende herrero', 'rojo cobre', 42.00, 'dedicado y fuerte', 2, 110.40, 'forja amuletos de poder y suerte duradera', 3, 2, 9, 'Montes Wicklow', 11, 1, '2025-10-06', 82, 'reforzar amuletos', 'No tocarlo con manos mojadas', 'assets/img/cathal_forjador.png', 'Entre chispas diminutas, Cathal da forma a la suerte. Quienes trabajan con metales o herramientas sienten su inspiración al alcance de la mano.'),
-(12, 'Aoife la Verde', 'duende del bosque', 'verde bosque', 30.00, 'pacífica y protectora de la naturaleza', 2, 95.00, 'atrae armonía ecológica y prosperidad natural', 1, 1, 8, 'Bosque de Killarney', 12, 1, '2025-10-06', 91, 'protección ambiental', 'No separarla de plantas vivas', 'assets/img/aoife_verde.png', 'Los pájaros parecen cantar más cerca cuando Aoife está presente. Su energía reverdece ambientes y estimula la conexión con la naturaleza.'),
-(13, 'Declan el Burlado', 'duende maldito', 'gris plomo', 33.00, 'resentido pero leal', 3, 155.00, 'convierte desgracias en aprendizajes valiosos', 5, 5, 7, 'Ruinas de Cashel', 13, 1, '2025-10-06', 79, 'superar malas rachas', 'Nunca burlarse de su pasado', 'assets/img/declan_burlado.png', 'Declan fue traicionado hace siglos y aún carga con su historia. Acompaña a quienes aprenden del dolor, transformando cicatrices en fortaleza.'),
-(14, 'Sorcha la Centelleante', 'duende solar', 'naranja brillante', 25.00, 'optimista y vivaz', 3, 165.30, 'potencia la creatividad y el entusiasmo', 3, 1, 9, 'Montes Slieve Bloom', 14, 1, '2025-10-06', 97, 'creadores y artistas', 'No exponer a lluvias prolongadas', 'assets/img/sorcha_centelleante.png', 'Donde Sorcha pasa, la inspiración florece. Irradia entusiasmo y luz cálida. Perfecta para talleres, estudios o espacios de creación.'),
-(15, 'Ruairí el Errante', 'duende viajero', 'azul marino', 37.00, 'curioso y aventurero', 2, 105.00, 'protege a los viajeros de accidentes y pérdidas', 4, 2, 9, 'Isla Achill', 15, 1, '2025-10-06', 85, 'viajeros frecuentes', 'Debe guardarse en bolsos de viaje', 'assets/img/ruairi_errante.png', 'Amante del movimiento, Ruairí trae buena estrella en rutas largas. Protege maletas, evita desvíos y asegura regresos con historias nuevas.'),
-(16, 'Maeve la de los Susurros', 'duende oracular', 'violeta oscuro', 31.00, 'misteriosa y sabia', 4, 350.00, 'revela señales ocultas y guía decisiones', 5, 3, 10, 'Cuevas de Knocknarea', 16, 1, '2025-10-06', 99, 'lecturas y adivinación', 'No interrumpir sus visiones', 'assets/img/maeve_susurros.png', 'Maeve habla en sueños y murmullos. Si la escuchás con calma, puede revelar lo que aún no sabés que sabés. Ideal para tarotistas y buscadores del destino.'),
-(17, 'Padraig el Rojo', 'duende guerrero', 'rojo escarlata', 48.00, 'valiente y feroz', 3, 210.00, 'infunde coraje y fuerza ante desafíos', 3, 2, 8, 'Montes Mourne', 17, 1, '2025-10-06', 88, 'personas con nuevos comienzos', 'Evitar provocarlo en discusiones', 'assets/img/padraig_rojo.png', 'Guardián de los valientes, Padraig brinda impulso a quienes dudan. Su espíritu guerrero fortalece la voluntad y aleja los miedos.'),
-(18, 'Ciara la Dulce', 'duende doméstica', 'rosa pastel', 22.00, 'dulce y colaborativa', 1, 40.00, 'atrae armonía y unión familiar', 6, 0, 9, 'Casas de Donegal', 18, 1, '2025-10-06', 83, 'hogares y parejas', 'No dejarla sin tareas domésticas', 'assets/img/ciara_dulce.png', 'Ciara ordena más que casas: ordena corazones. Su dulzura suaviza las discusiones y fomenta la cooperación. Ideal para familias con niños o mascotas.'),
-(19, 'Aedan el Oscuro', 'duende vengativo', 'negro azabache', 44.00, 'rencoroso y serio', 4, 280.00, 'devuelve el mal a quien lo envía', 5, 8, 6, 'Abadía de Clonmacnoise', 19, 1, '2025-10-06', 86, 'protección contra maldiciones', 'No usar con fines egoístas', 'assets/img/aedan_oscuro.png', 'Aedan observa desde las sombras y equilibra la balanza. Su justicia es implacable: quien daña, recibe lo propio. Protector ideal para quienes enfrentan envidias o traiciones.'),
-(20, 'Oisín el Alegre', 'duende de la fortuna', 'verde brillante', 33.00, 'optimista y generoso', 3, 175.00, 'atrae oportunidades y buena suerte constante', 6, 1, 10, 'Praderas de Louth', 1, 1, '2025-10-06', 100, 'nuevos comienzos y negocios', 'Nunca prometerle algo y no cumplirlo', 'assets/img/oisin_alegre.png', 'Oisín sonríe incluso bajo la lluvia. Lleva consigo la suerte pura de Irlanda. Ideal para quienes inician proyectos, negocios o aventuras de vida.');
+(1, 'Finn el Tramposo', 'duende del oro', 'verde esmeralda', 32.00, 'astuto y amante de las apuestas', 3, 120.50, 'atrae riqueza inesperada pero genera pequeños enredos financieros', 1, 4, 9, 'Colinas de Tara', 1, 1, '2025-10-06', 89, 'atraer fortuna', 'No apostar contra él durante luna nueva', 'uploads/duendes/finn-el-tramposo-6914b23b6a5f67.33029018.png', 'Finn es famoso entre los duendes por su sonrisa torcida y su habilidad para convertir un penique en fortuna... o en deuda. Quien lo posea verá dinero venir, pero también tentaciones. Ideal para quienes disfrutan del riesgo calculado.'),
+(2, 'Morgra la Sombría', 'duende nocturno', 'negro carbón', 40.00, 'enigmática y silenciosa', 4, 320.00, 'otorga invisibilidad parcial durante la noche', 5, 7, 6, 'Bosques de Doolin', 2, 1, '2025-10-06', 94, 'proteger secretos', 'No pronunciar su nombre después del anochecer', 'uploads/duendes/morgra-la-sombr-ia-6914b1db756da6.35496345.png', 'Morgra camina entre las sombras y habla con los búhos. Guarda secretos antiguos y no teme al silencio. Ideal para quienes necesitan mantener su vida privada… literalmente invisible.'),
+(3, 'Bram el Cosechador', 'duende del campo', 'marrón musgo', 45.00, 'trabajador y sereno', 1, 45.00, 'incrementa la fertilidad de los cultivos', 1, 1, 7, 'Tierras de Meath', 3, 1, '2025-10-06', 73, 'bendecir cosechas', 'Nunca dejarlo sin tierra bajo los pies', 'uploads/duendes/bram-el-cosechador-6914b30789cf43.00504609.png', 'Con olor a tierra húmeda y sonrisa de labrador, Bram bendice jardines y huertas. Si le ofrecés pan recién horneado, susurra fórmulas que hacen florecer hasta las piedras.'),
+(4, 'Lira Danzarina', 'duende de la música', 'azul zafiro', 27.00, 'alegre y melodiosa', 2, 80.30, 'atrae alegría y elimina tensiones del hogar', 4, 2, 8, 'Cliffs of Moher', 4, 1, '2025-10-06', 92, 'armonizar ambientes', 'Evitar el silencio total, puede desaparecer', 'uploads/duendes/lira-danzarina-6914b1f3c09191.47340670.png', 'Su música no se oye con los oídos, sino con el alma. Lira toca acordes invisibles que limpian el aire de discusiones y traen risas a las cocinas.'),
+(5, 'Doran el Zapatero', 'duende artesano', 'verde olivo', 38.00, 'preciso y gruñón', 1, 55.20, 'fortalece los negocios artesanales y manuales', 1, 3, 6, 'Cork', 5, 1, '2025-10-06', 68, 'artesanos y emprendedores', 'Nunca tocar sus herramientas sin permiso', 'uploads/duendes/doran-el-zapatero-6914b315d4d5e3.42514986.png', 'Doran trabaja toda la noche creando cosas pequeñas y perfectas. Si lo tratás bien, mejorará tu habilidad para fabricar o vender. Si no, tus cordones se anudarán solos.'),
+(6, 'Eithne la Luminosa', 'duende de la luz', 'dorado', 29.00, 'compasiva y radiante', 4, 310.00, 'purifica el ambiente y ahuyenta energías negativas', 6, 1, 10, 'Valle de Glendalough', 1, 1, '2025-10-06', 98, 'hogares con energía pesada', 'No dejarla en lugares oscuros por largos periodos', 'uploads/duendes/eithne-la-luminosa-6914b0bac733a1.87856195.png', 'Eithne emite una luz suave incluso cuando duerme. Su sola presencia aclara pensamientos y repele la tristeza. Colocarla cerca de una ventana potencia su efecto.'),
+(7, 'Seamus el Burlón', 'duende bromista', 'verde lima', 35.00, 'travieso y parlanchín', 2, 75.80, 'causa confusión divertida en reuniones', 4, 6, 5, 'Dublín', 1, 1, '2025-10-06', 84, 'fiestas y eventos', 'Puede esconder tus llaves', 'uploads/duendes/seamus-el-burl-on-6914b2b5f33577.47730308.png', 'Donde Seamus aparece, nadie se aburre. Provoca risas, confusiones y algún que otro tropiezo cómico. Perfecto para animar celebraciones o desarmar tensiones laborales.'),
+(8, 'Nuala del Arroyo', 'duende acuático', 'turquesa', 28.00, 'serena y reflexiva', 3, 150.00, 'limpia las emociones y atrae claridad mental', 2, 1, 9, 'Río Shannon', 1, 1, '2025-10-06', 90, 'sanación emocional', 'No mantenerla lejos de fuentes de agua', 'uploads/duendes/nuala-del-arroyo-6914b21e8c6756.10470759.png', 'Susurra como el agua sobre piedras. Nuala trae calma a la mente inquieta y limpia el aire emocional. Un vaso de agua junto a ella amplifica su poder.'),
+(9, 'Tadhg el Guardián', 'duende protector', 'gris piedra', 50.00, 'firme y silencioso', 3, 200.00, 'protege el hogar de intrusos y malos espíritus', 1, 1, 8, 'Castillo de Blarney', 1, 1, '2025-10-06', 87, 'protección del hogar', 'Debe colocarse mirando la entrada principal', 'uploads/duendes/tadhg-el-guardi-an-6914b260024fa2.24509394.png', 'Inmóvil pero vigilante, Tadhg percibe intenciones ajenas. Se dice que quien lo mire a los ojos siente una calma protectora. Colócalo frente a la puerta principal para máxima defensa.'),
+(10, 'Brigid la Curandera', 'duende sanadora', 'blanco perlado', 26.00, 'tranquila y maternal', 3, 185.70, 'mejora el descanso y la energía vital', 2, 1, 10, 'Lago Corrib', 1, 1, '2025-10-06', 95, 'salud y equilibrio emocional', 'No exponer a luz directa durante eclipses', 'uploads/duendes/brigid-la-curandera-6914b145ab3f19.93470609.png', 'Brigid destila paz. Su presencia suaviza los sueños y equilibra el cuerpo. Ideal para colocar en dormitorios o consultorios de sanación.'),
+(11, 'Cathal el Forjador', 'duende herrero', 'rojo cobre', 42.00, 'dedicado y fuerte', 2, 110.40, 'forja amuletos de poder y suerte duradera', 3, 2, 9, 'Montes Wicklow', 1, 1, '2025-10-06', 82, 'reforzar amuletos', 'No tocarlo con manos mojadas', 'uploads/duendes/cathal-el-forjador-6914b2dc2e9a83.48202035.png', 'Entre chispas diminutas, Cathal da forma a la suerte. Quienes trabajan con metales o herramientas sienten su inspiración al alcance de la mano.'),
+(12, 'Aoife la Verde', 'duende del bosque', 'verde bosque', 30.00, 'pacífica y protectora de la naturaleza', 2, 95.00, 'atrae armonía ecológica y prosperidad natural', 1, 1, 8, 'Bosque de Killarney', 1, 1, '2025-10-06', 91, 'protección ambiental', 'No separarla de plantas vivas', 'uploads/duendes/aoife-la-verde-6914b20c634e94.96200217.png', 'Los pájaros parecen cantar más cerca cuando Aoife está presente. Su energía reverdece ambientes y estimula la conexión con la naturaleza.'),
+(13, 'Declan el Burlado', 'duende maldito', 'gris plomo', 33.00, 'resentido pero leal', 3, 155.00, 'convierte desgracias en aprendizajes valiosos', 5, 5, 7, 'Ruinas de Cashel', 1, 1, '2025-10-06', 79, 'superar malas rachas', 'Nunca burlarse de su pasado', 'uploads/duendes/declan-el-burlado-6914b2eea24c09.11490174.png', 'Declan fue traicionado hace siglos y aún carga con su historia. Acompaña a quienes aprenden del dolor, transformando cicatrices en fortaleza.'),
+(14, 'Sorcha la Centelleante', 'duende solar', 'naranja brillante', 25.00, 'optimista y vivaz', 3, 165.30, 'potencia la creatividad y el entusiasmo', 3, 1, 9, 'Montes Slieve Bloom', 1, 1, '2025-10-06', 97, 'creadores y artistas', 'No exponer a lluvias prolongadas', 'uploads/duendes/sorcha-la-centelleante-6914b0d2eb7325.66164370.png', 'Donde Sorcha pasa, la inspiración florece. Irradia entusiasmo y luz cálida. Perfecta para talleres, estudios o espacios de creación.'),
+(15, 'Ruairí el Errante', 'duende viajero', 'azul marino', 37.00, 'curioso y aventurero', 2, 105.00, 'protege a los viajeros de accidentes y pérdidas', 4, 2, 9, 'Isla Achill', 1, 1, '2025-10-06', 85, 'viajeros frecuentes', 'Debe guardarse en bolsos de viaje', 'uploads/duendes/ruair-i-el-errante-6914b2a267d9e1.78858590.png', 'Amante del movimiento, Ruairí trae buena estrella en rutas largas. Protege maletas, evita desvíos y asegura regresos con historias nuevas.'),
+(16, 'Maeve la de los Susurros', 'duende oracular', 'violeta oscuro', 31.00, 'misteriosa y sabia', 4, 350.00, 'revela señales ocultas y guía decisiones', 5, 3, 10, 'Cuevas de Knocknarea', 1, 1, '2025-10-06', 99, 'lecturas y adivinación', 'No interrumpir sus visiones', 'uploads/duendes/maeve-la-de-los-susurros-6914b06db5df22.61766748.png', 'Maeve habla en sueños y murmullos. Si la escuchás con calma, puede revelar lo que aún no sabés que sabés. Ideal para tarotistas y buscadores del destino.'),
+(17, 'Padraig el Rojo', 'duende guerrero', 'rojo escarlata', 48.00, 'valiente y feroz', 3, 210.00, 'infunde coraje y fuerza ante desafíos', 3, 2, 8, 'Montes Mourne', 1, 1, '2025-10-06', 88, 'personas con nuevos comienzos', 'Evitar provocarlo en discusiones', 'uploads/duendes/padraig-el-rojo-6914b24e4940e5.14394643.png', 'Guardián de los valientes, Padraig brinda impulso a quienes dudan. Su espíritu guerrero fortalece la voluntad y aleja los miedos.'),
+(18, 'Ciara la Dulce', 'duende doméstica', 'rosa pastel', 22.00, 'dulce y colaborativa', 1, 40.00, 'atrae armonía y unión familiar', 6, 1, 9, 'Casas de Donegal', 1, 1, '2025-10-06', 83, 'hogares y parejas', 'No dejarla sin tareas domésticas', 'uploads/duendes/ciara-la-dulce-6914b2c8e54a41.91032676.png', 'Ciara ordena más que casas: ordena corazones. Su dulzura suaviza las discusiones y fomenta la cooperación. Ideal para familias con niños o mascotas.'),
+(19, 'Aedan el Oscuro', 'duende vengativo', 'negro azabache', 44.00, 'rencoroso y serio', 4, 280.00, 'devuelve el mal a quien lo envía', 5, 8, 6, 'Abadía de Clonmacnoise', 1, 1, '2025-10-06', 86, 'protección contra maldiciones', 'No usar con fines egoístas', 'uploads/duendes/aedan-el-oscuro-6914b274da9968.09225858.png', 'Aedan observa desde las sombras y equilibra la balanza. Su justicia es implacable: quien daña, recibe lo propio. Protector ideal para quienes enfrentan envidias o traiciones.'),
+(20, 'Oisín el Alegre', 'duende de la fortuna', 'verde brillante', 33.00, 'optimista y generoso', 3, 175.00, 'atrae oportunidades y buena suerte constante', 6, 1, 10, 'Praderas de Louth', 1, 1, '2025-10-06', 100, 'nuevos comienzos y negocios', 'Nunca prometerle algo y no cumplirlo', 'uploads/duendes/ois-in-el-alegre-6914b0520aed09.23440228.png', 'Oisín sonríe incluso bajo la lluvia. Lleva consigo la suerte pura de Irlanda. Ideal para quienes inician proyectos, negocios o aventuras de vida.');
 
 -- --------------------------------------------------------
 
@@ -423,7 +425,7 @@ INSERT INTO `materiales` (`id_material`, `nombre`) VALUES
 --
 
 CREATE TABLE `pedidos` (
-  `id_pedido` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id_pedido` int(10) UNSIGNED NOT NULL,
   `id_usuario` int(10) UNSIGNED NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `estado` enum('pendiente','procesando','enviado','completado','cancelado') NOT NULL DEFAULT 'pendiente',
@@ -435,7 +437,8 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id_pedido`, `id_usuario`, `total`, `estado`, `fecha_pedido`) VALUES
-(1, 4, 175.00, 'cancelado', '2025-11-11 01:51:43');
+(1, 4, 175.00, 'cancelado', '2025-11-11 01:51:43'),
+(2, 4, 175.00, 'enviado', '2025-11-11 18:24:19');
 
 -- --------------------------------------------------------
 
@@ -455,7 +458,8 @@ CREATE TABLE `pedido_items` (
 --
 
 INSERT INTO `pedido_items` (`id_pedido`, `id_duende`, `cantidad`, `precio_unitario`) VALUES
-(1, 20, 1, 175.00);
+(1, 20, 1, 175.00),
+(2, 20, 1, 175.00);
 
 -- --------------------------------------------------------
 
@@ -506,7 +510,10 @@ INSERT INTO `secciones` (`id_seccion`, `vinculo`, `titulo`, `descripcion`, `menu
 (7, 'contacto', 'Contacto y Bendiciones', 'Formulario para consultas, colaboraciones o adopciones mágicas personalizadas.', 1),
 (8, 'carrito', 'Carrito Mágico', 'Resumen de los duendes seleccionados, con cálculo automático en monedas de oro.', 0),
 (9, 'checkout', 'Finalizar Compra', 'Página de confirmación donde se elige el método de envío y pago.', 0),
-(10, 'cuenta', 'Mi Cuenta', 'Zona del usuario con historial de compras, deseos y configuraciones.', 0);
+(10, 'cuenta', 'Mi Cuenta', 'Zona del usuario con historial de compras, deseos y configuraciones.', 0),
+(11, 'login', 'Ingresar', 'Página de inicio de sesión para usuarios registrados.', 0),
+(12, 'registro', 'Registrarse', 'Formulario de registro para nuevos usuarios.', 0),
+(13, 'logout', 'Cerrar Sesión', 'Acción para cerrar la sesión del usuario.', 0);
 
 -- --------------------------------------------------------
 
@@ -560,7 +567,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `email`, `password_hash`, `rol`, `fecha_alta`, `activo`) VALUES
 (3, 'Administrador', NULL, 'admin@tienda.com', '$2y$10$DE3czMIHcT4rmvDDyoTN6O/LxvKKRCcVy9uhgWaHX4UiMJfZ4s9NG', 'admin', '2025-11-11 01:34:09', 1),
-(4, 'Usuario Prueba', NULL, 'usuario@test.com', '$2y$10$Oj8pBhllD.2rQhD8J2hU6uCDyyud9da0f.oXthbe4PXxuWmkpc.aK', 'usuario', '2025-11-11 01:34:09', 1);
+(4, 'Usuario Prueba', NULL, 'usuario@test.com', '$2y$10$Oj8pBhllD.2rQhD8J2hU6uCDyyud9da0f.oXthbe4PXxuWmkpc.aK', 'usuario', '2025-11-11 01:34:09', 1),
+(5, 'Jorge', NULL, 'jorge@tienda.com', '$2y$10$cZ3ZazQ9NdF/TvGiXZba8.4/mi4P5TYabIP2hpzDVtIXOVZ.1VKxa', 'usuario', '2025-11-11 19:44:26', 1);
 
 --
 -- Índices para tablas volcadas
@@ -712,19 +720,19 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT de la tabla `carritos`
 --
 ALTER TABLE `carritos`
-  MODIFY `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`
 --
 ALTER TABLE `contactos`
-  MODIFY `id_contacto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_contacto` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `duendes`
 --
 ALTER TABLE `duendes`
-  MODIFY `id_duende` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_duende` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `elementos`
@@ -744,12 +752,11 @@ ALTER TABLE `etiquetas`
 ALTER TABLE `materiales`
   MODIFY `id_material` smallint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
-
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pedido` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `rareza`
@@ -761,13 +768,13 @@ ALTER TABLE `rareza`
 -- AUTO_INCREMENT de la tabla `secciones`
 --
 ALTER TABLE `secciones`
-  MODIFY `id_seccion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_seccion` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

@@ -6,7 +6,7 @@ class Blog {
     public static function latest(): array {
         try {
             $cn = DB::get();
-            return $cn->query("SELECT id_blog, titulo, slug, descripcion_corta, fecha_publicacion
+            return $cn->query("SELECT id_blog, titulo, slug, descripcion_corta, fecha_publicacion, categoria, imagen_portada, autor
                                FROM blogs ORDER BY fecha_publicacion DESC")->fetchAll();
         } catch (Exception $e) {
             error_log("Error al obtener últimos blogs: " . $e->getMessage());

@@ -8,63 +8,89 @@ $error = $_SESSION['error'] ?? null;
 unset($_SESSION['success'], $_SESSION['error']);
 $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
 ?>
-<h1>Gestión de Usuarios</h1>
+<div class="space-y-6">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+            <h1 class="text-3xl font-semibold text-white">Gestión de usuarios</h1>
+            <p class="text-sm text-slate-300">Administrá roles, accesos y estados de la tripulación de la tienda.</p>
+        </div>
+        <a href="<?php echo admin_url('usuario_crear'); ?>" class="button-arcade">+ Crear nuevo usuario</a>
+    </div>
 
-<?php if ($success): ?>
-    <p style="color: green; background: #d4edda; padding: 10px; border-radius: 4px;">✓ <?php echo htmlspecialchars($success); ?></p>
-<?php endif; ?>
+    <?php if ($success): ?>
+        <div class="alert-arcade alert-success">
+            <span class="status-dot"></span>
+            <span><?php echo htmlspecialchars($success); ?></span>
+        </div>
+    <?php endif; ?>
 
-<?php if ($error): ?>
-    <p style="color: red; background: #f8d7da; padding: 10px; border-radius: 4px;">✗ <?php echo htmlspecialchars($error); ?></p>
-<?php endif; ?>
+    <?php if ($error): ?>
+        <div class="alert-arcade alert-error">
+            <span class="status-dot offline"></span>
+            <span><?php echo htmlspecialchars($error); ?></span>
+        </div>
+    <?php endif; ?>
 
-<p><a href="<?php echo admin_url('usuario_crear'); ?>" style="background: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">+ Crear nuevo usuario</a></p>
-
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-<thead style="background: #f8f9fa;">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Rol</th>
-        <th>Estado</th>
-        <th>Fecha Alta</th>
-        <th>Acciones</th>
-    </tr>
-</thead>
-<tbody>
-<?php foreach ($usuarios as $usuario): ?>
-    <tr>
-        <td>#<?php echo (int)$usuario['id_usuario']; ?></td>
-        <td><?php echo htmlspecialchars(trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellido'] ?? '')) ?: $usuario['nombre']); ?></td>
-        <td><?php echo htmlspecialchars($usuario['email']); ?></td>
-        <td><?php echo htmlspecialchars(ucfirst($usuario['rol'] ?? 'usuario')); ?></td>
-        <td style="text-align: center;">
-            <?php echo (int)$usuario['activo'] === 1 ? '✓ Activo' : '✗ Inactivo'; ?>
-        </td>
-        <td><?php echo date('d/m/Y H:i', strtotime($usuario['fecha_alta'] ?? 'now')); ?></td>
-        <td style="white-space: nowrap;">
-            <a href="<?php echo admin_url('usuario_editar', ['id' => $usuario['id_usuario']]); ?>" style="color: #007bff;">✏️ Editar</a>
-            <?php if ((int)$usuario['id_usuario'] !== (int)$usuarioActual): ?>
-                |
-                <form method="post" action="/tienda_mistica/admin/actions/usuario_estado_acc.php" style="display: inline;">
-                    <input type="hidden" name="id" value="<?php echo (int)$usuario['id_usuario']; ?>">
-                    <input type="hidden" name="activo" value="<?php echo (int)$usuario['activo'] === 1 ? 0 : 1; ?>">
-                    <button type="submit" style="background: none; border: none; color: <?php echo (int)$usuario['activo'] === 1 ? '#dc3545' : '#28a745'; ?>; cursor: pointer;">
-                        <?php echo (int)$usuario['activo'] === 1 ? 'Desactivar' : 'Activar'; ?>
-                    </button>
-                </form>
-            <?php else: ?>
-                <span style="color: #6c757d;">(Sesión actual)</span>
-            <?php endif; ?>
-        </td>
-    </tr>
-<?php endforeach; ?>
-</tbody>
-</table>
-
-<?php if (count($usuarios) === 0): ?>
-    <p style="padding: 20px; background: #f8f9fa; text-align: center;">No hay usuarios registrados.</p>
-<?php endif; ?>
+    <?php if (count($usuarios) > 0): ?>
+        <div class="panel-glass overflow-hidden rounded-3xl border border-arcade-cyan/30 shadow-neon">
+            <div class="overflow-x-auto">
+                <table class="arcade-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Fecha alta</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($usuarios as $usuario): ?>
+                            <?php $activo = (int)($usuario['activo'] ?? 0) === 1; ?>
+                            <tr>
+                                <td class="font-mono text-sm text-slate-300">#<?php echo (int)$usuario['id_usuario']; ?></td>
+                                <td><?php echo htmlspecialchars(trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellido'] ?? '')) ?: ($usuario['nombre'] ?? '')); ?></td>
+                                <td>
+                                    <a href="mailto:<?php echo htmlspecialchars($usuario['email']); ?>" class="text-arcade-cyan hover:text-arcade-magenta"><?php echo htmlspecialchars($usuario['email']); ?></a>
+                                </td>
+                                <td><?php echo htmlspecialchars(ucfirst($usuario['rol'] ?? 'usuario')); ?></td>
+                                <td class="text-center">
+                                    <?php if ($activo): ?>
+                                        <span class="stat-chip text-xs">Activo</span>
+                                    <?php else: ?>
+                                        <span class="stat-chip text-xs" style="background: linear-gradient(135deg, rgba(148,163,184,0.92), rgba(71,85,105,0.92));">Inactivo</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo date('d/m/Y H:i', strtotime($usuario['fecha_alta'] ?? 'now')); ?></td>
+                                <td class="whitespace-nowrap text-sm">
+                                    <a href="<?php echo admin_url('usuario_editar', ['id' => $usuario['id_usuario']]); ?>" class="text-arcade-cyan hover:text-arcade-magenta">✏️ Editar</a>
+                                    <?php if ((int)$usuario['id_usuario'] !== (int)$usuarioActual): ?>
+                                        <span class="text-slate-500">|</span>
+                                        <form method="post" action="/tienda_mistica/admin/actions/usuario_estado_acc.php" class="inline">
+                                            <input type="hidden" name="id" value="<?php echo (int)$usuario['id_usuario']; ?>">
+                                            <input type="hidden" name="activo" value="<?php echo $activo ? 0 : 1; ?>">
+                                            <button type="submit" class="inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] <?php echo $activo ? 'text-rose-300 hover:text-rose-200' : 'text-emerald-300 hover:text-emerald-200'; ?>">
+                                                <?php echo $activo ? 'Desactivar' : 'Activar'; ?>
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <span class="ml-2 text-xs uppercase tracking-[0.2em] text-slate-500">Sesión actual</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="panel-glass rounded-3xl border border-dashed border-arcade-cyan/40 p-10 text-center shadow-neon">
+            <p class="text-lg font-semibold text-white">No hay usuarios registrados.</p>
+            <p class="mt-2 text-sm text-slate-300">Creá el primero para compartir el control del panel.</p>
+        </div>
+    <?php endif; ?>
+</div>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

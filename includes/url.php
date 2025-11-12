@@ -1,10 +1,13 @@
 <?php
+if (!defined('APP_BASE_PATH')) {
+    define('APP_BASE_PATH', '/tienda_mistica/');
+}
+
 /**
  * Genera URLs amigables para la aplicación
  */
 function url($seccion, $params = []) {
-    // Base de la aplicación (debe coincidir con RewriteBase del .htaccess)
-    $base = '/tienda_mistica/';
+    $base = APP_BASE_PATH;
     
     // URLs especiales con parámetros
     if ($seccion === 'detalle_duende' && !empty($params['id'])) {
@@ -21,4 +24,15 @@ function url($seccion, $params = []) {
     }
     
     return $url;
+}
+
+/**
+ * Normaliza rutas hacia assets estáticos (imágenes, uploads, etc.)
+ */
+function asset_url(string $path): string {
+    if (preg_match('/^https?:\/\//i', $path)) {
+        return $path;
+    }
+
+    return APP_BASE_PATH . ltrim($path, '/');
 }
