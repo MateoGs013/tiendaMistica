@@ -6,6 +6,8 @@ $mensaje = $_SESSION['mensaje'] ?? null;
 $error = $_SESSION['error'] ?? null;
 unset($_SESSION['mensaje'], $_SESSION['error']);
 
+$usuarioLogueado = !empty($_SESSION['usuario']);
+
 $filtrosDisponibles = Duende::filtrosDisponibles();
 
 $filtros = [
@@ -20,6 +22,8 @@ $filtros = [
     'page' => isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1,
     'solo_disponibles' => true,
 ];
+
+$filtros['per_page'] = 6;
 
 $catalogo = Duende::catalogoInteractivo($filtros, true);
 $duendes = $catalogo['items'];
@@ -132,6 +136,7 @@ if ($filtros['orden'] !== 'popularidad' && isset($opcionesOrden[$filtros['orden'
 $panelShouldStartOpen = !empty($activeChips);
 ?>
 
+<div class="catalogo-shell">
 <section class="panel-glass overflow-hidden">
     <div class="flex flex-col gap-6 px-6 py-8 lg:flex-row lg:items-center lg:justify-between">
         <div>
@@ -150,7 +155,7 @@ $panelShouldStartOpen = !empty($activeChips);
             <ul class="mt-4 space-y-2">
                 <li class="flex items-center justify-between">
                     <span>Precio promedio</span>
-                    <span class="stat-chip" style="background: linear-gradient(135deg, rgba(6,182,212,0.92), rgba(147,51,234,0.92));">
+                    <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.92), rgba(var(--rareza-rgb-mistico), 0.92));">
                         <?php
                         $promedio = 0.0;
                         if (!empty($duendes)) {
@@ -172,7 +177,7 @@ $panelShouldStartOpen = !empty($activeChips);
                 </li>
                 <li class="flex items-center justify-between">
                     <span>Rango de suerte</span>
-                    <span class="stat-chip" style="background: linear-gradient(135deg, rgba(251,191,36,0.92), rgba(59,130,246,0.92));">
+                    <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-legendario), 0.92), rgba(var(--rareza-rgb-poco-comun), 0.92));">
                         <?php
                         if (!empty($duendes)) {
                             $min = min(array_map(static fn($d) => (int)($d['nivel_suerte'] ?? 0), $duendes));
@@ -190,7 +195,7 @@ $panelShouldStartOpen = !empty($activeChips);
 </section>
 
 <?php if ($mensaje): ?>
-    <div class="mt-6 rounded-lg border border-emerald-400/50 bg-emerald-500/15 p-4 text-sm text-emerald-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-emerald/50 bg-arcade-emerald/15 p-4 text-sm text-arcade-emerald shadow-neon">
         ✓ <?php echo htmlspecialchars($mensaje); ?>
     </div>
 <?php endif; ?>
@@ -220,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <?php if ($error): ?>
-    <div class="mt-6 rounded-lg border border-rose-500/50 bg-rose-500/15 p-4 text-sm text-rose-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-rose/50 bg-arcade-rose/15 p-4 text-sm text-arcade-rose shadow-neon">
         ✗ <?php echo htmlspecialchars($error); ?>
     </div>
 <?php endif; ?>
@@ -349,84 +354,153 @@ document.addEventListener('DOMContentLoaded', function () {
 </form>
 
 <?php if (empty($duendes)): ?>
-    <div class="mt-10 rounded-2xl border border-arcade-magenta/40 bg-arcade-panel/70 p-10 text-center text-slate-200 shadow-neon">
+    <div class="catalogo-results-empty rounded-2xl border border-arcade-magenta/40 bg-arcade-panel/70 p-10 text-center text-slate-200 shadow-neon">
         <p class="font-orbitron text-xl text-arcade-magenta">No encontramos duendes con esos filtros</p>
         <p class="mt-3 text-sm text-slate-300">Probá ampliando el rango de precio o quitando algunos elementos. La magia adecuada te espera.</p>
     </div>
 <?php else: ?>
-    <div class="mt-10 card-grid">
+    <section class="catalogo-results">
+        <div class="cards" role="list" data-card-list>
         <?php foreach ($duendes as $duende):
-            $detalleUrl = url('detalle_duende', ['id' => $duende['id_duende']]);
-            $carritoDisponible = !empty($_SESSION['usuario']);
+            $id = (int)($duende['id_duende'] ?? 0);
+            $detalleUrl = url('detalle_duende', ['id' => $id]);
+            $carritoDisponible = $usuarioLogueado;
+            $isDisponible = (int)($duende['disponible'] ?? 0) === 1;
             $imagenUrl = $duende['imagen_url'] ?? '';
-            if ($imagenUrl) {
-                $imagenUrl = asset_url($imagenUrl);
+            $imagenUrl = $imagenUrl ? asset_url($imagenUrl) : null;
+            $rarezaLabel = strtoupper($duende['rareza'] ?? 'COMÚN');
+            $rarezaColor = $duende['rareza_color'] ?? 'rgba(var(--rareza-rgb-poco-comun), 0.55)';
+            $rarezaColorCss = htmlspecialchars($rarezaColor, ENT_QUOTES, 'UTF-8');
+            $rarezaNormalized = strtr((string)($duende['rareza'] ?? 'comun'), [
+                'Á' => 'A', 'É' => 'E', 'Í' => 'I', 'Ó' => 'O', 'Ú' => 'U', 'Ü' => 'U', 'Ñ' => 'N',
+                'á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u', 'ü' => 'u', 'ñ' => 'n',
+            ]);
+            $rarezaSlug = strtolower($rarezaNormalized);
+            $rarezaSlug = preg_replace('/[^a-z0-9]+/', '-', $rarezaSlug);
+            $rarezaSlug = trim((string)$rarezaSlug, '-');
+            if ($rarezaSlug === '') {
+                $rarezaSlug = 'comun';
             }
+            $popularidad = (int)($duende['popularidad'] ?? 0);
+            $elementoAbrev = strtoupper(substr((string)($duende['elemento'] ?? ''), 0, 3));
+            $elementoAbrev = $elementoAbrev !== '' ? $elementoAbrev : '???';
+            $tipo = strtoupper($duende['tipo'] ?? 'DUENDE');
+            $precio = number_format((float)($duende['precio_en_oro'] ?? 0), 0, '.', '.');
+            $alturaCm = (int)($duende['altura_cm'] ?? 0);
+            $nivelSuerte = (int)($duende['nivel_suerte'] ?? 0);
+            $recomendado = strtoupper($duende['recomendado_para'] ?? 'TODOS');
+            $origen = strtoupper($duende['origen_mitologico'] ?? 'DESCONOCIDO');
+            $poderTotal = (int)($duende['poder_total'] ?? 0);
+            $indiceSuerte = (float)($duende['indice_suerte'] ?? 0);
+            $nivelRiesgo = (int)($duende['nivel_riesgo'] ?? 0);
+            $accesorios = $duende['accesorios_list'] ?? [];
+            $descripcion = trim((string)($duende['descripcion'] ?? ''));
         ?>
-            <article class="neon-card flex flex-col overflow-hidden">
-                <?php if ($imagenUrl): ?>
-                    <div class="relative h-48 w-full overflow-hidden">
-                        <img src="<?php echo htmlspecialchars($imagenUrl); ?>" alt="<?php echo htmlspecialchars($duende['nombre']); ?>" class="h-full w-full object-cover transition duration-300 hover:scale-105">
-                        <span class="absolute left-4 top-4 rounded-full border border-white/30 bg-black/40 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white" style="box-shadow: 0 0 15px <?php echo $duende['rareza_color']; ?>;">
-                            <?php echo htmlspecialchars($duende['rareza'] ?? ''); ?>
-                        </span>
+        <article class="card card--rareza-<?php echo htmlspecialchars($rarezaSlug, ENT_QUOTES, 'UTF-8'); ?>" role="listitem" aria-labelledby="duende-<?php echo $id; ?>-title" aria-describedby="duende-<?php echo $id; ?>-desc" data-rareza="<?php echo htmlspecialchars($rarezaSlug, ENT_QUOTES, 'UTF-8'); ?>" data-rareza-label="<?php echo htmlspecialchars($rarezaLabel, ENT_QUOTES, 'UTF-8'); ?>">
+            <div class="card__content">
+                <div class="flex items-center justify-between gap-2 mb-3">
+                    <span class="badge pixel-font pixel-xs" style="border-color: <?php echo $rarezaColorCss; ?>; box-shadow: 0 0 8px <?php echo $rarezaColorCss; ?>; color: <?php echo $rarezaColorCss; ?>;">
+                        <?php echo htmlspecialchars($rarezaLabel); ?>
+                    </span>
+                    <?php if ($popularidad >= 90): ?>
+                        <span class="chip pixel-font pixel-xs blink-decoration">★ HOT</span>
+                    <?php else: ?>
+                        <span class="chip pixel-font pixel-xs">⚡ <?php echo $popularidad; ?>%</span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="duende-img-wrapper">
+                    <?php if ($imagenUrl): ?>
+                        <img src="<?php echo htmlspecialchars($imagenUrl); ?>" alt="<?php echo htmlspecialchars($duende['nombre']); ?>" class="duende-img" loading="lazy">
+                    <?php else: ?>
+                        <div class="duende-img duende-img--placeholder pixel-font pixel-xs">Sin imagen</div>
+                    <?php endif; ?>
+                    <div class="card-element-chip">
+                        <span class="pixel-font pixel-xs text-neon-cyan"><?php echo htmlspecialchars($elementoAbrev); ?></span>
                     </div>
-                <?php endif; ?>
-                <div class="flex flex-1 flex-col gap-4 p-6">
-                    <div class="flex items-start justify-between gap-3">
-                        <div>
-                            <h2 class="font-orbitron text-xl text-white drop-shadow"><a href="<?php echo $detalleUrl; ?>"><?php echo htmlspecialchars($duende['nombre']); ?></a></h2>
-                            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Elemento: <span style="color: <?php echo $duende['elemento_color']; ?>;"><?php echo htmlspecialchars($duende['elemento'] ?? '-'); ?></span></p>
-                        </div>
-                        <span class="stat-chip" style="background: linear-gradient(135deg, <?php echo $duende['rareza_color']; ?>, rgba(6,182,212,0.92));">
-                            <?php echo number_format((float)($duende['precio_en_oro'] ?? 0), 2); ?> oro
-                        </span>
-                    </div>
-                    <p class="text-sm text-slate-300 line-clamp-3"><?php echo htmlspecialchars($duende['descripcion'] ?? ''); ?></p>
-                    <div class="grid grid-cols-2 gap-2 text-[0.7rem] uppercase tracking-[0.15em] text-slate-200">
-                        <span class="rounded-lg border border-arcade-cyan/40 bg-arcade-base/70 px-2 py-2">Poder: <strong class="block text-lg text-arcade-gold"><?php echo (int)($duende['poder_total'] ?? 0); ?></strong></span>
-                        <span class="rounded-lg border border-arcade-cyan/40 bg-arcade-base/70 px-2 py-2">Suerte: <strong class="block text-lg text-arcade-cyan"><?php echo (float)($duende['indice_suerte'] ?? 0); ?></strong></span>
-                        <span class="rounded-lg border border-arcade-cyan/40 bg-arcade-base/70 px-2 py-2">Riesgo: <strong class="block text-lg text-arcade-magenta"><?php echo (int)($duende['nivel_riesgo'] ?? 0); ?></strong></span>
-                        <span class="rounded-lg border border-arcade-cyan/40 bg-arcade-base/70 px-2 py-2">Popularidad: <strong class="block text-lg text-arcade-cyan"><?php echo (int)($duende['popularidad'] ?? 0); ?></strong></span>
-                    </div>
-                    <?php if (!empty($duende['accesorios_list'])): ?>
-                        <div class="flex flex-wrap gap-2 text-[0.65rem] uppercase tracking-[0.18em] text-slate-200">
-                            <?php foreach ($duende['accesorios_list'] as $accesorio): ?>
-                                <span class="rounded-full border border-arcade-magenta/30 bg-arcade-panel/70 px-3 py-1"><?php echo htmlspecialchars($accesorio); ?></span>
-                            <?php endforeach; ?>
+                    <?php if (!$isDisponible): ?>
+                        <div class="soldout-mini">
+                            <div class="label pixel-font pixel-xs">Agotado</div>
                         </div>
                     <?php endif; ?>
-                    <div class="mt-auto flex items-center justify-between gap-3">
-                        <a href="<?php echo $detalleUrl; ?>" class="button-arcade px-4 py-2 text-xs">Ver ficha</a>
-                        <?php if ($carritoDisponible): ?>
-                            <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-flex">
-                                <input type="hidden" name="action" value="agregar">
-                                <input type="hidden" name="id_duende" value="<?php echo $duende['id_duende']; ?>">
-                                <input type="hidden" name="redirect" value="catalogo">
-                                <button type="submit" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(217,70,239,0.4));">Agregar</button>
-                            </form>
-                        <?php else: ?>
-                            <a href="<?php echo url('login'); ?>" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(147,51,234,0.35));">Ingresá</a>
-                        <?php endif; ?>
-                    </div>
                 </div>
-            </article>
-        <?php endforeach; ?>
-    </div>
 
-    <?php if ($pages > 1): ?>
-        <nav class="mt-10 flex items-center justify-center gap-3 text-sm text-slate-200">
-            <?php if ($page > 1): ?>
-                <a href="?<?php echo $buildQuery(['page' => $page - 1]); ?>" class="button-arcade px-4 py-2 text-xs">Anterior</a>
-            <?php endif; ?>
-            <?php for ($i = 1; $i <= $pages; $i++):
-                $activo = $i === $page;
-            ?>
-                <a href="?<?php echo $buildQuery(['page' => $i]); ?>" class="button-arcade px-4 py-2 text-xs <?php echo $activo ? '' : 'opacity-70'; ?>" style="<?php echo $activo ? 'background: linear-gradient(135deg, rgba(217,70,239,0.4), rgba(6,182,212,0.4));' : 'background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));'; ?>"><?php echo $i; ?></a>
-            <?php endfor; ?>
-            <?php if ($page < $pages): ?>
-                <a href="?<?php echo $buildQuery(['page' => $page + 1]); ?>" class="button-arcade px-4 py-2 text-xs">Siguiente</a>
-            <?php endif; ?>
-        </nav>
-    <?php endif; ?>
+                <h3 id="duende-<?php echo $id; ?>-title" class="pixel-font pixel-md text-neon-cyan text-glow mb-3 text-center">
+                    <?php echo htmlspecialchars(strtoupper($duende['nombre'] ?? 'Duende')); ?>
+                </h3>
+
+                <div class="text-center mb-4">
+                    <div class="pixel-font pixel-xs text-neon-green mb-2">🧙 <?php echo htmlspecialchars($tipo); ?></div>
+                    <p class="pixel-font pixel-lg precio-oro"><?php echo $precio; ?> ORO</p>
+                </div>
+
+                <div id="duende-<?php echo $id; ?>-desc" class="duende-info pixel-font pixel-xs text-center mb-4">
+                    <div class="text-neon-green">⚡ <?php echo $alturaCm; ?>CM • Lvl <?php echo $nivelSuerte; ?></div>
+                    <div class="text-neon-yellow">🎯 <?php echo htmlspecialchars($recomendado); ?></div>
+                    <div class="text-neon-pink">🏛️ <?php echo htmlspecialchars($origen); ?></div>
+                </div>
+
+                <div class="card-info-row pixel-font pixel-xs text-center mb-4">
+                    <div class="text-neon-cyan">Poder <?php echo $poderTotal; ?></div>
+                    <div class="text-neon-yellow">Suerte <?php echo number_format($indiceSuerte, 1); ?></div>
+                    <div class="text-neon-pink">Riesgo <?php echo $nivelRiesgo; ?></div>
+                </div>
+
+                <div class="flex gap-2 justify-center mt-auto">
+                    <?php if ($carritoDisponible && $isDisponible): ?>
+                        <form id="carrito-form-<?php echo $id; ?>" method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="card-cart-form">
+                            <input type="hidden" name="action" value="agregar">
+                            <input type="hidden" name="id_duende" value="<?php echo $id; ?>">
+                            <input type="hidden" name="redirect" value="catalogo">
+                        </form>
+                        <button type="button" class="btn-arc secondary pixel-font pixel-xs" onclick="agregarAlCarrito(<?php echo $id; ?>)">+ Agregar</button>
+                    <?php elseif (!$isDisponible): ?>
+                        <button type="button" class="btn-arc secondary pixel-font pixel-xs" disabled>Agotado</button>
+                    <?php else: ?>
+                        <a href="<?php echo url('login'); ?>" class="btn-arc secondary pixel-font pixel-xs">Ingresá</a>
+                    <?php endif; ?>
+                    <a href="<?php echo $detalleUrl; ?>" class="btn-arc primary pixel-font pixel-xs">👁️ Ver</a>
+                </div>
+            </div>
+        </article>
+        <?php endforeach; ?>
+        </div>
+
+        <?php if ($usuarioLogueado): ?>
+            <script>
+            function agregarAlCarrito(id) {
+                var form = document.getElementById('carrito-form-' + id);
+                if (!form) {
+                    return;
+                }
+                window.requestAnimationFrame(function () {
+                    form.submit();
+                });
+            }
+            </script>
+        <?php else: ?>
+            <script>
+            function agregarAlCarrito() {
+                window.location.href = "<?php echo url('login'); ?>";
+            }
+            </script>
+        <?php endif; ?>
+
+        <?php if ($pages > 1): ?>
+            <nav class="catalogo-pagination" aria-label="Paginación del catálogo">
+                <?php if ($page > 1): ?>
+                    <a href="?<?php echo $buildQuery(['page' => $page - 1]); ?>" class="btn-arc secondary pixel-font pixel-xs">Anterior</a>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $pages; $i++):
+                    $activo = $i === $page;
+                ?>
+                    <a href="?<?php echo $buildQuery(['page' => $i]); ?>" class="btn-arc secondary pixel-font pixel-xs <?php echo $activo ? '' : 'opacity-70'; ?>" style="<?php echo $activo ? 'border-color: rgba(var(--rareza-rgb-legendario), 0.45);' : ''; ?>"<?php echo $activo ? ' aria-current="page"' : ''; ?>><?php echo $i; ?></a>
+                <?php endfor; ?>
+                <?php if ($page < $pages): ?>
+                    <a href="?<?php echo $buildQuery(['page' => $page + 1]); ?>" class="btn-arc secondary pixel-font pixel-xs">Siguiente</a>
+                <?php endif; ?>
+            </nav>
+        <?php endif; ?>
+    </section>
 <?php endif; ?>
+</div>
