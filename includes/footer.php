@@ -3,7 +3,7 @@
 ?>
             </div>
         </main>
-        <footer class="bg-arcade-panel/90 border-t border-arcade-magenta/20">
+    <footer class="bg-arcade-panel/90 border-t border-arcade-magenta/20 arcade-machine__footer">
             <div class="max-w-7xl mx-auto px-4 py-10 lg:px-8">
                 <div class="grid gap-8 md:grid-cols-3">
                     <div>
@@ -39,6 +39,89 @@
 </div>
 <script>
     (function() {
+        const gateway = document.getElementById('game-gateway');
+        if (gateway) {
+            const storageKey = 'tienda-mistica-gateway';
+            const startButton = gateway.querySelector('[data-gateway-start]');
+            const skipButton = gateway.querySelector('[data-gateway-skip]');
+            const marquee = gateway.querySelector('.game-gateway__marquee');
+
+            const hideGateway = () => {
+                if (!gateway.classList.contains('game-gateway--closing')) {
+                    gateway.classList.add('game-gateway--closing');
+                    document.body.classList.remove('has-gateway');
+                    gateway.setAttribute('aria-hidden', 'true');
+                    window.setTimeout(() => {
+                        gateway.classList.add('game-gateway--hidden');
+                    }, 450);
+                }
+                try {
+                    window.sessionStorage.setItem(storageKey, '1');
+                } catch (err) {
+                    /* ignore storage errors */
+                }
+                document.removeEventListener('keydown', handleKeydown);
+            };
+
+            const shouldSkip = (() => {
+                try {
+                    return window.sessionStorage.getItem(storageKey) === '1';
+                } catch (err) {
+                    return false;
+                }
+            })();
+
+            if (shouldSkip) {
+                hideGateway();
+            } else {
+                gateway.classList.add('game-gateway--active');
+                gateway.setAttribute('aria-hidden', 'false');
+                if (typeof gateway.focus === 'function') {
+                    gateway.focus();
+                }
+            }
+
+            const focusStart = () => {
+                window.requestAnimationFrame(() => {
+                    startButton?.focus();
+                });
+            };
+
+            function handleKeydown(event) {
+                if (gateway.classList.contains('game-gateway--closing')) {
+                    return;
+                }
+                if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+                    hideGateway();
+                }
+            }
+
+            if (startButton) {
+                startButton.addEventListener('click', hideGateway);
+                startButton.addEventListener('keyup', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        hideGateway();
+                    }
+                });
+            }
+
+            if (skipButton) {
+                skipButton.addEventListener('click', hideGateway);
+            }
+
+            gateway.addEventListener('transitionend', (event) => {
+                if (event.target === gateway && gateway.classList.contains('game-gateway--hidden')) {
+                    marquee?.classList.remove('is-scrolling');
+                }
+            });
+
+            if (!shouldSkip) {
+                document.addEventListener('keydown', handleKeydown);
+                focusStart();
+                marquee?.classList.add('is-scrolling');
+            }
+        }
+
         const toggle = document.getElementById('btn-mobile-menu');
         const menu = document.getElementById('mobile-menu');
         if (!toggle || !menu) {

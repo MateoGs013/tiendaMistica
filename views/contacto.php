@@ -16,13 +16,13 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old_nombre'], $_SESSI
 </section>
 
 <?php if ($success): ?>
-    <div class="mt-6 rounded-lg border border-emerald-400/50 bg-emerald-500/15 p-4 text-sm text-emerald-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-emerald/50 bg-arcade-emerald/15 p-4 text-sm text-arcade-emerald shadow-neon">
         ✓ <?php echo htmlspecialchars($success); ?>
     </div>
 <?php endif; ?>
 
 <?php if ($error): ?>
-    <div class="mt-6 rounded-lg border border-rose-500/50 bg-rose-500/15 p-4 text-sm text-rose-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-rose/50 bg-arcade-rose/15 p-4 text-sm text-arcade-rose shadow-neon">
         ✗ <?php echo htmlspecialchars($error); ?>
     </div>
 <?php endif; ?>

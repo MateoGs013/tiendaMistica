@@ -28,13 +28,13 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
 </section>
 
 <?php if ($mensaje): ?>
-    <div class="mt-6 rounded-lg border border-emerald-400/50 bg-emerald-500/15 p-4 text-sm text-emerald-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-emerald/50 bg-arcade-emerald/15 p-4 text-sm text-arcade-emerald shadow-neon">
         ✓ <?php echo htmlspecialchars($mensaje); ?>
     </div>
 <?php endif; ?>
 
 <?php if ($error): ?>
-    <div class="mt-6 rounded-lg border border-rose-500/50 bg-rose-500/15 p-4 text-sm text-rose-200 shadow-neon">
+    <div class="mt-6 rounded-lg border border-arcade-rose/50 bg-arcade-rose/15 p-4 text-sm text-arcade-rose shadow-neon">
         ✗ <?php echo htmlspecialchars($error); ?>
     </div>
 <?php endif; ?>
@@ -69,7 +69,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
                                 <input type="hidden" name="action" value="actualizar">
                                 <input type="hidden" name="id_duende" value="<?php echo $item['id_duende']; ?>">
                                 <input type="number" name="cantidad" value="<?php echo $item['cantidad']; ?>" min="1" max="99" class="w-20 rounded-lg border border-arcade-cyan/30 bg-arcade-base/70 px-2 py-1 text-slate-100 focus:border-arcade-magenta/50 focus:outline-none">
-                                <button type="submit" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(217,70,239,0.4));">Actualizar</button>
+                                <button type="submit" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-raro), 0.4));">Actualizar</button>
                             </form>
                         </td>
                         <td class="text-sm font-semibold text-arcade-gold"><?php echo number_format($item['subtotal'], 2); ?> oro</td>
@@ -77,7 +77,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
                             <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-flex" onsubmit="return confirm('¿Eliminar este power-up del carrito?');">
                                 <input type="hidden" name="action" value="eliminar">
                                 <input type="hidden" name="id_duende" value="<?php echo $item['id_duende']; ?>">
-                                <button type="submit" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(217,70,239,0.35), rgba(240,82,82,0.45));">Eliminar</button>
+                                <button type="submit" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.35), rgba(var(--rareza-rgb-mitico), 0.45));">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -95,9 +95,9 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
             <a href="<?php echo url('catalogo'); ?>" class="button-arcade px-5 py-3 text-xs">← Seguir explorando</a>
             <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-flex" onsubmit="return confirm('¿Vaciar todo el carrito? Esta acción no se puede deshacer.');">
                 <input type="hidden" name="action" value="vaciar">
-                <button type="submit" class="button-arcade px-5 py-3 text-xs" style="background: linear-gradient(135deg, rgba(217,70,239,0.35), rgba(240,82,82,0.45));">Vaciar slots</button>
+                <button type="submit" class="button-arcade px-5 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.35), rgba(var(--rareza-rgb-mitico), 0.45));">Vaciar slots</button>
             </form>
-            <a href="<?php echo url('checkout'); ?>" class="button-arcade px-5 py-3 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.4), rgba(99,102,241,0.45));">Proceder al checkout →</a>
+            <a href="<?php echo url('checkout'); ?>" class="button-arcade px-5 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.4), rgba(var(--rareza-rgb-raro), 0.45));">Proceder al checkout →</a>
         </div>
     </div>
 <?php endif; ?>

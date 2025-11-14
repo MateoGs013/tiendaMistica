@@ -68,13 +68,13 @@ if (!$duende): ?>
                 </div>
             </div>
             <?php if (!empty($duende['advertencias'])): ?>
-                <div class="rounded-xl border border-amber-400/60 bg-amber-400/10 p-4 text-sm text-amber-200">
-                    <p class="font-orbitron text-xs uppercase tracking-[0.25em] text-amber-300">Advertencia arcade</p>
+                <div class="rounded-xl border border-arcade-amber/60 bg-arcade-amber/10 p-4 text-sm text-arcade-amber">
+                    <p class="font-orbitron text-xs uppercase tracking-[0.25em] text-arcade-amber">Advertencia arcade</p>
                     <p class="mt-2"><?php echo htmlspecialchars($duende['advertencias']); ?></p>
                 </div>
             <?php endif; ?>
             <div class="flex flex-wrap items-center gap-4">
-                <span class="stat-chip" style="background: linear-gradient(135deg, <?php echo $duende['rareza_color']; ?>, rgba(6,182,212,0.92));">
+                <span class="stat-chip" style="background: linear-gradient(135deg, <?php echo $duende['rareza_color']; ?>, rgba(var(--rareza-rgb-poco-comun), 0.92));">
                     <?php echo number_format((float)($duende['precio_en_oro'] ?? 0), 2); ?> oro
                 </span>
                 <?php if (!empty($_SESSION['usuario'])): ?>
@@ -85,7 +85,7 @@ if (!$duende): ?>
                         <button type="submit" class="button-arcade px-6">Agregar al carrito</button>
                     </form>
                 <?php else: ?>
-                    <a href="<?php echo url('login'); ?>" class="button-arcade px-6" style="background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(147,51,234,0.35));">Ingresá para comprar</a>
+                    <a href="<?php echo url('login'); ?>" class="button-arcade px-6" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-raro), 0.35), rgba(var(--rareza-rgb-mistico), 0.35));">Ingresá para comprar</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -169,7 +169,7 @@ if (!$duende): ?>
                         <p class="text-xs uppercase tracking-[0.18em] text-slate-400"><?php echo htmlspecialchars($reco['rareza'] ?? '-'); ?> &bull; <?php echo htmlspecialchars($reco['elemento'] ?? '-'); ?></p>
                         <p class="text-sm text-slate-300 line-clamp-3"><?php echo htmlspecialchars($reco['descripcion'] ?? ''); ?></p>
                         <div class="flex items-center justify-between text-xs uppercase tracking-[0.18em] text-slate-200">
-                            <span class="stat-chip" style="background: linear-gradient(135deg, <?php echo $reco['rareza_color']; ?>, rgba(6,182,212,0.92));"><?php echo number_format((float)($reco['precio_en_oro'] ?? 0), 2); ?> oro</span>
+                            <span class="stat-chip" style="background: linear-gradient(135deg, <?php echo $reco['rareza_color']; ?>, rgba(var(--rareza-rgb-poco-comun), 0.92));"><?php echo number_format((float)($reco['precio_en_oro'] ?? 0), 2); ?> oro</span>
                             <span class="rounded-full border border-arcade-cyan/40 bg-arcade-base/70 px-3 py-1">Poder <?php echo (int)($reco['poder_total'] ?? 0); ?></span>
                         </div>
                     </div>

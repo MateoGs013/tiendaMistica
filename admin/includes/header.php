@@ -28,12 +28,16 @@ $adminNav = [
                 extend: {
                     colors: {
                         arcade: {
-                            base: '#050816',
-                            panel: '#0f172a',
-                            cyan: '#06b6d4',
-                            magenta: '#d946ef',
-                            violet: '#6366f1',
-                            gold: '#fbbf24'
+                            base: '#040714',
+                            panel: '#090e20',
+                            cyan: '#3b82f6',
+                            magenta: '#ec4899',
+                            violet: '#818cf8',
+                            gold: '#fbbf24',
+                            emerald: '#22c55e',
+                            amber: '#f97316',
+                            rose: '#ef4444',
+                            mystic: '#a58bff'
                         }
                     },
                     fontFamily: {
@@ -42,11 +46,11 @@ $adminNav = [
                         body: ['Inter', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
-                        neon: '0 0 10px rgba(6,182,212,0.6), 0 0 20px rgba(99,102,241,0.35)',
-                        grid: '0 0 18px rgba(6,182,212,0.25)'
+                        neon: '0 0 10px rgba(59,130,246,0.55), 0 0 20px rgba(129,140,248,0.32)',
+                        grid: '0 0 18px rgba(59,130,246,0.25)'
                     },
                     backgroundImage: {
-                        'arcade-console': 'linear-gradient(160deg, rgba(15,23,42,0.92) 0%, rgba(4,7,20,0.95) 60%, rgba(0,0,0,0.95) 100%)'
+                        'arcade-console': 'linear-gradient(160deg, rgba(9,14,32,0.92) 0%, rgba(4,7,20,0.96) 60%, rgba(2,6,16,0.96) 100%)'
                     }
                 }
             }

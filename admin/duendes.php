@@ -70,13 +70,13 @@ unset($_SESSION['success']);
                                     <?php if ($d['disponible']): ?>
                                         <span class="stat-chip text-xs">Activo</span>
                                     <?php else: ?>
-                                        <span class="stat-chip text-xs" style="background: linear-gradient(135deg, rgba(248,113,113,0.85), rgba(99,102,241,0.75));">Pausado</span>
+                                        <span class="stat-chip text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-mitico), 0.85), rgba(var(--rareza-rgb-raro), 0.75));">Pausado</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="whitespace-nowrap text-sm">
                                     <a href="<?php echo admin_url('duende_editar', ['id' => $d['id_duende']]); ?>" class="text-arcade-cyan hover:text-arcade-magenta">✏️ Editar</a>
                                     <span class="text-slate-500">|</span>
-                                    <a href="#" onclick="confirmarBorrado(<?php echo $d['id_duende']; ?>, '<?php echo htmlspecialchars($d['nombre'], ENT_QUOTES); ?>'); return false;" class="text-pink-400 hover:text-pink-300">🗑️ Borrar</a>
+                                    <a href="#" onclick="confirmarBorrado(<?php echo $d['id_duende']; ?>, '<?php echo htmlspecialchars($d['nombre'], ENT_QUOTES); ?>'); return false;" class="text-arcade-magenta hover:text-arcade-gold">🗑️ Borrar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

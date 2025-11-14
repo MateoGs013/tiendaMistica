@@ -48,7 +48,7 @@ $msg = $_GET['msg'] ?? null;
                                 <td class="whitespace-nowrap text-sm">
                                     <a href="<?php echo admin_url('contacto_ver', ['id' => $c['id_contacto']]); ?>" class="text-arcade-cyan hover:text-arcade-magenta">👁️ Ver</a>
                                     <span class="text-slate-500">|</span>
-                                    <a href="#" onclick="confirmarBorrado(<?php echo $c['id_contacto']; ?>); return false;" class="text-pink-400 hover:text-pink-300">🗑️ Borrar</a>
+                                    <a href="#" onclick="confirmarBorrado(<?php echo $c['id_contacto']; ?>); return false;" class="text-arcade-magenta hover:text-arcade-gold">🗑️ Borrar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

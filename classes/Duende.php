@@ -5,29 +5,57 @@ require_once __DIR__ . '/DB.php';
 class Duende {
 
     private static array $rarezaPalette = [
-        'legendario' => '#d946ef',
-        'épico' => '#06b6d4',
-        'raro' => '#fbbf24',
-        'común' => '#38bdf8',
+        'comun' => '#22c55e',
+        'poco-comun' => '#3b82f6',
+        'raro' => '#818cf8',
+        'epico' => '#ec4899',
+        'legendario' => '#fbbf24',
+        'mistico' => '#a58bff',
+        'ancestral' => '#f97316',
+        'mitico' => '#ef4444',
     ];
 
     private static array $elementoPalette = [
         'tierra' => '#22c55e',
-        'agua' => '#0ea5e9',
+        'agua' => '#3b82f6',
         'fuego' => '#f97316',
-        'aire' => '#a855f7',
-        'sombra' => '#9333ea',
-        'luz' => '#fde047',
+        'aire' => '#a58bff',
+        'sombra' => '#ec4899',
+        'luz' => '#fbbf24',
     ];
 
+    private static function normalizarClave(?string $valor): string {
+        if ($valor === null) {
+            return '';
+        }
+
+        $clave = strtolower(trim($valor));
+        if ($clave === '') {
+            return '';
+        }
+
+        $clave = strtr($clave, [
+            'á' => 'a',
+            'é' => 'e',
+            'í' => 'i',
+            'ó' => 'o',
+            'ú' => 'u',
+            'ñ' => 'n',
+        ]);
+
+        $clave = preg_replace('/[^a-z0-9]+/', '-', $clave) ?? '';
+
+        return trim($clave, '-');
+    }
+
     private static function rarezaColor(?string $rareza): string {
-        $clave = strtolower(trim((string)$rareza));
-        return self::$rarezaPalette[$clave] ?? '#06b6d4';
+        $clave = self::normalizarClave($rareza);
+        return self::$rarezaPalette[$clave] ?? self::$rarezaPalette['comun'];
     }
 
     private static function elementoColor(?string $elemento): string {
-        $clave = strtolower(trim((string)$elemento));
-        return self::$elementoPalette[$clave] ?? '#6366f1';
+        $clave = self::normalizarClave($elemento);
+        return self::$elementoPalette[$clave] ?? self::$elementoPalette['tierra'];
     }
 
     private static function normalizarLista(mixed $valor): array {

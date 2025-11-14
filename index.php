@@ -23,6 +23,7 @@ if (!in_array($sec, $secciones_validas) && !in_array($sec, [
     $vista = '404';
 } else {
     $vista = $sec;
+    $currentView = $vista;
 }
 
 /* Acciones simples que redirigen a vistas o ejecutan lógica */

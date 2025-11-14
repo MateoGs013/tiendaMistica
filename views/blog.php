@@ -35,11 +35,11 @@ if ($categoriaSeleccionada !== '') {
 
 <?php if (!empty($categorias)): ?>
     <div class="mt-6 flex flex-wrap gap-3">
-        <a href="<?php echo url('blog'); ?>" class="button-arcade px-4 py-2 text-xs <?php echo $categoriaSeleccionada === '' ? '' : 'opacity-75'; ?>" style="<?php echo $categoriaSeleccionada === '' ? 'background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(217,70,239,0.45));' : 'background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));'; ?>">Todas</a>
+    <a href="<?php echo url('blog'); ?>" class="button-arcade px-4 py-2 text-xs <?php echo $categoriaSeleccionada === '' ? '' : 'opacity-75'; ?>" style="<?php echo $categoriaSeleccionada === '' ? 'background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-epico), 0.45));' : 'background: linear-gradient(135deg, rgba(9,14,32,0.9), rgba(4,7,20,0.92));'; ?>">Todas</a>
         <?php foreach ($categorias as $categoria):
             $isActive = $categoriaSeleccionada === $categoria;
         ?>
-            <a href="<?php echo url('blog'); ?>?categoria=<?php echo urlencode($categoria); ?>" class="button-arcade px-4 py-2 text-xs <?php echo $isActive ? '' : 'opacity-75'; ?>" style="<?php echo $isActive ? 'background: linear-gradient(135deg, rgba(217,70,239,0.35), rgba(6,182,212,0.45));' : 'background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));'; ?>"><?php echo ucfirst($categoria); ?></a>
+            <a href="<?php echo url('blog'); ?>?categoria=<?php echo urlencode($categoria); ?>" class="button-arcade px-4 py-2 text-xs <?php echo $isActive ? '' : 'opacity-75'; ?>" style="<?php echo $isActive ? 'background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.35), rgba(var(--rareza-rgb-poco-comun), 0.45));' : 'background: linear-gradient(135deg, rgba(9,14,32,0.9), rgba(4,7,20,0.92));'; ?>"><?php echo ucfirst($categoria); ?></a>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
@@ -66,7 +66,7 @@ if ($categoriaSeleccionada !== '') {
                     <h2 class="font-orbitron text-xl text-white"><?php echo htmlspecialchars($entrada['titulo'] ?? 'Sin título'); ?></h2>
                     <p class="text-xs uppercase tracking-[0.18em] text-slate-400">Publicado: <?php echo htmlspecialchars($entrada['fecha_publicacion'] ?? ''); ?></p>
                     <p class="text-sm text-slate-300 line-clamp-3"><?php echo htmlspecialchars($entrada['descripcion_corta'] ?? ''); ?></p>
-                    <a href="<?php echo url('blog'); ?>?ver=<?php echo urlencode($entrada['slug']); ?>" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(147,51,234,0.45));">Leer historia</a>
+                    <a href="<?php echo url('blog'); ?>?ver=<?php echo urlencode($entrada['slug']); ?>" class="button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-mistico), 0.45));">Leer historia</a>
                 </div>
             </article>
         <?php endforeach; ?>

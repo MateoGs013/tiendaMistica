@@ -42,7 +42,7 @@ if (empty($items) && !$pedidoCreado) {
         <p class="mt-2 text-xs uppercase tracking-[0.24em] text-arcade-cyan">Recibirás un correo con los pasos para la activación mística.</p>
         <div class="mt-6 flex flex-wrap justify-center gap-4">
             <a href="<?php echo url('cuenta'); ?>" class="button-arcade px-6 py-3 text-xs">Ver mis pedidos</a>
-            <a href="<?php echo url('catalogo'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(147,51,234,0.45));">Seguir comprando</a>
+            <a href="<?php echo url('catalogo'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-mistico), 0.45));">Seguir comprando</a>
         </div>
     </section>
     <?php
@@ -57,7 +57,7 @@ if (empty($items) && !$pedidoCreado) {
     </section>
 
     <?php if ($error): ?>
-        <div class="mt-6 rounded-lg border border-rose-500/50 bg-rose-500/15 p-4 text-sm text-rose-200 shadow-neon">
+        <div class="mt-6 rounded-lg border border-arcade-rose/50 bg-arcade-rose/15 p-4 text-sm text-arcade-rose shadow-neon">
             ✗ <?php echo htmlspecialchars($error); ?>
         </div>
     <?php endif; ?>
@@ -102,7 +102,7 @@ if (empty($items) && !$pedidoCreado) {
                 </fieldset>
                 <div class="flex flex-wrap items-center gap-3">
                     <button type="submit" class="button-arcade px-6 py-3 text-xs">Confirmar pedido</button>
-                    <a href="<?php echo url('carrito'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(147,51,234,0.35));">← Volver al carrito</a>
+                    <a href="<?php echo url('carrito'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-raro), 0.35), rgba(var(--rareza-rgb-mistico), 0.35));">← Volver al carrito</a>
                 </div>
             </form>
         </div>

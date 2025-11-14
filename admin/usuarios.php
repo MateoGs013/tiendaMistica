@@ -60,7 +60,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
                                     <?php if ($activo): ?>
                                         <span class="stat-chip text-xs">Activo</span>
                                     <?php else: ?>
-                                        <span class="stat-chip text-xs" style="background: linear-gradient(135deg, rgba(148,163,184,0.92), rgba(71,85,105,0.92));">Inactivo</span>
+                                        <span class="stat-chip text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-mistico), 0.72), rgba(var(--rareza-rgb-raro), 0.72));">Inactivo</span>
                                     <?php endif; ?>
                                 </td>
                                 <td><?php echo date('d/m/Y H:i', strtotime($usuario['fecha_alta'] ?? 'now')); ?></td>
@@ -71,7 +71,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
                                         <form method="post" action="/tienda_mistica/admin/actions/usuario_estado_acc.php" class="inline">
                                             <input type="hidden" name="id" value="<?php echo (int)$usuario['id_usuario']; ?>">
                                             <input type="hidden" name="activo" value="<?php echo $activo ? 0 : 1; ?>">
-                                            <button type="submit" class="inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] <?php echo $activo ? 'text-rose-300 hover:text-rose-200' : 'text-emerald-300 hover:text-emerald-200'; ?>">
+                                            <button type="submit" class="inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] <?php echo $activo ? 'text-arcade-rose hover:text-arcade-magenta' : 'text-arcade-emerald hover:text-arcade-gold'; ?>">
                                                 <?php echo $activo ? 'Desactivar' : 'Activar'; ?>
                                             </button>
                                         </form>

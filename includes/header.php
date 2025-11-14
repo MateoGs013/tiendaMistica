@@ -16,6 +16,33 @@ if (!empty($_SESSION['usuario']) && isset($_SESSION['usuario']['id_usuario'])) {
 
 // Obtener secciones del menú desde la base de datos
 $seccionesMenu = Secciones::secciones_menu();
+
+$skipIntro = false;
+if (isset($_GET['intro']) && $_GET['intro'] === 'off') {
+    $_SESSION['skip_intro'] = true;
+    $target = strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/';
+    header('Location: ' . $target);
+    exit;
+}
+
+if (!empty($_SESSION['skip_intro'])) {
+    $skipIntro = true;
+}
+
+global $currentView;
+$bodyClassList = [
+    'min-h-screen',
+    'bg-arcade-base',
+    'text-slate-100',
+    'font-body',
+    'antialiased'
+];
+
+if (!$skipIntro) {
+    $bodyClassList[] = 'has-gateway';
+}
+
+$bodyClassAttribute = implode(' ', $bodyClassList);
 ?>
 <!doctype html>
 <html lang="es" class="h-full">
@@ -33,12 +60,16 @@ $seccionesMenu = Secciones::secciones_menu();
                 extend: {
                     colors: {
                         arcade: {
-                            base: '#050816',
-                            panel: '#0f172a',
-                            cyan: '#06b6d4',
-                            magenta: '#d946ef',
-                            violet: '#6366f1',
-                            gold: '#fbbf24'
+                            base: '#040714',
+                            panel: '#090e20',
+                            cyan: '#3b82f6',
+                            magenta: '#ec4899',
+                            violet: '#818cf8',
+                            gold: '#fbbf24',
+                            emerald: '#22c55e',
+                            amber: '#f97316',
+                            rose: '#ef4444',
+                            mystic: '#a58bff'
                         }
                     },
                     fontFamily: {
@@ -47,11 +78,11 @@ $seccionesMenu = Secciones::secciones_menu();
                         body: ['Inter', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
-                        neon: '0 0 10px rgba(6,182,212,0.6), 0 0 20px rgba(99,102,241,0.35)',
-                        'neon-strong': '0 0 12px rgba(217,70,239,0.75), 0 0 32px rgba(99,102,241,0.45)'
+                        neon: '0 0 10px rgba(59,130,246,0.55), 0 0 20px rgba(129,140,248,0.32)',
+                        'neon-strong': '0 0 12px rgba(236,72,153,0.72), 0 0 32px rgba(251,191,36,0.45)'
                     },
                     backgroundImage: {
-                        'arcade-grid': 'radial-gradient(circle at center, rgba(99,102,241,0.18) 0%, rgba(15,23,42,0.85) 55%, rgba(5,8,22,0.95) 100%)'
+                        'arcade-grid': 'radial-gradient(circle at center, rgba(129,140,248,0.18) 0%, rgba(9,14,32,0.85) 55%, rgba(4,7,20,0.95) 100%)'
                     }
                 }
             }
@@ -59,12 +90,44 @@ $seccionesMenu = Secciones::secciones_menu();
     </script>
     <link rel="stylesheet" href="/tienda_mistica/assets/css/style.css">
 </head>
-<body class="min-h-screen bg-arcade-base text-slate-100 font-body antialiased">
-<div class="relative min-h-screen overflow-hidden">
-    <div class="absolute inset-0 bg-arcade-grid opacity-80"></div>
-    <div class="absolute inset-0 pointer-events-none mix-blend-screen noise-layer"></div>
-    <div class="relative z-10 min-h-screen flex flex-col">
-        <header class="bg-arcade-panel/80 backdrop-blur border-b border-arcade-cyan/30 shadow-neon">
+<body class="<?php echo $bodyClassAttribute; ?>">
+<?php if (!$skipIntro): ?>
+<div id="game-gateway" class="game-gateway" aria-hidden="false" tabindex="-1">
+    <div class="game-gateway__frame" role="dialog" aria-modal="true" aria-labelledby="game-gateway-title">
+        <div class="game-gateway__crt">
+            <div class="game-gateway__scanlines"></div>
+            <div class="game-gateway__glow"></div>
+            <div class="game-gateway__content">
+                <p class="game-gateway__subtitle">Tienda Mística</p>
+                <h1 id="game-gateway-title" class="game-gateway__title">Insert Coin to Enter</h1>
+                <p class="game-gateway__hint">Pulsa start para encender la máquina arcade</p>
+                <div class="game-gateway__actions">
+                    <button type="button" class="game-gateway__button" data-gateway-start>
+                        <span class="game-gateway__button-shadow"></span>
+                        <span class="game-gateway__button-label">Start ▶</span>
+                    </button>
+                    <button type="button" class="game-gateway__ghost" data-gateway-skip>Modo espectador</button>
+                </div>
+                <noscript>
+                    <div class="game-gateway__noscript">
+                        <a class="game-gateway__noscript-link" href="?intro=off">Entrar sin animación</a>
+                    </div>
+                </noscript>
+            </div>
+        </div>
+        <div class="game-gateway__marquee" aria-hidden="true">
+            <span>▲▲▲ Arcade Ready ▲▲▲</span>
+            <span>Insertar moneda · Seleccionar combo · Alinear rarezas</span>
+            <span>▲▲▲ Arcade Ready ▲▲▲</span>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<div class="relative min-h-screen overflow-hidden arcade-stage">
+    <div class="absolute inset-0 bg-arcade-grid opacity-80 arcade-stage__grid"></div>
+    <div class="absolute inset-0 pointer-events-none mix-blend-screen noise-layer arcade-stage__noise"></div>
+    <div class="relative z-10 min-h-screen flex flex-col arcade-machine">
+        <header class="bg-arcade-panel/80 backdrop-blur border-b border-arcade-cyan/30 shadow-neon arcade-machine__header">
             <div class="max-w-7xl mx-auto px-4 lg:px-8">
                 <div class="flex flex-col gap-4 py-6">
                     <div class="flex flex-col gap-5">
@@ -152,6 +215,6 @@ $seccionesMenu = Secciones::secciones_menu();
                 </div>
             </div>
         </header>
-        <main class="flex-1">
-            <div class="max-w-7xl mx-auto w-full px-4 py-10 lg:px-8" id="page-content">
+        <main class="flex-1 arcade-screen">
+            <div class="max-w-7xl mx-auto w-full px-4 py-10 lg:px-8 arcade-screen__content" id="page-content">
 

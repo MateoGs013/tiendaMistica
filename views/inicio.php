@@ -16,7 +16,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14m-6-6 6 6-6 6" />
                     </svg>
                 </a>
-                <a href="<?php echo url('blog'); ?>" class="button-arcade" style="background: linear-gradient(135deg, rgba(217,70,239,0.28), rgba(99,102,241,0.42));">
+                <a href="<?php echo url('blog'); ?>" class="button-arcade" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.28), rgba(var(--rareza-rgb-raro), 0.42));">
                     <span>Crónicas del Bosque</span>
                 </a>
             </div>
@@ -51,22 +51,13 @@
                         <span class="text-xs uppercase tracking-[0.2em] text-slate-400">Poder Total 280+</span>
                     </li>
                     <li class="flex items-center gap-3">
-                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(217,70,239,0.92), rgba(99,102,241,0.92));">Riesgo Controlado</span>
+                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.92), rgba(var(--rareza-rgb-raro), 0.92));">Riesgo Controlado</span>
                         <span class="text-xs uppercase tracking-[0.2em] text-slate-400">Alertas integradas</span>
                     </li>
                     <li class="flex items-center gap-3">
-                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(6,182,212,0.92), rgba(15,118,110,0.92));">Combo Accesorios</span>
+                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.92), rgba(var(--rareza-rgb-comun), 0.92));">Combo Accesorios</span>
                         <span class="text-xs uppercase tracking-[0.2em] text-slate-400">+80 sinergias</span>
                     </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="mt-12">
-    <div class="grid gap-8 lg:grid-cols-3">
-        <article class="neon-card p-6">
             <p class="font-orbitron text-sm uppercase text-arcade-magenta">Explorá el catálogo</p>
             <h3 class="mt-3 text-2xl font-semibold text-white">Más de 20 duendes en stock</h3>
             <p class="mt-3 text-sm text-slate-300">

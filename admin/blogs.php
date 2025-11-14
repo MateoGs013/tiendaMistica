@@ -66,7 +66,7 @@ unset($_SESSION['success']);
                                 <td class="whitespace-nowrap text-sm">
                                     <a href="<?php echo admin_url('blog_editar', ['id' => $b['id_blog']]); ?>" class="text-arcade-cyan hover:text-arcade-magenta">✏️ Editar</a>
                                     <span class="text-slate-500">|</span>
-                                    <a href="#" onclick="confirmarBorrado(<?php echo $b['id_blog']; ?>, '<?php echo htmlspecialchars($b['titulo'], ENT_QUOTES); ?>'); return false;" class="text-pink-400 hover:text-pink-300">🗑️ Borrar</a>
+                                    <a href="#" onclick="confirmarBorrado(<?php echo $b['id_blog']; ?>, '<?php echo htmlspecialchars($b['titulo'], ENT_QUOTES); ?>'); return false;" class="text-arcade-magenta hover:text-arcade-gold">🗑️ Borrar</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

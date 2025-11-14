@@ -3,6 +3,6 @@
 	<p class="mt-4 text-sm text-slate-300">El duende guardián no reconoce esta sección. Revisá el mapa o regresá al salón principal.</p>
 	<div class="mt-6 flex flex-wrap justify-center gap-4">
 		<a href="<?php echo url('inicio'); ?>" class="button-arcade px-6 py-3 text-xs">Ir al inicio</a>
-		<a href="<?php echo url('catalogo'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(6,182,212,0.35), rgba(147,51,234,0.45));">Ver catálogo</a>
+		<a href="<?php echo url('catalogo'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-mistico), 0.45));">Ver catálogo</a>
 	</div>
 </section>

@@ -18,7 +18,7 @@ $pedidos = $idUsuario > 0 ? Pedido::porUsuario($idUsuario) : [];
         <p class="mt-3 text-sm text-slate-200">Email: <?php echo htmlspecialchars($_SESSION['usuario']['email']); ?></p>
         <p class="mt-1 text-sm text-slate-200">Rol: <?php echo htmlspecialchars($_SESSION['usuario']['rol']); ?></p>
         <p class="mt-1 text-sm text-slate-200">ID jugador: #<?php echo $idUsuario; ?></p>
-        <a href="<?php echo url('logout'); ?>" class="mt-4 inline-flex button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(217,70,239,0.35), rgba(240,82,82,0.45));">Cerrar sesión</a>
+    <a href="<?php echo url('logout'); ?>" class="mt-4 inline-flex button-arcade px-4 py-2 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.35), rgba(var(--rareza-rgb-mitico), 0.45));">Cerrar sesión</a>
     </div>
     <div class="lg:col-span-2 rounded-2xl border border-arcade-cyan/30 bg-arcade-panel/70 p-6 shadow-neon">
         <h2 class="font-orbitron text-lg text-white">Mis pedidos</h2>

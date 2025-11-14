@@ -6,10 +6,10 @@ $msg = $_GET['msg'] ?? null;
 ?>
 <?php
 $statusStyles = [
-    'pendiente' => 'border-amber-400/40 bg-amber-500/20 text-amber-200',
-    'completado' => 'border-emerald-400/40 bg-emerald-500/20 text-emerald-200',
-    'cancelado' => 'border-rose-400/40 bg-rose-500/20 text-rose-200',
-    'en_proceso' => 'border-sky-400/40 bg-sky-500/20 text-sky-200',
+    'pendiente' => 'border-arcade-amber/40 bg-arcade-amber/15 text-arcade-amber',
+    'completado' => 'border-arcade-emerald/40 bg-arcade-emerald/15 text-arcade-emerald',
+    'cancelado' => 'border-arcade-rose/40 bg-arcade-rose/15 text-arcade-rose',
+    'en_proceso' => 'border-arcade-cyan/40 bg-arcade-cyan/15 text-arcade-cyan',
 ];
 ?>
 <div class="space-y-6">
@@ -45,7 +45,7 @@ $statusStyles = [
                     <tbody>
                         <?php foreach ($pedidos as $p): ?>
                             <?php $estado = strtolower($p['estado']); ?>
-                            <?php $estadoClass = $statusStyles[$estado] ?? 'border-slate-400/40 bg-slate-500/20 text-slate-200'; ?>
+                            <?php $estadoClass = $statusStyles[$estado] ?? 'border-arcade-violet/40 bg-arcade-violet/15 text-arcade-violet'; ?>
                             <tr>
                                 <td class="font-mono text-sm text-slate-300">#<?php echo $p['id_pedido']; ?></td>
                                 <td><?php echo htmlspecialchars($p['nombre']); ?></td>
