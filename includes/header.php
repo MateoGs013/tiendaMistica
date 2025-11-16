@@ -17,15 +17,18 @@ if (!empty($_SESSION['usuario']) && isset($_SESSION['usuario']['id_usuario'])) {
 // Obtener secciones del menú desde la base de datos
 $seccionesMenu = Secciones::secciones_menu();
 
+// Determinar si mostrar el gateway solo en la página de inicio
+$currentSection = isset($_GET['sec']) ? $_GET['sec'] : 'inicio';
+$showGateway = ($currentSection === 'inicio' || $currentSection === '');
+
+// Permitir saltar manualmente con ?intro=off
 $skipIntro = false;
 if (isset($_GET['intro']) && $_GET['intro'] === 'off') {
-    $_SESSION['skip_intro'] = true;
-    $target = strtok($_SERVER['REQUEST_URI'] ?? '/', '?') ?: '/';
-    header('Location: ' . $target);
-    exit;
+    $skipIntro = true;
 }
 
-if (!empty($_SESSION['skip_intro'])) {
+// Si no estamos en inicio, siempre saltar el gateway
+if (!$showGateway) {
     $skipIntro = true;
 }
 
@@ -50,9 +53,15 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tienda Mística de Duendes</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -75,7 +84,7 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                     fontFamily: {
                         retro: ['"Press Start 2P"', 'cursive'],
                         orbitron: ['Orbitron', 'sans-serif'],
-                        body: ['Inter', 'system-ui', 'sans-serif']
+                        body: ['VT323', 'monospace']
                     },
                     boxShadow: {
                         neon: '0 0 10px rgba(59,130,246,0.55), 0 0 20px rgba(129,140,248,0.32)',
@@ -88,133 +97,185 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
             }
         };
     </script>
+    <!-- GSAP Core + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="/tienda_mistica/assets/css/style.css">
 </head>
 <body class="<?php echo $bodyClassAttribute; ?>">
 <?php if (!$skipIntro): ?>
 <div id="game-gateway" class="game-gateway" aria-hidden="false" tabindex="-1">
-    <div class="game-gateway__frame" role="dialog" aria-modal="true" aria-labelledby="game-gateway-title">
-        <div class="game-gateway__crt">
-            <div class="game-gateway__scanlines"></div>
-            <div class="game-gateway__glow"></div>
-            <div class="game-gateway__content">
-                <p class="game-gateway__subtitle">Tienda Mística</p>
-                <h1 id="game-gateway-title" class="game-gateway__title">Insert Coin to Enter</h1>
-                <p class="game-gateway__hint">Pulsa start para encender la máquina arcade</p>
-                <div class="game-gateway__actions">
-                    <button type="button" class="game-gateway__button" data-gateway-start>
-                        <span class="game-gateway__button-shadow"></span>
-                        <span class="game-gateway__button-label">Start ▶</span>
-                    </button>
-                    <button type="button" class="game-gateway__ghost" data-gateway-skip>Modo espectador</button>
+    <div class="game-gateway__screen">
+        <div class="game-gateway__scanlines"></div>
+        <div class="game-gateway__content">
+            <div class="game-gateway__loading">
+                <div class="game-gateway__spinner">
+                    <i class="fas fa-hat-wizard"></i>
                 </div>
-                <noscript>
-                    <div class="game-gateway__noscript">
-                        <a class="game-gateway__noscript-link" href="?intro=off">Entrar sin animación</a>
-                    </div>
-                </noscript>
             </div>
+            <h1 id="game-gateway-title" class="game-gateway__title">
+                <span class="game-gateway__title-main">CARGANDO LA MAGIA</span>
+                <span class="game-gateway__title-sub">PREPARANDO DIMENSIÓN ARCADE</span>
+            </h1>
+            <div class="game-gateway__progress">
+                <div class="game-gateway__progress-bar">
+                    <div class="game-gateway__progress-fill"></div>
+                </div>
+                <div class="game-gateway__progress-text">
+                    <span id="loading-percent">0</span>%
+                </div>
+            </div>
+            <div class="game-gateway__status-text">
+                <span id="loading-status">Inicializando portal místico...</span>
+            </div>
+            <button type="button" class="game-gateway__btn game-gateway__btn--skip" data-gateway-skip style="opacity: 0; pointer-events: none;">
+                <i class="fas fa-forward"></i>
+                <span>SKIP</span>
+            </button>
         </div>
-        <div class="game-gateway__marquee" aria-hidden="true">
-            <span>▲▲▲ Arcade Ready ▲▲▲</span>
-            <span>Insertar moneda · Seleccionar combo · Alinear rarezas</span>
-            <span>▲▲▲ Arcade Ready ▲▲▲</span>
+        <div class="game-gateway__footer">
+            <div class="game-gateway__credits">
+                <i class="fas fa-gamepad"></i>
+                <span>TIENDA MÍSTICA v2.0</span>
+            </div>
+            <div class="game-gateway__status">
+                <span class="game-gateway__status-dot"></span>
+                <span id="system-status">LOADING</span>
+            </div>
         </div>
     </div>
 </div>
 <?php endif; ?>
-<div class="relative min-h-screen overflow-hidden arcade-stage">
-    <div class="absolute inset-0 bg-arcade-grid opacity-80 arcade-stage__grid"></div>
-    <div class="absolute inset-0 pointer-events-none mix-blend-screen noise-layer arcade-stage__noise"></div>
-    <div class="relative z-10 min-h-screen flex flex-col arcade-machine">
-        <header class="bg-arcade-panel/80 backdrop-blur border-b border-arcade-cyan/30 shadow-neon arcade-machine__header">
-            <div class="max-w-7xl mx-auto px-4 lg:px-8">
-                <div class="flex flex-col gap-4 py-6">
-                    <div class="flex flex-col gap-5">
-                        <div class="flex items-center justify-between gap-4">
-                            <a href="<?php echo url('inicio'); ?>" class="flex items-center gap-3 group">
-                                <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-arcade-cyan/45 bg-arcade-base shadow-neon transition-transform group-hover:scale-105">
-                                    <svg class="h-7 w-7 text-arcade-cyan" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16l-2 12H6L4 6zm3-4h10v4H7V2zm3 14h4" />
-                                    </svg>
-                                </span>
-                                <div>
-                                    <p class="font-retro text-[0.65rem] uppercase tracking-[0.42em] text-arcade-magenta">Tienda Mística</p>
-                                    <p class="font-orbitron text-xl font-semibold text-white drop-shadow">Duendes &amp; Power-Ups</p>
-                                </div>
-                            </a>
-                            <div class="flex items-center gap-3">
-                                <div class="hidden lg:flex items-center gap-2">
-                                    <a href="<?php echo url('carrito'); ?>" class="command-pill">
-                                        <svg class="command-pill-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h9.6a1 1 0 0 0 .98-.804l1.2-6A1 1 0 0 0 17.8 5H5.21" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 13l-1.2-6M7 13l-2 8m2-8h10M5 21h2m10 0h2" />
-                                        </svg>
-                                        <span>Carrito</span>
-                                        <?php if ($cantidadCarrito > 0): ?>
-                                            <span class="command-pill-count"><?php echo $cantidadCarrito; ?></span>
-                                        <?php endif; ?>
+<div class="arcade-wrapper">
+    <!-- Grid Background -->
+    <div class="arcade-grid"></div>
+    
+    <!-- Minimal Arcade Header -->
+    <header class="arcade-header" id="main-header">
+            <div class="arcade-header__inner">
+                <!-- Logo -->
+                <a href="<?php echo url('inicio'); ?>" class="arcade-logo">
+                    <div class="arcade-logo__icon">
+                        <i class="fas fa-hat-wizard"></i>
+                    </div>
+                    <div class="arcade-logo__text">
+                        <span class="arcade-logo__title">TIENDA MÍSTICA</span>
+                        <span class="arcade-logo__subtitle">Arcade Shop</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="arcade-nav" aria-label="Navegación principal">
+                    <?php if (!empty($seccionesMenu)): ?>
+                        <?php foreach ($seccionesMenu as $seccion): ?>
+                            <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
+                                <a href="<?php echo url($seccion['vinculo']); ?>" class="arcade-nav__link">
+                                    <?php echo htmlspecialchars($seccion['titulo']); ?>
+                                </a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </nav>
+
+                <!-- User Actions -->
+                <div class="arcade-actions">
+                    <!-- Cart -->
+                    <a href="<?php echo url('carrito'); ?>" class="arcade-action-btn arcade-action-btn--cart" title="Carrito">
+                        <i class="fas fa-shopping-cart"></i>
+                        <?php if ($cantidadCarrito > 0): ?>
+                            <span class="arcade-badge"><?php echo $cantidadCarrito; ?></span>
+                        <?php endif; ?>
+                    </a>
+
+                    <!-- User Menu -->
+                    <?php if (!empty($_SESSION['usuario'])): ?>
+                        <div class="arcade-user-menu">
+                            <button class="arcade-action-btn arcade-action-btn--user" id="user-menu-btn" aria-expanded="false" aria-haspopup="true">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                            <div class="arcade-dropdown" id="user-menu" hidden>
+                                <a href="<?php echo url('cuenta'); ?>" class="arcade-dropdown__item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Mi Cuenta</span>
+                                </a>
+                                <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
+                                    <a href="/tienda_mistica/admin/" class="arcade-dropdown__item">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <span>Admin</span>
                                     </a>
-                                    <?php if (!empty($_SESSION['usuario'])): ?>
-                                        <a href="<?php echo url('cuenta'); ?>" class="command-pill">Mi cuenta</a>
-                                        <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
-                                            <a href="/tienda_mistica/admin/" class="command-pill command-pill--accent">Admin</a>
-                                        <?php endif; ?>
-                                        <a href="<?php echo url('logout'); ?>" class="command-pill command-pill--ghost">Salir</a>
-                                    <?php else: ?>
-                                        <a href="<?php echo url('login'); ?>" class="command-pill">Ingresar</a>
-                                        <a href="<?php echo url('registro'); ?>" class="command-pill command-pill--accent">Registrarse</a>
-                                    <?php endif; ?>
-                                </div>
-                                <button id="btn-mobile-menu" class="lg:hidden inline-flex items-center justify-center rounded-full border border-arcade-cyan/45 bg-arcade-base/80 p-2.5 text-arcade-cyan shadow-neon transition hover:scale-105" aria-expanded="false" aria-controls="mobile-menu">
-                                    <span class="sr-only">Abrir menú</span>
-                                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-                                    </svg>
-                                </button>
+                                <?php endif; ?>
+                                <div class="arcade-dropdown__divider"></div>
+                                <a href="<?php echo url('logout'); ?>" class="arcade-dropdown__item arcade-dropdown__item--danger">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Salir</span>
+                                </a>
                             </div>
                         </div>
-                        <nav class="hidden items-center gap-3 lg:flex xl:gap-5">
-                            <?php if (!empty($seccionesMenu)): ?>
-                                <?php foreach ($seccionesMenu as $seccion): ?>
-                                    <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
-                                        <a href="<?php echo url($seccion['vinculo']); ?>" class="nav-link nav-link--soft"><?php echo htmlspecialchars($seccion['titulo']); ?></a>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </nav>
-                        <p class="hidden text-xs uppercase tracking-[0.28em] text-slate-400 lg:block">Explorá la sala retro, desbloqueá filtros inteligentes y encontrá tu duende ideal.</p>
-                    </div>
-                    <div id="mobile-menu" class="header-mobile-panel hidden lg:hidden">
-                        <div class="space-y-2 border-t border-arcade-cyan/20 pt-4">
-                            <?php if (!empty($seccionesMenu)): ?>
-                                <?php foreach ($seccionesMenu as $seccion): ?>
-                                    <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
-                                        <a href="<?php echo url($seccion['vinculo']); ?>" class="mobile-link"><?php echo htmlspecialchars($seccion['titulo']); ?></a>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                            <a href="<?php echo url('carrito'); ?>" class="mobile-link flex items-center justify-between">
-                                <span>Carrito</span>
-                                <?php if ($cantidadCarrito > 0): ?>
-                                    <span class="badge-glow"><?php echo $cantidadCarrito; ?></span>
-                                <?php endif; ?>
-                            </a>
-                            <?php if (!empty($_SESSION['usuario'])): ?>
-                                <a href="<?php echo url('cuenta'); ?>" class="mobile-link">Mi cuenta</a>
-                                <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
-                                    <a href="/tienda_mistica/admin/" class="mobile-link">Admin</a>
-                                <?php endif; ?>
-                                <a href="<?php echo url('logout'); ?>" class="mobile-link">Salir</a>
-                            <?php else: ?>
-                                <a href="<?php echo url('login'); ?>" class="mobile-link">Ingresar</a>
-                                <a href="<?php echo url('registro'); ?>" class="mobile-link">Registrarse</a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
+                    <?php else: ?>
+                        <a href="<?php echo url('login'); ?>" class="arcade-action-btn" title="Iniciar sesión">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </a>
+                        <a href="<?php echo url('registro'); ?>" class="arcade-btn arcade-btn--primary">
+                            <span>REGISTRARSE</span>
+                        </a>
+                    <?php endif; ?>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="arcade-mobile-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+                        <span class="arcade-mobile-toggle__bar"></span>
+                        <span class="arcade-mobile-toggle__bar"></span>
+                        <span class="arcade-mobile-toggle__bar"></span>
+                    </button>
                 </div>
             </div>
-        </header>
-        <main class="flex-1 arcade-screen">
-            <div class="max-w-7xl mx-auto w-full px-4 py-10 lg:px-8 arcade-screen__content" id="page-content">
+
+            <!-- Mobile Menu -->
+            <div class="arcade-mobile-menu" id="mobile-menu" hidden>
+                <nav class="arcade-mobile-nav">
+                    <?php if (!empty($seccionesMenu)): ?>
+                        <?php foreach ($seccionesMenu as $seccion): ?>
+                            <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
+                                <a href="<?php echo url($seccion['vinculo']); ?>" class="arcade-mobile-nav__link">
+                                    <span><?php echo htmlspecialchars($seccion['titulo']); ?></span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    
+                    <div class="arcade-mobile-nav__divider"></div>
+                    
+                    <?php if (!empty($_SESSION['usuario'])): ?>
+                        <a href="<?php echo url('cuenta'); ?>" class="arcade-mobile-nav__link">
+                            <span><i class="fas fa-user"></i> Mi Cuenta</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                        <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
+                            <a href="/tienda_mistica/admin/" class="arcade-mobile-nav__link">
+                                <span><i class="fas fa-shield-alt"></i> Admin</span>
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        <?php endif; ?>
+                        <a href="<?php echo url('logout'); ?>" class="arcade-mobile-nav__link arcade-mobile-nav__link--danger">
+                            <span><i class="fas fa-sign-out-alt"></i> Salir</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo url('login'); ?>" class="arcade-mobile-nav__link">
+                            <span><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                        <a href="<?php echo url('registro'); ?>" class="arcade-mobile-nav__link arcade-mobile-nav__link--primary">
+                            <span><i class="fas fa-user-plus"></i> Registrarse</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <?php endif; ?>
+                </nav>
+            </div>
+    </header>
+
+    <div class="arcade-container">
+        <!-- Main Content -->
+        <main class="arcade-main" id="main-content">
+            <div class="arcade-content">
 

@@ -37,6 +37,19 @@ class Blog {
         }
     }
 
+    public static function findBySlug(string $slug): ?array {
+        try {
+            $cn = DB::get();
+            $st = $cn->prepare("SELECT * FROM blogs WHERE slug = ?");
+            $st->execute([$slug]); // @phpstan-ignore-line
+            $row = $st->fetch();
+            return $row ?: null;
+        } catch (Exception $e) {
+            error_log("Error al buscar blog por slug $slug: " . $e->getMessage());
+            return null;
+        }
+    }
+
     public static function create(array $data): bool {
         try {
             $cn = DB::get();

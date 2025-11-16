@@ -7,53 +7,69 @@ $contacto = Contacto::find($id);
 
 if (!$contacto) {
     ?>
-    <div class="panel-glass rounded-3xl border border-arcade-cyan/35 p-8 text-center shadow-neon">
-        <h1 class="text-2xl font-semibold text-white">Mensaje no encontrado</h1>
-        <p class="mt-3 text-sm text-slate-300">El mensaje seleccionado fue eliminado o su identificación es incorrecta.</p>
-        <a href="<?php echo admin_url('contactos'); ?>" class="button-arcade mt-6 inline-flex">Volver al listado</a>
+    <div class="admin-empty-state">
+        <div class="admin-empty-state__icon">⚠️</div>
+        <h3 class="admin-empty-state__title">Mensaje no encontrado</h3>
+        <p class="admin-empty-state__text">El mensaje seleccionado fue eliminado o su identificación es incorrecta</p>
+        <a href="<?php echo admin_url('contactos'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+            <span>Volver al listado</span>
+        </a>
     </div>
     <?php
     require_once __DIR__ . '/includes/footer.php';
     exit;
 }
 ?>
-<div class="space-y-6">
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-            <h1 class="text-3xl font-semibold text-white">Detalle del mensaje</h1>
-            <p class="text-sm text-slate-300">Analizá la señal recibida y definí próximos pasos.</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-3">
-            <a href="<?php echo admin_url('contactos'); ?>" class="button-ghost">← Volver al listado</a>
-            <a href="#" onclick="confirmarBorrado(<?php echo $contacto['id_contacto']; ?>); return false;" class="button-arcade">🗑️ Eliminar mensaje</a>
+
+<!-- Section Header -->
+<div class="admin-section-header">
+    <div>
+        <h1 class="admin-section-title">Mensaje #<?php echo $contacto['id_contacto']; ?></h1>
+        <p class="admin-section-subtitle">Analizá la señal recibida y definí próximos pasos</p>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="<?php echo admin_url('contactos'); ?>" class="btn-arc btn-arc--ghost">
+            <span>← Volver al listado</span>
+        </a>
+        <a href="#" onclick="confirmarBorrado(<?php echo $contacto['id_contacto']; ?>); return false;" class="btn-arc btn-arc--danger">
+            <span>🗑️ Eliminar</span>
+        </a>
+    </div>
+</div>
+
+<!-- Contact Details -->
+<div class="admin-form">
+    <div class="admin-form-section">
+        <h2 class="admin-form-section__title">Datos del Remitente</h2>
+        <div class="admin-form-grid">
+            <div class="form-group">
+                <label class="form-label">ID</label>
+                <p class="form-value" style="font-family: 'Space Mono', monospace; color: #818CF8;">#<?php echo $contacto['id_contacto']; ?></p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Fecha de Envío</label>
+                <p class="form-value"><?php echo date('d/m/Y H:i:s', strtotime($contacto['fecha_envio'])); ?></p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <p class="form-value"><?php echo htmlspecialchars($contacto['nombre']); ?></p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <a href="mailto:<?php echo htmlspecialchars($contacto['email']); ?>" class="form-value form-value--link">
+                    <?php echo htmlspecialchars($contacto['email']); ?>
+                </a>
+            </div>
         </div>
     </div>
-
-    <div class="panel-glass rounded-3xl border border-arcade-cyan/30 p-8 shadow-neon">
-        <div class="grid gap-6 md:grid-cols-2">
-            <div>
-                <p class="arcade-label">ID</p>
-                <p class="font-mono text-lg text-arcade-cyan">#<?php echo $contacto['id_contacto']; ?></p>
-            </div>
-            <div>
-                <p class="arcade-label">Fecha de envío</p>
-                <p class="text-sm text-slate-200"><?php echo date('d/m/Y H:i:s', strtotime($contacto['fecha_envio'])); ?></p>
-            </div>
-            <div>
-                <p class="arcade-label">Nombre</p>
-                <p class="text-base text-white"><?php echo htmlspecialchars($contacto['nombre']); ?></p>
-            </div>
-            <div>
-                <p class="arcade-label">Email</p>
-                <a href="mailto:<?php echo htmlspecialchars($contacto['email']); ?>" class="text-arcade-cyan hover:text-arcade-magenta"><?php echo htmlspecialchars($contacto['email']); ?></a>
-            </div>
-        </div>
-        <div class="glow-divider"></div>
-        <div>
-            <p class="arcade-label">Mensaje</p>
-            <div class="mt-3 rounded-2xl border border-arcade-magenta/30 bg-arcade-panel/60 p-5 text-sm leading-relaxed text-slate-200 shadow-inner">
-                <?php echo nl2br(htmlspecialchars($contacto['mensaje'])); ?>
-            </div>
+    
+    <div class="admin-form-section">
+        <h2 class="admin-form-section__title">Mensaje</h2>
+        <div class="admin-message-box">
+            <?php echo nl2br(htmlspecialchars($contacto['mensaje'])); ?>
         </div>
     </div>
 </div>

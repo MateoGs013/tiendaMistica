@@ -1,8 +1,19 @@
-<section class="panel-glass mt-12 p-12 text-center text-slate-200">
-	<h1 class="font-orbitron text-4xl text-arcade-magenta">404 • Portal cerrado</h1>
-	<p class="mt-4 text-sm text-slate-300">El duende guardián no reconoce esta sección. Revisá el mapa o regresá al salón principal.</p>
-	<div class="mt-6 flex flex-wrap justify-center gap-4">
-		<a href="<?php echo url('inicio'); ?>" class="button-arcade px-6 py-3 text-xs">Ir al inicio</a>
-		<a href="<?php echo url('catalogo'); ?>" class="button-arcade px-6 py-3 text-xs" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.35), rgba(var(--rareza-rgb-mistico), 0.45));">Ver catálogo</a>
-	</div>
-</section>
+<!-- 404 Error Page -->
+<div class="error-404">
+    <div class="error-404__content">
+        <div class="error-404__code">404</div>
+        <h1 class="error-404__title">Portal Cerrado</h1>
+        <p class="error-404__message">
+            El duende guardián no reconoce esta sección. <br>
+            Revisá el mapa o regresá al salón principal.
+        </p>
+        <div class="error-404__actions">
+            <a href="<?php echo url('inicio'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+                <span>Ir al Inicio</span>
+            </a>
+            <a href="<?php echo url('catalogo'); ?>" class="btn-arc btn-arc--secondary btn-arc--lg">
+                <span>Ver Catálogo</span>
+            </a>
+        </div>
+    </div>
+</div>

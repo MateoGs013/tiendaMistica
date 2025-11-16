@@ -16,9 +16,14 @@ try {
 
 $sec = isset($_GET['sec']) ? $_GET['sec'] : 'inicio';
 
+// Handle blog detail with slug
+if ($sec === 'blog' && !empty($_GET['slug'])) {
+    $sec = 'blog_detalle';
+}
+
 if (!in_array($sec, $secciones_validas) && !in_array($sec, [
     'detalle_duende','agregar_carrito','carrito','checkout',
-    'login','registro','logout','cuenta','blog','contacto'
+    'login','registro','logout','cuenta','blog','blog_detalle','contacto'
 ])) {
     $vista = '404';
 } else {

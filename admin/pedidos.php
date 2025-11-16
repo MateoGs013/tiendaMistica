@@ -4,77 +4,95 @@ require_once __DIR__ . '/includes/header.php';
 $pedidos = Pedido::todos();
 $msg = $_GET['msg'] ?? null;
 ?>
-<?php
-$statusStyles = [
-    'pendiente' => 'border-arcade-amber/40 bg-arcade-amber/15 text-arcade-amber',
-    'completado' => 'border-arcade-emerald/40 bg-arcade-emerald/15 text-arcade-emerald',
-    'cancelado' => 'border-arcade-rose/40 bg-arcade-rose/15 text-arcade-rose',
-    'en_proceso' => 'border-arcade-cyan/40 bg-arcade-cyan/15 text-arcade-cyan',
-];
-?>
-<div class="space-y-6">
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-            <h1 class="text-3xl font-semibold text-white">Gestión de pedidos</h1>
-            <p class="text-sm text-slate-300">Controlá el flujo dimensional de entregas y ajustá estados.</p>
-        </div>
+
+<!-- Section Header -->
+<div class="admin-section-header">
+    <div>
+        <h1 class="admin-section-title">Pedidos</h1>
+        <p class="admin-section-subtitle">Controlá el flujo dimensional de entregas y ajustá estados</p>
     </div>
-
-    <?php if ($msg === 'actualizado'): ?>
-        <div class="alert-arcade alert-success">
-            <span class="status-dot"></span>
-            <span>Estado del pedido actualizado correctamente.</span>
-        </div>
-    <?php endif; ?>
-
-    <?php if (count($pedidos) > 0): ?>
-        <div class="panel-glass overflow-hidden rounded-3xl border border-arcade-cyan/30 shadow-neon">
-            <div class="overflow-x-auto">
-                <table class="arcade-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Email</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                            <th>Fecha</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($pedidos as $p): ?>
-                            <?php $estado = strtolower($p['estado']); ?>
-                            <?php $estadoClass = $statusStyles[$estado] ?? 'border-arcade-violet/40 bg-arcade-violet/15 text-arcade-violet'; ?>
-                            <tr>
-                                <td class="font-mono text-sm text-slate-300">#<?php echo $p['id_pedido']; ?></td>
-                                <td><?php echo htmlspecialchars($p['nombre']); ?></td>
-                                <td>
-                                    <a href="mailto:<?php echo htmlspecialchars($p['email']); ?>" class="text-arcade-cyan hover:text-arcade-magenta"><?php echo htmlspecialchars($p['email']); ?></a>
-                                </td>
-                                <td class="font-semibold text-white"><?php echo number_format($p['total'], 2); ?> 🪙</td>
-                                <td>
-                                    <span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] <?php echo $estadoClass; ?>">
-                                        <span class="h-2 w-2 rounded-full bg-current"></span>
-                                        <?php echo ucfirst($estado); ?>
-                                    </span>
-                                </td>
-                                <td><?php echo date('d/m/Y H:i', strtotime($p['fecha_pedido'])); ?></td>
-                                <td class="whitespace-nowrap text-sm">
-                                    <a href="<?php echo admin_url('pedido_ver', ['id' => $p['id_pedido']]); ?>" class="text-arcade-cyan hover:text-arcade-magenta">👁️ Ver detalles</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    <?php else: ?>
-        <div class="panel-glass rounded-3xl border border-dashed border-arcade-cyan/40 p-10 text-center shadow-neon">
-            <p class="text-lg font-semibold text-white">No hay pedidos registrados.</p>
-            <p class="mt-2 text-sm text-slate-300">Cuando un cliente active un pedido, lo vas a ver aquí.</p>
-        </div>
-    <?php endif; ?>
 </div>
+
+<!-- Alerts -->
+<?php if ($msg === 'actualizado'): ?>
+    <div class="alert alert-success">
+        <span class="alert__icon">✓</span>
+        <span>Estado del pedido actualizado correctamente</span>
+    </div>
+<?php endif; ?>
+
+<!-- Orders Table -->
+<?php if (count($pedidos) > 0): ?>
+    <div class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Email</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($pedidos as $p): ?>
+                    <?php 
+                    $estado = strtolower($p['estado']);
+                    $badgeClass = 'admin-badge';
+                    switch($estado) {
+                        case 'completado':
+                            $badgeClass .= ' admin-badge--success';
+                            break;
+                        case 'cancelado':
+                            $badgeClass .= ' admin-badge--danger';
+                            break;
+                        case 'procesando':
+                        case 'enviado':
+                            $badgeClass .= ' admin-badge--warning';
+                            break;
+                        default:
+                            $badgeClass .= ' admin-badge--inactive';
+                    }
+                    ?>
+                    <tr>
+                        <td>
+                            <span class="admin-table__id">#<?php echo $p['id_pedido']; ?></span>
+                        </td>
+                        <td>
+                            <span class="admin-table__name-main"><?php echo htmlspecialchars($p['nombre']); ?></span>
+                        </td>
+                        <td>
+                            <a href="mailto:<?php echo htmlspecialchars($p['email']); ?>" class="admin-action-link admin-action-link--edit">
+                                <?php echo htmlspecialchars($p['email']); ?>
+                            </a>
+                        </td>
+                        <td>
+                            <span class="admin-table__price"><?php echo number_format($p['total'], 2); ?> 🪙</span>
+                        </td>
+                        <td>
+                            <span class="<?php echo $badgeClass; ?>"><?php echo ucfirst($estado); ?></span>
+                        </td>
+                        <td><?php echo date('d/m/Y H:i', strtotime($p['fecha_pedido'])); ?></td>
+                        <td>
+                            <div class="admin-table__actions">
+                                <a href="<?php echo admin_url('pedido_ver', ['id' => $p['id_pedido']]); ?>" class="admin-action-link admin-action-link--edit">
+                                    👁️ Ver Detalles
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
+    <div class="admin-empty-state">
+        <div class="admin-empty-state__icon">📦</div>
+        <h3 class="admin-empty-state__title">No hay pedidos registrados</h3>
+        <p class="admin-empty-state__text">Cuando un cliente active un pedido, lo vas a ver aquí</p>
+    </div>
+<?php endif; ?>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

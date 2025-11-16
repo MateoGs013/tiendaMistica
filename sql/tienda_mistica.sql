@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2025 a las 17:19:00
+-- Tiempo de generación: 16-11-2025 a las 05:07:49
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -177,7 +177,8 @@ CREATE TABLE `carritos` (
 
 INSERT INTO `carritos` (`id_carrito`, `id_usuario`, `estado`, `creado_en`, `actualizado_en`) VALUES
 (1, 4, 'convertido', '2025-11-11 01:51:38', '2025-11-11 18:09:25'),
-(2, 4, 'convertido', '2025-11-11 18:09:38', '2025-11-11 18:24:19');
+(2, 4, 'convertido', '2025-11-11 18:09:38', '2025-11-11 18:24:19'),
+(3, 3, 'activo', '2025-11-12 13:23:49', '2025-11-15 23:19:17');
 
 -- --------------------------------------------------------
 
@@ -198,7 +199,8 @@ CREATE TABLE `carrito_items` (
 
 INSERT INTO `carrito_items` (`id_carrito`, `id_duende`, `cantidad`, `precio_unitario`) VALUES
 (1, 20, 1, 175.00),
-(2, 20, 1, 175.00);
+(2, 20, 1, 175.00),
+(3, 16, 1, 350.00);
 
 -- --------------------------------------------------------
 
@@ -502,13 +504,13 @@ CREATE TABLE `secciones` (
 
 INSERT INTO `secciones` (`id_seccion`, `vinculo`, `titulo`, `descripcion`, `menu`) VALUES
 (1, 'inicio', 'Inicio', 'Sección principal con bienvenida, llamado a la acción y elementos mágicos animados.', 1),
-(2, 'catalogo', 'Catálogo de Duendes', 'Galería completa de duendes con filtros por rareza, afinidad, suerte o propósito.', 1),
-(3, 'detalle_producto', 'Ficha del Duende', 'Vista individual de cada duende con su descripción, atributos, historia y accesorios.', 0),
-(4, 'nosotros', 'Sobre la Tienda', 'Historia, misión y el mito detrás de los duendes que vendemos.', 1),
-(5, 'blog', 'Crónicas del Bosque', 'Artículos sobre mitología celta, rituales de suerte, leyendas y cuvinculoado de duendes.', 1),
+(2, 'catalogo', 'Catálogo', 'Galería completa de duendes con filtros por rareza, afinidad, suerte o propósito.', 1),
+(3, 'detalle_producto', 'Duende', 'Vista individual de cada duende con su descripción, atributos, historia y accesorios.', 0),
+(4, 'nosotros', 'Arcade', 'Historia, misión y el mito detrás de los duendes que vendemos.', 1),
+(5, 'blog', 'Blog', 'Artículos sobre mitología celta, rituales de suerte, leyendas y cuvinculoado de duendes.', 1),
 (6, 'detalle_blog', 'Artículo del Blog', 'Vista individual de cada artículo del blog con su contenido, imágenes y comentarios.', 0),
-(7, 'contacto', 'Contacto y Bendiciones', 'Formulario para consultas, colaboraciones o adopciones mágicas personalizadas.', 1),
-(8, 'carrito', 'Carrito Mágico', 'Resumen de los duendes seleccionados, con cálculo automático en monedas de oro.', 0),
+(7, 'contacto', 'Contacto', 'Formulario para consultas, colaboraciones o adopciones mágicas personalizadas.', 1),
+(8, 'carrito', 'Carrito', 'Resumen de los duendes seleccionados, con cálculo automático en monedas de oro.', 0),
 (9, 'checkout', 'Finalizar Compra', 'Página de confirmación donde se elige el método de envío y pago.', 0),
 (10, 'cuenta', 'Mi Cuenta', 'Zona del usuario con historial de compras, deseos y configuraciones.', 0),
 (11, 'login', 'Ingresar', 'Página de inicio de sesión para usuarios registrados.', 0),
@@ -720,7 +722,7 @@ ALTER TABLE `blogs`
 -- AUTO_INCREMENT de la tabla `carritos`
 --
 ALTER TABLE `carritos`
-  MODIFY `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_carrito` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `contactos`

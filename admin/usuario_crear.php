@@ -5,72 +5,90 @@ $error = $_SESSION['error'] ?? null;
 $old = $_SESSION['old_data'] ?? [];
 unset($_SESSION['error'], $_SESSION['old_data']);
 ?>
-<div class="space-y-6">
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-            <h1 class="text-3xl font-semibold text-white">Crear usuario</h1>
-            <p class="text-sm text-slate-300">Asigná credenciales y rol para sumar a la tripulación.</p>
-        </div>
-        <a href="<?php echo admin_url('usuarios'); ?>" class="button-ghost">← Volver al listado</a>
+
+<!-- Section Header -->
+<div class="admin-section-header">
+    <div>
+        <h1 class="admin-section-title">Crear Usuario</h1>
+        <p class="admin-section-subtitle">Asigná credenciales y rol para sumar a la tripulación</p>
     </div>
-
-    <?php if ($error): ?>
-        <div class="alert-arcade alert-error">
-            <span class="status-dot offline"></span>
-            <span><?php echo htmlspecialchars($error); ?></span>
-        </div>
-    <?php endif; ?>
-
-    <form method="post" action="/tienda_mistica/admin/actions/usuario_crear_acc.php" class="space-y-8">
-        <section class="panel-glass rounded-3xl border border-arcade-cyan/30 p-8 shadow-neon">
-            <h2 class="fieldset-title">Datos principales</h2>
-            <div class="grid gap-6 md:grid-cols-2">
-                <label class="arcade-label">
-                    Nombre*
-                    <input type="text" name="nombre" required value="<?php echo htmlspecialchars($old['nombre'] ?? ''); ?>" class="arcade-input mt-2">
-                </label>
-                <label class="arcade-label">
-                    Apellido
-                    <input type="text" name="apellido" value="<?php echo htmlspecialchars($old['apellido'] ?? ''); ?>" class="arcade-input mt-2">
-                </label>
-                <label class="arcade-label md:col-span-2">
-                    Email*
-                    <input type="email" name="email" required value="<?php echo htmlspecialchars($old['email'] ?? ''); ?>" class="arcade-input mt-2">
-                </label>
-                <label class="arcade-label">
-                    Rol*
-                    <?php $rolActual = $old['rol'] ?? 'usuario'; ?>
-                    <select name="rol" required class="arcade-select mt-2">
-                        <option value="usuario" <?php echo $rolActual === 'usuario' ? 'selected' : ''; ?>>Usuario</option>
-                        <option value="admin" <?php echo $rolActual === 'admin' ? 'selected' : ''; ?>>Administrador</option>
-                    </select>
-                </label>
-                <label class="arcade-label flex items-center gap-3 text-xs uppercase tracking-[0.2em]">
-                    <input type="checkbox" name="activo" value="1" class="h-5 w-5 rounded border border-arcade-cyan/40 bg-arcade-panel/70 text-arcade-cyan focus:ring-arcade-magenta/60" <?php echo isset($old['activo']) ? ($old['activo'] ? 'checked' : '') : 'checked'; ?>>
-                    Usuario activo
-                </label>
-            </div>
-        </section>
-
-        <section class="panel-glass rounded-3xl border border-arcade-cyan/30 p-8 shadow-neon">
-            <h2 class="fieldset-title">Credenciales</h2>
-            <div class="grid gap-6 md:grid-cols-2">
-                <label class="arcade-label">
-                    Contraseña* (mínimo 6 caracteres)
-                    <input type="password" name="password" required minlength="6" class="arcade-input mt-2">
-                </label>
-                <label class="arcade-label">
-                    Confirmar contraseña*
-                    <input type="password" name="password2" required minlength="6" class="arcade-input mt-2">
-                </label>
-            </div>
-        </section>
-
-        <div class="flex flex-wrap items-center gap-4">
-            <button type="submit" class="button-arcade">Crear usuario</button>
-            <a href="<?php echo admin_url('usuarios'); ?>" class="button-ghost">Cancelar</a>
-        </div>
-    </form>
+    <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost">
+        <span>← Volver al listado</span>
+    </a>
 </div>
+
+<!-- Alerts -->
+<?php if ($error): ?>
+    <div class="alert alert-error">
+        <span class="alert__icon">✗</span>
+        <span><?php echo htmlspecialchars($error); ?></span>
+    </div>
+<?php endif; ?>
+
+<!-- User Form -->
+<form method="post" action="/tienda_mistica/admin/actions/usuario_crear_acc.php" class="admin-form">
+    <!-- Basic Info -->
+    <div class="admin-form-section">
+        <h2 class="admin-form-section__title">Datos Principales</h2>
+        <div class="admin-form-grid">
+            <div class="form-group">
+                <label for="nombre" class="form-label">Nombre*</label>
+                <input type="text" id="nombre" name="nombre" required value="<?php echo htmlspecialchars($old['nombre'] ?? ''); ?>" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" name="apellido" value="<?php echo htmlspecialchars($old['apellido'] ?? ''); ?>" class="form-input">
+            </div>
+            
+            <div class="form-group form-group--full">
+                <label for="email" class="form-label">Email*</label>
+                <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($old['email'] ?? ''); ?>" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="rol" class="form-label">Rol*</label>
+                <?php $rolActual = $old['rol'] ?? 'usuario'; ?>
+                <select id="rol" name="rol" required class="form-input">
+                    <option value="usuario" <?php echo $rolActual === 'usuario' ? 'selected' : ''; ?>>Usuario</option>
+                    <option value="admin" <?php echo $rolActual === 'admin' ? 'selected' : ''; ?>>Administrador</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="admin-checkbox">
+                    <input type="checkbox" name="activo" value="1" <?php echo isset($old['activo']) ? ($old['activo'] ? 'checked' : '') : 'checked'; ?>>
+                    <span>Usuario Activo</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Credentials -->
+    <div class="admin-form-section">
+        <h2 class="admin-form-section__title">Credenciales</h2>
+        <div class="admin-form-grid">
+            <div class="form-group">
+                <label for="password" class="form-label">Contraseña* (mínimo 6 caracteres)</label>
+                <input type="password" id="password" name="password" required minlength="6" class="form-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="password2" class="form-label">Confirmar Contraseña*</label>
+                <input type="password" id="password2" name="password2" required minlength="6" class="form-input">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Form Actions -->
+    <div class="admin-form-actions">
+        <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
+            <span>Crear Usuario</span>
+        </button>
+        <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost btn-arc--lg">
+            <span>Cancelar</span>
+        </a>
+    </div>
+</form>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

@@ -14,6 +14,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # URLs especiales con parámetros
 RewriteRule ^duende/([0-9]+)$ index.php?sec=detalle_duende&id=$1 [L,QSA]
+RewriteRule ^blog/([a-zA-Z0-9_-]+)$ index.php?sec=blog&slug=$1 [L,QSA]
 
 # Regla genérica para todas las secciones
 # Captura cualquier palabra y la envía como parámetro sec

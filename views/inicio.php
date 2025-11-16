@@ -1,110 +1,195 @@
-<section class="panel-glass scanline-overlay overflow-hidden">
-    <div class="relative z-10 grid gap-10 px-6 py-12 lg:grid-cols-2 lg:px-12">
-        <div class="flex flex-col justify-center space-y-6">
-            <p class="font-retro text-xs uppercase tracking-[0.4em] text-arcade-cyan flicker">Insert coin to begin</p>
-            <h1 class="font-orbitron text-4xl text-white drop-shadow sm:text-5xl">
-                Bienvenido al Salón Arcade de los Duendes Místicos
+<!-- Hero Section -->
+<section class="arcade-hero">
+    <div class="arcade-hero__content">
+        <div class="arcade-hero__text">
+            <div class="arcade-hero__badge">
+                <i class="fas fa-gamepad"></i>
+                <span>ARCADE SHOP</span>
+            </div>
+            
+            <h1 class="arcade-hero__title">
+                <span class="arcade-hero__title-main">TIENDA MÍSTICA</span>
+                <span class="arcade-hero__title-sub">Colecciona Duendes Legendarios</span>
             </h1>
-            <p class="text-lg text-slate-300">
-                Cada duende es un power-up único. Desbloqueá fortuna, protección y combos mágicos
-                en una experiencia retro 3D inspirada en los bosques encantados de Irlanda.
+            
+            <p class="arcade-hero__description">
+                Cada duende es un poder único. Desbloquea fortuna, protección y combos mágicos 
+                en una experiencia arcade inspirada en los bosques encantados de Irlanda.
             </p>
-            <div class="flex flex-col gap-4 sm:flex-row">
-                <a href="<?php echo url('catalogo'); ?>" class="button-arcade">
-                    <span>Comenzar</span>
-                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14m-6-6 6 6-6 6" />
-                    </svg>
+            
+            <div class="arcade-hero__actions">
+                <a href="<?php echo url('catalogo'); ?>" class="arcade-hero__btn arcade-hero__btn--primary">
+                    <i class="fas fa-play"></i>
+                    <span>EXPLORAR CATÁLOGO</span>
                 </a>
-                <a href="<?php echo url('blog'); ?>" class="button-arcade" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.28), rgba(var(--rareza-rgb-raro), 0.42));">
-                    <span>Crónicas del Bosque</span>
+                <a href="<?php echo url('blog'); ?>" class="arcade-hero__btn arcade-hero__btn--secondary">
+                    <i class="fas fa-book-open"></i>
+                    <span>CRÓNICAS</span>
                 </a>
             </div>
-            <div class="grid gap-3 text-sm text-slate-300 sm:grid-cols-2">
-                <div class="neon-card p-4">
-                    <p class="font-orbitron text-xs uppercase tracking-[0.16em] text-arcade-magenta">Rarezas</p>
-                    <p class="mt-2 text-2xl font-semibold text-arcade-gold">4 niveles</p>
-                    <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">Desde comunes hasta legendarios</p>
+            
+            <div class="arcade-hero__stats">
+                <div class="arcade-stat-card">
+                    <div class="arcade-stat-card__icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="arcade-stat-card__content">
+                        <span class="arcade-stat-card__value">8 NIVELES</span>
+                        <span class="arcade-stat-card__label">Rarezas</span>
+                    </div>
                 </div>
-                <div class="neon-card p-4">
-                    <p class="font-orbitron text-xs uppercase tracking-[0.16em] text-arcade-magenta">Elementos</p>
-                    <p class="mt-2 text-2xl font-semibold text-arcade-cyan">6 poderes</p>
-                    <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">Tierra, agua, fuego, sombra, luz, aire</p>
+                
+                <div class="arcade-stat-card">
+                    <div class="arcade-stat-card__icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="arcade-stat-card__content">
+                        <span class="arcade-stat-card__value">6 ELEMENTOS</span>
+                        <span class="arcade-stat-card__label">Poderes</span>
+                    </div>
+                </div>
+                
+                <div class="arcade-stat-card">
+                    <div class="arcade-stat-card__icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="arcade-stat-card__content">
+                        <span class="arcade-stat-card__value">20+ STOCK</span>
+                        <span class="arcade-stat-card__label">Duendes</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="relative flex items-center justify-center">
-            <div class="neon-card h-full w-full max-w-md scale-105 bg-gradient-to-br from-arcade-panel/90 via-arcade-panel/65 to-arcade-base/95 p-8 text-center shadow-neon-strong">
-                <div class="mx-auto flex h-32 w-32 items-center justify-center rounded-full border border-arcade-cyan/50 bg-arcade-base/90 shadow-neon">
-                    <svg class="h-20 w-20 text-arcade-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 3v3m6-3v3m-9 4h6l4 4v6H5v-6l4-4zm1 4v2m4-2v2" />
-                    </svg>
+        
+        <div class="arcade-hero__visual">
+            <div class="arcade-screen-frame">
+                <div class="arcade-screen-frame__inner">
+                    <i class="fas fa-hat-wizard"></i>
                 </div>
-                <h2 class="mt-8 font-orbitron text-2xl text-white">Salón de Power-Ups</h2>
-                <p class="mt-4 text-sm text-slate-300">
-                    Sumergite en el bosque neon. Visualizá stats, rarezas y combos con efectos especiales en 3D.
-                </p>
-                <div class="glow-divider"></div>
-                <ul class="space-y-3 text-left text-sm text-slate-200">
-                    <li class="flex items-center gap-3">
-                        <span class="stat-chip">Fortuna + Suerte</span>
-                        <span class="text-xs uppercase tracking-[0.2em] text-slate-400">Poder Total 280+</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-epico), 0.92), rgba(var(--rareza-rgb-raro), 0.92));">Riesgo Controlado</span>
-                        <span class="text-xs uppercase tracking-[0.2em] text-slate-400">Alertas integradas</span>
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <span class="stat-chip" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-poco-comun), 0.92), rgba(var(--rareza-rgb-comun), 0.92));">Combo Accesorios</span>
-                        <span class="text-xs uppercase tracking-[0.2em] text-slate-400">+80 sinergias</span>
-                    </li>
-            <p class="font-orbitron text-sm uppercase text-arcade-magenta">Explorá el catálogo</p>
-            <h3 class="mt-3 text-2xl font-semibold text-white">Más de 20 duendes en stock</h3>
-            <p class="mt-3 text-sm text-slate-300">
-                Filtrá por rareza, elemento, precio o nivel de suerte. Calculamos automáticamente el poder total y el índice de éxito recomendado para cada misión.
-            </p>
-            <a href="<?php echo url('catalogo'); ?>" class="mt-5 inline-flex text-sm uppercase tracking-[0.2em] text-arcade-cyan hover:text-arcade-gold">Ver Duendes →</a>
-        </article>
-        <article class="neon-card p-6">
-            <p class="font-orbitron text-sm uppercase text-arcade-magenta">Aprendé rituales</p>
-            <h3 class="mt-3 text-2xl font-semibold text-white">Crónicas del Bosque</h3>
-            <p class="mt-3 text-sm text-slate-300">
-                Descubrí cómo preparar tu espacio, activar accesorios y combinar elementos sin activar alertas de riesgo.
-            </p>
-            <a href="<?php echo url('blog'); ?>" class="mt-5 inline-flex text-sm uppercase tracking-[0.2em] text-arcade-cyan hover:text-arcade-gold">Ir al Blog →</a>
-        </article>
-        <article class="neon-card p-6">
-            <p class="font-orbitron text-sm uppercase text-arcade-magenta">Nivelá tus stats</p>
-            <h3 class="mt-3 text-2xl font-semibold text-white">¿Cómo elegir tu power-up?</h3>
-            <ul class="mt-4 space-y-3 text-sm text-slate-300">
-                <li>• Definí si buscás fortuna, protección o inspiración.</li>
-                <li>• Revisá rareza, elemento y compatibilidad con accesorios.</li>
-                <li>• Observá advertencias y nivel de riesgo recomendado.</li>
-            </ul>
-            <a href="<?php echo url('contacto'); ?>" class="mt-5 inline-flex text-sm uppercase tracking-[0.2em] text-arcade-cyan hover:text-arcade-gold">Consultanos →</a>
-        </article>
+                <div class="arcade-screen-frame__glow"></div>
+            </div>
+        </div>
     </div>
 </section>
 
-<section class="mt-14 panel-glass p-8">
-    <h2 class="font-orbitron text-2xl text-white">¿Por qué adoptar un duende?</h2>
-    <div class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div>
-            <p class="text-xl font-semibold text-arcade-gold">Fortuna</p>
-            <p class="mt-2 text-sm text-slate-300">Duendes del oro que atraen oportunidades, créditos y loot inesperado.</p>
+<!-- Features Section -->
+<section class="arcade-features">
+    <div class="arcade-section-header">
+        <span class="arcade-section-badge">
+            <i class="fas fa-trophy"></i>
+            <span>CARACTERÍSTICAS</span>
+        </span>
+        <h2 class="arcade-section-title">¿Por qué elegir un duende místico?</h2>
+    </div>
+    
+    <div class="arcade-features-grid">
+        <div class="arcade-feature-card">
+            <div class="arcade-feature-card__icon">
+                <i class="fas fa-coins"></i>
+            </div>
+            <h3 class="arcade-feature-card__title">Fortuna</h3>
+            <p class="arcade-feature-card__description">
+                Duendes del oro que atraen oportunidades, créditos y loot inesperado a tu vida.
+            </p>
         </div>
-        <div>
-            <p class="text-xl font-semibold text-arcade-gold">Protección</p>
-            <p class="mt-2 text-sm text-slate-300">Guardianes que vigilan entradas y generan barreras luminosas.</p>
+        
+        <div class="arcade-feature-card">
+            <div class="arcade-feature-card__icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="arcade-feature-card__title">Protección</h3>
+            <p class="arcade-feature-card__description">
+                Guardianes que vigilan entradas y generan barreras luminosas de seguridad.
+            </p>
         </div>
-        <div>
-            <p class="text-xl font-semibold text-arcade-gold">Inspiración</p>
-            <p class="mt-2 text-sm text-slate-300">Power-ups solares que potencian la creatividad y la confianza.</p>
+        
+        <div class="arcade-feature-card">
+            <div class="arcade-feature-card__icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="arcade-feature-card__title">Inspiración</h3>
+            <p class="arcade-feature-card__description">
+                Power-ups solares que potencian tu creatividad y confianza personal.
+            </p>
         </div>
-        <div>
-            <p class="text-xl font-semibold text-arcade-gold">Equilibrio</p>
-            <p class="mt-2 text-sm text-slate-300">Sanadores que estabilizan emociones y sincronizan tu energía.</p>
+        
+        <div class="arcade-feature-card">
+            <div class="arcade-feature-card__icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="arcade-feature-card__title">Equilibrio</h3>
+            <p class="arcade-feature-card__description">
+                Sanadores que estabilizan emociones y sincronizan tu energía interior.
+            </p>
         </div>
     </div>
-    <p class="mt-8 text-xs uppercase tracking-[0.2em] text-slate-400">Cada duende incluye guía de cuidados, advertencias específicas y garantía de satisfacción de 30 días.</p>
+</section>
+
+<!-- Info Cards Section -->
+<section class="arcade-info-section">
+    <div class="arcade-info-grid">
+        <div class="arcade-info-card">
+            <div class="arcade-info-card__header">
+                <i class="fas fa-scroll"></i>
+                <h3>CATÁLOGO COMPLETO</h3>
+            </div>
+            <p class="arcade-info-card__text">
+                Más de 20 duendes en stock. Filtra por rareza, elemento, precio o nivel de suerte. 
+                Sistema de poder total y índice de éxito incluido.
+            </p>
+            <a href="<?php echo url('catalogo'); ?>" class="arcade-info-card__link">
+                <span>VER DUENDES</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="arcade-info-card">
+            <div class="arcade-info-card__header">
+                <i class="fas fa-book-dead"></i>
+                <h3>CRÓNICAS DEL BOSQUE</h3>
+            </div>
+            <p class="arcade-info-card__text">
+                Descubre cómo preparar tu espacio, activar accesorios y combinar elementos 
+                sin activar alertas de riesgo.
+            </p>
+            <a href="<?php echo url('blog'); ?>" class="arcade-info-card__link">
+                <span>IR AL BLOG</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="arcade-info-card">
+            <div class="arcade-info-card__header">
+                <i class="fas fa-question-circle"></i>
+                <h3>GUÍA DE SELECCIÓN</h3>
+            </div>
+            <p class="arcade-info-card__text">
+                Define si buscas fortuna, protección o inspiración. Revisa rareza, elemento 
+                y compatibilidad con accesorios mágicos.
+            </p>
+            <a href="<?php echo url('contacto'); ?>" class="arcade-info-card__link">
+                <span>CONSULTAR</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Guarantee Section -->
+<section class="arcade-guarantee">
+    <div class="arcade-guarantee__content">
+        <div class="arcade-guarantee__icon">
+            <i class="fas fa-certificate"></i>
+        </div>
+        <div class="arcade-guarantee__text">
+            <h3 class="arcade-guarantee__title">GARANTÍA ARCADE</h3>
+            <p class="arcade-guarantee__description">
+                Cada duende incluye guía de cuidados, advertencias específicas y garantía de satisfacción de 30 días.
+            </p>
+        </div>
+        <div class="arcade-guarantee__badge">
+            <i class="fas fa-check-circle"></i>
+            <span>CALIDAD VERIFICADA</span>
+        </div>
+    </div>
 </section>
