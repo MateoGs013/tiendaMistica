@@ -22,7 +22,7 @@ unset($_SESSION['error'], $_SESSION['old_nombre'], $_SESSION['old_email']);
 
 <!-- Registration Form -->
 <div class="login-container">
-    <form method="post" action="/tienda_mistica/actions/registro_acc.php" class="login-form">
+    <form method="post" action="actions/registro_acc.php" class="login-form">
         <div class="form-group">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" name="nombre" id="nombre" required value="<?php echo htmlspecialchars($oldNombre); ?>" class="form-input">

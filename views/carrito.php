@@ -67,7 +67,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
                 </div>
                 
                 <div class="carrito-item__quantity">
-                    <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="quantity-form">
+                    <form method="post" action="actions/carrito_actualizar.php" class="quantity-form">
                         <input type="hidden" name="action" value="actualizar">
                         <input type="hidden" name="id_duende" value="<?php echo $item['id_duende']; ?>">
                         <label class="quantity-label">Cantidad:</label>
@@ -85,7 +85,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
                 </div>
                 
                 <div class="carrito-item__actions">
-                    <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" onsubmit="return confirm('¿Eliminar este item del carrito?');">
+                    <form method="post" action="actions/carrito_actualizar.php" onsubmit="event.preventDefault(); showConfirm('¿Eliminar este item del carrito?', 'Confirmar eliminación').then(result => { if (result) this.submit(); });">
                         <input type="hidden" name="action" value="eliminar">
                         <input type="hidden" name="id_duende" value="<?php echo $item['id_duende']; ?>">
                         <button type="submit" class="btn-remove">
@@ -110,7 +110,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
             <a href="index.php?sec=catalogo" class="btn-arc btn-arc--secondary">
                 ← Seguir Comprando
             </a>
-            <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-form" onsubmit="return confirm('¿Vaciar todo el carrito?');">
+            <form method="post" action="actions/carrito_actualizar.php" class="inline-form" onsubmit="event.preventDefault(); showConfirm('Se eliminarán todos los productos del carrito', '¿Vaciar todo el carrito?').then(result => { if (result) this.submit(); });">
                 <input type="hidden" name="action" value="vaciar">
                 <button type="submit" class="btn-arc btn-arc--danger">
                     Vaciar Carrito

@@ -12,8 +12,26 @@ if (empty($slug)) {
 $blog = Blog::findBySlug($slug);
 
 if (!$blog) {
-    header('Location: index.php?sec=404');
-    exit;
+    // En lugar de redirigir al 404, mostrar mensaje en la página
+    ?>
+    <div class="blog-article">
+        <div class="blog-article__header">
+            <a href="index.php?sec=blog" class="blog-article__back">
+                ← Volver al Blog
+            </a>
+        </div>
+        
+        <div class="blog-empty">
+            <div class="blog-empty__icon">🔍</div>
+            <h3 class="blog-empty__title">Artículo no encontrado</h3>
+            <p class="blog-empty__text">
+                El artículo que buscás no existe o fue eliminado.
+                <a href="index.php?sec=blog" class="link-primary">Volver al blog</a>.
+            </p>
+        </div>
+    </div>
+    <?php
+    return;
 }
 
 ?>

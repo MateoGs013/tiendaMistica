@@ -78,7 +78,7 @@ if (!$duende): ?>
                     <?php echo number_format((float)($duende['precio_en_oro'] ?? 0), 2); ?> oro
                 </span>
                 <?php if (!empty($_SESSION['usuario'])): ?>
-                    <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-flex">
+                    <form method="post" action="actions/carrito_actualizar.php" class="inline-flex">
                         <input type="hidden" name="action" value="agregar">
                         <input type="hidden" name="id_duende" value="<?php echo $duende['id_duende']; ?>">
                         <input type="hidden" name="redirect" value="detalle_duende&id=<?php echo $duende['id_duende']; ?>">

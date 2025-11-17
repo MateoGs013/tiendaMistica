@@ -31,7 +31,7 @@ unset($_SESSION['success'], $_SESSION['error'], $_SESSION['old_nombre'], $_SESSI
 
 <!-- Contact Form -->
 <div class="contacto-container">
-    <form method="post" action="/tienda_mistica/actions/contacto_acc.php" class="contacto-form">
+    <form method="post" action="actions/contacto_acc.php" class="contacto-form">
         <div class="contacto-form__row">
             <div class="form-group">
                 <label for="nombre" class="form-label">Nombre Completo</label>

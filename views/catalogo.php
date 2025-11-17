@@ -239,7 +239,8 @@ document.addEventListener('DOMContentLoaded', function () {
         <?php endif; ?>
     </div>
     
-    <form method="get" class="arcade-filter-form">
+    <form id="catalogo-filter-form" method="get" class="arcade-filter-form">
+        <input type="hidden" name="sec" value="catalogo">
         <div class="arcade-filter-grid">
             <div class="arcade-filter-group">
                 <label class="arcade-filter-label">
@@ -300,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </details>
             
-            <details class="arcade-filter-accordion<?php echo !empty($filtros['elemento']) ? ' open' : ''; ?>">
+            <details class="arcade-filter-accordion <?php echo !empty($filtros['elemento']) ? ' open' : ''; ?>">
                 <summary>
                     <span>ELEMENTO</span>
                     <?php if (!empty($filtros['elemento'])): ?>
@@ -447,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 <div class="flex gap-2 justify-center mt-auto">
                     <?php if ($carritoDisponible && $isDisponible): ?>
-                        <form id="carrito-form-<?php echo $id; ?>" method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="card-cart-form">
+                        <form id="carrito-form-<?php echo $id; ?>" method="post" action="actions/carrito_actualizar.php" class="card-cart-form">
                             <input type="hidden" name="action" value="agregar">
                             <input type="hidden" name="id_duende" value="<?php echo $id; ?>">
                             <input type="hidden" name="redirect" value="catalogo">

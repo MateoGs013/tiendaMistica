@@ -67,7 +67,7 @@ if (empty($items) && !$pedidoCreado) {
 
     <div class="checkout-container">
         <div class="checkout-form-section">
-            <form method="post" action="/tienda_mistica/actions/checkout_acc.php" class="checkout-form">
+            <form method="post" action="actions/checkout_acc.php" class="checkout-form">
                 <div class="form-section">
                     <h2 class="form-section-title">Información de Envío</h2>
                     
