@@ -11,6 +11,12 @@ function login_usuario(string $email, string $password): bool {
     try {
         $user = Usuario::findByEmail($email);
         if ($user && isset($user['password_hash']) && password_verify($password, $user['password_hash'])) {
+            // Verificar si la cuenta está activa
+            if (!$user['activo']) {
+                $_SESSION['error'] = "Tu cuenta está desactivada. Contacta al administrador para más información.";
+                return false;
+            }
+            
             $_SESSION['usuario'] = [
                 'id_usuario' => $user['id_usuario'],
                 'nombre' => $user['nombre'],

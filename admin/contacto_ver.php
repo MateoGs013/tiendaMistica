@@ -11,7 +11,7 @@ if (!$contacto) {
         <div class="admin-empty-state__icon">⚠️</div>
         <h3 class="admin-empty-state__title">Mensaje no encontrado</h3>
         <p class="admin-empty-state__text">El mensaje seleccionado fue eliminado o su identificación es incorrecta</p>
-        <a href="admin/index.php?sec=contactos" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="index.php?sec=contactos" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Volver al listado</span>
         </a>
     </div>
@@ -28,7 +28,7 @@ if (!$contacto) {
         <p class="admin-section-subtitle">Analizá la señal recibida y definí próximos pasos</p>
     </div>
     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        <a href="admin/index.php?sec=contactos" class="btn-arc btn-arc--ghost">
+        <a href="index.php?sec=contactos" class="btn-arc btn-arc--ghost">
             <span>← Volver al listado</span>
         </a>
         <a href="#" onclick="confirmarBorrado(<?php echo $contacto['id_contacto']; ?>); return false;" class="btn-arc btn-arc--danger">
@@ -76,9 +76,11 @@ if (!$contacto) {
 
 <script>
 function confirmarBorrado(id) {
-    if (confirm('¿Estás seguro de que quieres eliminar este mensaje de contacto?\n\nEsta acción no se puede deshacer.')) {
-        window.location.href = '/tienda_mistica/admin/actions/contacto_borrar_acc.php?id=' + id + '&confirmar=1';
-    }
+    showConfirm('¿Estás seguro de que quieres eliminar este mensaje de contacto?\n\nEsta acción no se puede deshacer.', 'Confirmar eliminación').then(result => {
+        if (result) {
+            window.location.href = 'actions/contacto_borrar_acc.php?id=' + id + '&confirmar=1';
+        }
+    });
 }
 </script>
 

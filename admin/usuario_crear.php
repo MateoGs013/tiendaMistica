@@ -12,7 +12,7 @@ unset($_SESSION['error'], $_SESSION['old_data']);
         <h1 class="admin-section-title">Crear Usuario</h1>
         <p class="admin-section-subtitle">Asigná credenciales y rol para sumar a la tripulación</p>
     </div>
-    <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost">
+    <a href="index.php?sec=usuarios" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>
@@ -26,7 +26,7 @@ unset($_SESSION['error'], $_SESSION['old_data']);
 <?php endif; ?>
 
 <!-- User Form -->
-<form method="post" action="/tienda_mistica/admin/actions/usuario_crear_acc.php" class="admin-form">
+<form method="post" action="actions/usuario_crear_acc.php" class="admin-form">
     <!-- Basic Info -->
     <div class="admin-form-section">
         <h2 class="admin-form-section__title">Datos Principales</h2>
@@ -85,7 +85,7 @@ unset($_SESSION['error'], $_SESSION['old_data']);
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Crear Usuario</span>
         </button>
-        <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost btn-arc--lg">
+        <a href="index.php?sec=usuarios" class="btn-arc btn-arc--ghost btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>

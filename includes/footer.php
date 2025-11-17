@@ -770,5 +770,106 @@
     }
 })();
 </script>
+
+<!-- Toast Container -->
+<div id="toast-container" style="position: fixed; top: 80px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 12px; max-width: 400px;"></div>
+
+<!-- Confirm Modal -->
+<div id="confirm-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10001; align-items: center; justify-content: center;">
+    <div style="background: linear-gradient(135deg, #090e20 0%, #0d1428 100%); padding: 32px; border-radius: 16px; border: 1px solid rgba(129, 140, 248, 0.3); box-shadow: 0 0 40px rgba(59, 130, 246, 0.3); max-width: 480px; width: 90%;">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #FBB024; margin-bottom: 16px;"></i>
+            <h3 id="confirm-title" style="font-family: 'Orbitron', sans-serif; color: #fff; font-size: 20px; margin-bottom: 12px;"></h3>
+            <p id="confirm-message" style="color: #94a3b8; font-size: 14px; line-height: 1.6;"></p>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: center;">
+            <button id="confirm-cancel" class="btn-arc btn-arc--secondary" style="min-width: 120px;">Cancelar</button>
+            <button id="confirm-accept" class="btn-arc btn-arc--danger" style="min-width: 120px;">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Toast System
+function showToast(message, type = 'info', duration = 3000) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    const colors = {
+        success: { bg: 'rgba(34, 197, 94, 0.15)', border: '#22c55e', icon: 'check-circle' },
+        error: { bg: 'rgba(239, 68, 68, 0.15)', border: '#ef4444', icon: 'times-circle' },
+        warning: { bg: 'rgba(251, 191, 36, 0.15)', border: '#fbbf24', icon: 'exclamation-triangle' },
+        info: { bg: 'rgba(59, 130, 246, 0.15)', border: '#3b82f6', icon: 'info-circle' }
+    };
+    
+    const config = colors[type] || colors.info;
+    
+    toast.innerHTML = `
+        <div style="background: ${config.bg}; backdrop-filter: blur(10px); border: 1px solid ${config.border}; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 300px;">
+            <i class="fas fa-${config.icon}" style="color: ${config.border}; font-size: 20px;"></i>
+            <p style="color: #fff; margin: 0; flex: 1; font-size: 14px;">${message}</p>
+            <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 18px; padding: 0; line-height: 1;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    container.appendChild(toast);
+    
+    gsap.from(toast, { x: 400, opacity: 0, duration: 0.4, ease: 'back.out(1.7)' });
+    
+    if (duration > 0) {
+        setTimeout(() => {
+            gsap.to(toast, {
+                x: 400,
+                opacity: 0,
+                duration: 0.3,
+                onComplete: () => toast.remove()
+            });
+        }, duration);
+    }
+}
+
+// Confirm Dialog System
+function showConfirm(message, title = '¿Estás seguro?') {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('confirm-modal');
+        const titleEl = document.getElementById('confirm-title');
+        const messageEl = document.getElementById('confirm-message');
+        const acceptBtn = document.getElementById('confirm-accept');
+        const cancelBtn = document.getElementById('confirm-cancel');
+        
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        modal.style.display = 'flex';
+        
+        gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.2 });
+        gsap.fromTo(modal.querySelector('div > div'), { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.3, ease: 'back.out(1.7)' });
+        
+        const close = (result) => {
+            gsap.to(modal, {
+                opacity: 0,
+                duration: 0.2,
+                onComplete: () => {
+                    modal.style.display = 'none';
+                    resolve(result);
+                }
+            });
+        };
+        
+        acceptBtn.onclick = () => close(true);
+        cancelBtn.onclick = () => close(false);
+        
+        const escHandler = (e) => {
+            if (e.key === 'Escape') {
+                close(false);
+                document.removeEventListener('keydown', escHandler);
+            }
+        };
+        document.addEventListener('keydown', escHandler);
+    });
+}
+</script>
+
 </body>
 </html>

@@ -11,12 +11,12 @@ if (!empty($_GET['id']) && isset($_GET['confirmar'])) {
     $duende = Duende::find($id);
     if ($duende && Duende::delete($id)) {
         Imagen::borrar($duende['imagen_url'] ?? null);
-        header('Location: ' . 'admin/index.php?sec=duendes&msg=eliminado');
+        header('Location: ' . '../index.php?sec=duendes&msg=eliminado');
     } else {
-        header('Location: ' . 'admin/index.php?sec=duendes&error=no_eliminar');
+        header('Location: ' . '../index.php?sec=duendes&error=no_eliminar');
     }
     exit;
 }
 
-header('Location: ' . 'admin/index.php?sec=duendes');
+header('Location: ' . '../index.php?sec=duendes');
 exit;

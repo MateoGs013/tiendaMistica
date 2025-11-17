@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['nombre'])) {
         $_SESSION['error'] = "El nombre es obligatorio";
         $_SESSION['old_data'] = $data;
-        header("Location: " . 'admin/index.php?sec=duende_crear');
+        header("Location: " . '../index.php?sec=duende_crear');
         exit;
     }
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } catch (RuntimeException $e) {
             $_SESSION['error'] = $e->getMessage();
             $_SESSION['old_data'] = $data;
-            header("Location: " . 'admin/index.php?sec=duende_crear');
+            header("Location: " . '../index.php?sec=duende_crear');
             exit;
         }
     }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         if (Duende::create($data)) {
             $_SESSION['success'] = "Duende creado exitosamente";
-            header("Location: " . 'admin/index.php?sec=duendes');
+            header("Location: " . '../index.php?sec=duendes');
             exit;
         } else {
             if ($imagenGuardada) {
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $_SESSION['error'] = "Error al crear el duende";
             $_SESSION['old_data'] = $data;
-            header("Location: " . 'admin/index.php?sec=duende_crear');
+            header("Location: " . '../index.php?sec=duende_crear');
             exit;
         }
     } catch (Exception $e) {
@@ -76,10 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log("Error al crear duende: " . $e->getMessage());
         $_SESSION['error'] = "Error al crear el duende. Por favor, intenta nuevamente.";
         $_SESSION['old_data'] = $data;
-        header("Location: " . 'admin/index.php?sec=duende_crear');
+        header("Location: " . '../index.php?sec=duende_crear');
         exit;
     }
 } else {
-    header("Location: " . 'admin/index.php?sec=duende_crear');
+    header("Location: " . '../index.php?sec=duende_crear');
     exit;
 }

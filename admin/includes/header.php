@@ -4,12 +4,12 @@ require_once __DIR__ . '/url.php';
 require_admin();
 
 $adminNav = [
-    ['label' => 'Inicio', 'href' => 'admin/index.php?sec=inicio'],
-    ['label' => 'Duendes', 'href' => 'admin/index.php?sec=duendes'],
-    ['label' => 'Blogs', 'href' => 'admin/index.php?sec=blogs'],
-    ['label' => 'Pedidos', 'href' => 'admin/index.php?sec=pedidos'],
-    ['label' => 'Contactos', 'href' => 'admin/index.php?sec=contactos'],
-    ['label' => 'Usuarios', 'href' => 'admin/index.php?sec=usuarios'],
+    ['label' => 'Inicio', 'href' => 'index.php?sec=inicio'],
+    ['label' => 'Duendes', 'href' => 'index.php?sec=duendes'],
+    ['label' => 'Blogs', 'href' => 'index.php?sec=blogs'],
+    ['label' => 'Pedidos', 'href' => 'index.php?sec=pedidos'],
+    ['label' => 'Contactos', 'href' => 'index.php?sec=contactos'],
+    ['label' => 'Usuarios', 'href' => 'index.php?sec=usuarios'],
 ];
 ?>
 <!doctype html>

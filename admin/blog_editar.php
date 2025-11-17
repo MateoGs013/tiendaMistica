@@ -11,7 +11,7 @@ if (!$blog) {
         <div class="admin-empty-state__icon">⚠️</div>
         <h3 class="admin-empty-state__title">Blog no encontrado</h3>
         <p class="admin-empty-state__text">La entrada seleccionada no existe o ya fue archivada</p>
-        <a href="admin/index.php?sec=blogs" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="index.php?sec=blogs" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Volver al listado</span>
         </a>
     </div>
@@ -37,7 +37,7 @@ if (empty($_POST)) {
         <h1 class="admin-section-title">Editar Blog #<?php echo $id; ?></h1>
         <p class="admin-section-subtitle">Actualizá el contenido de <?php echo htmlspecialchars($blog['titulo']); ?></p>
     </div>
-    <a href="admin/index.php?sec=blogs" class="btn-arc btn-arc--ghost">
+    <a href="index.php?sec=blogs" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>
@@ -58,7 +58,7 @@ if (empty($_POST)) {
 <?php endif; ?>
 
 <!-- Blog Form -->
-<form method="post" action="/tienda_mistica/admin/actions/blog_editar_acc.php" class="admin-form">
+<form method="post" action="actions/blog_editar_acc.php" class="admin-form">
     <input type="hidden" name="id" value="<?php echo $id; ?>">
     
     <!-- Basic Info -->
@@ -114,7 +114,7 @@ if (empty($_POST)) {
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Guardar Cambios</span>
         </button>
-        <a href="admin/index.php?sec=blogs" class="btn-arc btn-arc--ghost btn-arc--lg">
+        <a href="index.php?sec=blogs" class="btn-arc btn-arc--ghost btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>

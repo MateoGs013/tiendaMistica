@@ -22,7 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../index.php?sec=cuenta");
             exit;
         } else {
-            $_SESSION['error'] = "Usuario o contraseña incorrectos";
+            // Si no hay un error específico en la sesión, mostrar el genérico
+            if (!isset($_SESSION['error'])) {
+                $_SESSION['error'] = "Usuario o contraseña incorrectos";
+            }
             $_SESSION['old_email'] = $email;
             header("Location: ../index.php?sec=login");
             exit;

@@ -15,7 +15,7 @@ unset($_SESSION['success']);
         <h1 class="admin-section-title">Duendes</h1>
         <p class="admin-section-subtitle">Supervisá fichas mágicas, disponibilidad y rarezas directamente desde la consola</p>
     </div>
-    <a href="admin/index.php?sec=duende_crear" class="btn-arc btn-arc--primary">
+    <a href="index.php?sec=duende_crear" class="btn-arc btn-arc--primary">
         <span>+ Crear Duende</span>
     </a>
 </div>
@@ -83,15 +83,13 @@ unset($_SESSION['success']);
                                 <span class="admin-badge admin-badge--inactive">Pausado</span>
                             <?php endif; ?>
                         </td>
-                        <td>
-                            <td class="admin-table__actions">
-                                <a href="admin/index.php?sec=duende_editar&id=<?php echo $d['id_duende']; ?>" class="admin-action-link admin-action-link--edit">
-                                    ✏️ Editar
-                                </a>
-                                <a href="#" onclick="confirmarBorrado(<?php echo $d['id_duende']; ?>, '<?php echo htmlspecialchars($d['nombre'], ENT_QUOTES); ?>'); return false;" class="admin-action-link admin-action-link--delete">
-                                    🗑️ Borrar
-                                </a>
-                            </div>
+                        <td class="admin-table__actions">
+                            <a href="index.php?sec=duende_editar&id=<?php echo $d['id_duende']; ?>" class="admin-action-link admin-action-link--edit">
+                                ✏️ Editar
+                            </a>
+                            <a href="#" onclick="confirmarBorrado(<?php echo $d['id_duende']; ?>, '<?php echo htmlspecialchars($d['nombre'], ENT_QUOTES); ?>'); return false;" class="admin-action-link admin-action-link--delete">
+                                🗑️ Borrar
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -103,7 +101,7 @@ unset($_SESSION['success']);
         <div class="admin-empty-state__icon">⚙️</div>
         <h3 class="admin-empty-state__title">Todavía no hay duendes registrados</h3>
         <p class="admin-empty-state__text">Creá el primero para abrir el portal de criaturas místicas</p>
-        <a href="admin/index.php?sec=duende_crear" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="index.php?sec=duende_crear" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>+ Crear Duende</span>
         </a>
     </div>
@@ -111,9 +109,11 @@ unset($_SESSION['success']);
 
 <script>
 function confirmarBorrado(id, nombre) {
-    if (confirm('¿Estás seguro de que quieres eliminar el duende "' + nombre + '"?\n\nEsta acción no se puede deshacer.')) {
-        window.location.href = '/tienda_mistica/admin/actions/duende_borrar_acc.php?id=' + id + '&confirmar=1';
-    }
+    showConfirm('¿Estás seguro de que quieres eliminar el duende "' + nombre + '"?\n\nEsta acción no se puede deshacer.', 'Confirmar eliminación').then(result => {
+        if (result) {
+            window.location.href = 'actions/duende_borrar_acc.php?id=' + id + '&confirmar=1';
+        }
+    });
 }
 </script>
 

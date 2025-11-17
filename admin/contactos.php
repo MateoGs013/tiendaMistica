@@ -53,15 +53,13 @@ $msg = $_GET['msg'] ?? null;
                             <div class="admin-table__message"><?php echo htmlspecialchars($c['mensaje']); ?></div>
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($c['fecha_envio'])); ?></td>
-                        <td>
-                            <td class="admin-table__actions">
-                                <a href="admin/index.php?sec=contacto_ver&id=<?php echo $c['id_contacto']; ?>" class="admin-action-link admin-action-link--edit">
-                                    👁️ Ver
-                                </a>
-                                <a href="#" onclick="confirmarBorrado(<?php echo $c['id_contacto']; ?>); return false;" class="admin-action-link admin-action-link--delete">
-                                    🗑️ Borrar
-                                </a>
-                            </div>
+                        <td class="admin-table__actions">
+                            <a href="index.php?sec=contacto_ver&id=<?php echo $c['id_contacto']; ?>" class="admin-action-link admin-action-link--edit">
+                                👁️ Ver
+                            </a>
+                            <a href="#" onclick="confirmarBorrado(<?php echo $c['id_contacto']; ?>); return false;" class="admin-action-link admin-action-link--delete">
+                                🗑️ Borrar
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -78,9 +76,11 @@ $msg = $_GET['msg'] ?? null;
 
 <script>
 function confirmarBorrado(id) {
-    if (confirm('¿Estás seguro de que quieres eliminar este mensaje?\n\nEsta acción no se puede deshacer.')) {
-        window.location.href = '/tienda_mistica/admin/actions/contacto_borrar_acc.php?id=' + id + '&confirmar=1';
-    }
+    showConfirm('¿Estás seguro de que quieres eliminar este mensaje?\n\nEsta acción no se puede deshacer.', 'Confirmar eliminación').then(result => {
+        if (result) {
+            window.location.href = 'actions/contacto_borrar_acc.php?id=' + id + '&confirmar=1';
+        }
+    });
 }
 </script>
 

@@ -75,12 +75,10 @@ $msg = $_GET['msg'] ?? null;
                             <span class="<?php echo $badgeClass; ?>"><?php echo ucfirst($estado); ?></span>
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($p['fecha_pedido'])); ?></td>
-                        <td>
-                            <td class="admin-table__actions">
-                                <a href="admin/index.php?sec=pedido_ver&id=<?php echo $p['id_pedido']; ?>" class="admin-action-link admin-action-link--edit">
-                                    👁️ Ver Detalles
-                                </a>
-                            </div>
+                        <td class="admin-table__actions">
+                            <a href="index.php?sec=pedido_ver&id=<?php echo $p['id_pedido']; ?>" class="admin-action-link admin-action-link--edit">
+                                👁️ Ver Detalles
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

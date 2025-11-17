@@ -8,12 +8,12 @@ require_admin();
 if (!empty($_GET['id']) && isset($_GET['confirmar'])) {
     $id = (int)$_GET['id'];
     if (Blog::delete($id)) {
-        header('Location: ' . 'admin/index.php?sec=blogs&msg=eliminado');
+        header('Location: ' . '../index.php?sec=blogs&msg=eliminado');
     } else {
-        header('Location: ' . 'admin/index.php?sec=blogs&error=no_eliminar');
+        header('Location: ' . '../index.php?sec=blogs&error=no_eliminar');
     }
     exit;
 }
 
-header('Location: ' . 'admin/index.php?sec=blogs');
+header('Location: ' . '../index.php?sec=blogs');
 exit;

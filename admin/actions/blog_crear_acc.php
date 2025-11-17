@@ -27,36 +27,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($data['titulo'])) {
         $_SESSION['error'] = "El título es obligatorio";
         $_SESSION['old_data'] = $data;
-        header("Location: " . 'admin/index.php?sec=blog_crear');
+        header("Location: " . '../index.php?sec=blog_crear');
         exit;
     }
     
     if (empty($data['slug'])) {
         $_SESSION['error'] = "El slug es obligatorio";
         $_SESSION['old_data'] = $data;
-        header("Location: " . 'admin/index.php?sec=blog_crear');
+        header("Location: " . '../index.php?sec=blog_crear');
         exit;
     }
     
     try {
         if (Blog::create($data)) {
             $_SESSION['success'] = "Blog creado exitosamente";
-            header("Location: " . 'admin/index.php?sec=blogs');
+            header("Location: " . '../index.php?sec=blogs');
             exit;
         } else {
             $_SESSION['error'] = "Error al crear el blog";
             $_SESSION['old_data'] = $data;
-            header("Location: " . 'admin/index.php?sec=blog_crear');
+            header("Location: " . '../index.php?sec=blog_crear');
             exit;
         }
     } catch (Exception $e) {
         error_log("Error al crear blog: " . $e->getMessage());
         $_SESSION['error'] = "Error al crear el blog. Por favor, intenta nuevamente.";
         $_SESSION['old_data'] = $data;
-        header("Location: " . 'admin/index.php?sec=blog_crear');
+        header("Location: " . '../index.php?sec=blog_crear');
         exit;
     }
 } else {
-    header("Location: " . 'admin/index.php?sec=blog_crear');
+    header("Location: " . '../index.php?sec=blog_crear');
     exit;
 }

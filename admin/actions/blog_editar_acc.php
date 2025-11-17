@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($id <= 0) {
         $_SESSION['error'] = "ID de blog inválido";
-        header("Location: " . 'admin/index.php?sec=blogs');
+        header("Location: " . '../index.php?sec=blogs');
         exit;
     }
     
@@ -29,33 +29,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (empty($data['titulo'])) {
         $_SESSION['error'] = "El título es obligatorio";
-        header("Location: " . 'admin/index.php?sec=blog_editar&id=' . $id);
+        header("Location: " . '../index.php?sec=blog_editar&id=' . $id);
         exit;
     }
     
     if (empty($data['slug'])) {
         $_SESSION['error'] = "El slug es obligatorio";
-        header("Location: " . 'admin/index.php?sec=blog_editar&id=' . $id);
+        header("Location: " . '../index.php?sec=blog_editar&id=' . $id);
         exit;
     }
     
     try {
         if (Blog::update($id, $data)) {
             $_SESSION['success'] = "Blog actualizado exitosamente";
-            header("Location: " . 'admin/index.php?sec=blogs');
+            header("Location: " . '../index.php?sec=blogs');
             exit;
         } else {
             $_SESSION['error'] = "Error al actualizar el blog";
-            header("Location: " . 'admin/index.php?sec=blog_editar&id=' . $id);
+            header("Location: " . '../index.php?sec=blog_editar&id=' . $id);
             exit;
         }
     } catch (Exception $e) {
         error_log("Error al actualizar blog: " . $e->getMessage());
         $_SESSION['error'] = "Error al actualizar el blog. Por favor, intenta nuevamente.";
-        header("Location: " . 'admin/index.php?sec=blog_editar&id=' . $id);
+        header("Location: " . '../index.php?sec=blog_editar&id=' . $id);
         exit;
     }
 } else {
-    header("Location: " . 'admin/index.php?sec=blogs');
+    header("Location: " . '../index.php?sec=blogs');
     exit;
 }

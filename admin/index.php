@@ -4,6 +4,14 @@
 $sec = isset($_GET['sec']) ? $_GET['sec'] : 'inicio';
 $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
 
+// Handle logout
+if ($sec === 'logout') {
+    require_once __DIR__ . '/includes/functions.php';
+    logout_usuario();
+    header('Location: ../index.php?sec=inicio');
+    exit;
+}
+
 // Map sections to files
 $secciones_validas = [
     'inicio' => 'inicio.php',

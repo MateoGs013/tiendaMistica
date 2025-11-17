@@ -15,7 +15,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
         <h1 class="admin-section-title">Usuarios</h1>
         <p class="admin-section-subtitle">Administrá roles, accesos y estados de la tripulación de la tienda</p>
     </div>
-    <a href="admin/index.php?sec=usuario_crear" class="btn-arc btn-arc--primary">
+    <a href="index.php?sec=usuario_crear" class="btn-arc btn-arc--primary">
         <span>+ Crear Usuario</span>
     </a>
 </div>
@@ -74,23 +74,21 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
                             <?php endif; ?>
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($usuario['fecha_alta'] ?? 'now')); ?></td>
-                        <td>
-                            <td class="admin-table__actions">
-                                <a href="admin/index.php?sec=usuario_editar&id=<?php echo $usuario['id_usuario']; ?>" class="admin-action-link admin-action-link--edit">
-                                    ✏️ Editar
-                                </a>
-                                <?php if ((int)$usuario['id_usuario'] !== (int)$usuarioActual): ?>
-                                    <form method="post" action="/tienda_mistica/admin/actions/usuario_estado_acc.php" style="display: inline;">
-                                        <input type="hidden" name="id" value="<?php echo (int)$usuario['id_usuario']; ?>">
-                                        <input type="hidden" name="activo" value="<?php echo $activo ? 0 : 1; ?>">
-                                        <button type="submit" class="admin-action-link <?php echo $activo ? 'admin-action-link--delete' : 'admin-action-link--activate'; ?>">
-                                            <?php echo $activo ? '🔴 Desactivar' : '✅ Activar'; ?>
-                                        </button>
-                                    </form>
-                                <?php else: ?>
-                                    <span class="admin-badge admin-badge--warning">Sesión Actual</span>
-                                <?php endif; ?>
-                            </div>
+                        <td class="admin-table__actions">
+                            <a href="index.php?sec=usuario_editar&id=<?php echo $usuario['id_usuario']; ?>" class="admin-action-link admin-action-link--edit">
+                                ✏️ Editar
+                            </a>
+                            <?php if ((int)$usuario['id_usuario'] !== (int)$usuarioActual): ?>
+                                <form method="post" action="actions/usuario_estado_acc.php" style="display: inline;">
+                                    <input type="hidden" name="id" value="<?php echo (int)$usuario['id_usuario']; ?>">
+                                    <input type="hidden" name="activo" value="<?php echo $activo ? 0 : 1; ?>">
+                                    <button type="submit" class="admin-action-link <?php echo $activo ? 'admin-action-link--delete' : 'admin-action-link--activate'; ?>">
+                                        <?php echo $activo ? '🔴 Desactivar' : '✅ Activar'; ?>
+                                    </button>
+                                </form>
+                            <?php else: ?>
+                                <span class="admin-badge admin-badge--warning">Sesión Actual</span>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -102,7 +100,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
         <div class="admin-empty-state__icon">👥</div>
         <h3 class="admin-empty-state__title">No hay usuarios registrados</h3>
         <p class="admin-empty-state__text">Creá el primero para compartir el control del panel</p>
-        <a href="admin/index.php?sec=usuario_crear" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="index.php?sec=usuario_crear" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>+ Crear Usuario</span>
         </a>
     </div>

@@ -52,5 +52,5 @@ switch ($action) {
 
 // Redirigir según el origen
 $redirect = $_POST['redirect'] ?? $_GET['redirect'] ?? 'carrito';
-header("Location: /tienda_mistica/" . $redirect);
+header("Location: ../index.php?sec=" . $redirect);
 exit;

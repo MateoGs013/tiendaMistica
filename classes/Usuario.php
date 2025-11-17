@@ -8,7 +8,7 @@ class Usuario {
     public static function findByEmail(string $email): ?array {
         try {
             $cn = DB::get();
-            $st = $cn->prepare("SELECT * FROM usuarios WHERE email = ? AND activo = 1 LIMIT 1");
+            $st = $cn->prepare("SELECT * FROM usuarios WHERE email = ? LIMIT 1");
             $st->execute([$email]); // @phpstan-ignore-line
             $row = $st->fetch();
             return $row ?: null;

@@ -8,14 +8,14 @@ require_once __DIR__ . '/../../classes/Usuario.php';
 require_admin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . 'admin/index.php?sec=usuarios');
+    header('Location: ' . '../index.php?sec=usuarios');
     exit;
 }
 
 $id = (int)($_POST['id'] ?? 0);
 if ($id <= 0) {
     $_SESSION['error'] = 'ID de usuario inválido.';
-    header('Location: ' . 'admin/index.php?sec=usuarios');
+    header('Location: ' . '../index.php?sec=usuarios');
     exit;
 }
 
@@ -38,21 +38,21 @@ $old = [
 if ($nombre === '' || $email === '') {
     $_SESSION['error'] = 'El nombre y el email son obligatorios.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+    header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El email no es válido.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+    header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
     exit;
 }
 
 if (!in_array($rol, ['usuario', 'admin'], true)) {
     $_SESSION['error'] = 'El rol seleccionado no es válido.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+    header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
     exit;
 }
 
@@ -60,13 +60,13 @@ if ($password !== '' || $password2 !== '') {
     if ($password !== $password2) {
         $_SESSION['error'] = 'Las contraseñas no coinciden.';
         $_SESSION['old_data'] = $old;
-        header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+        header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
         exit;
     }
     if (strlen($password) < 6) {
         $_SESSION['error'] = 'La nueva contraseña debe tener al menos 6 caracteres.';
         $_SESSION['old_data'] = $old;
-        header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+        header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
         exit;
     }
 }
@@ -74,7 +74,7 @@ if ($password !== '' || $password2 !== '') {
 if (Usuario::emailExists($email, $id)) {
     $_SESSION['error'] = 'Ya existe un usuario con ese email.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+    header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
     exit;
 }
 
@@ -84,7 +84,7 @@ $esActual = $sesion && (int)$sesion['id_usuario'] === $id;
 if ($esActual && (!$activo || $rol !== 'admin')) {
     $_SESSION['error'] = 'No podés desactivar tu propia cuenta ni quitarte el rol de administrador mientras estés logueado.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+    header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
     exit;
 }
 
@@ -106,11 +106,11 @@ if (Usuario::updateAdmin($id, $data)) {
         $_SESSION['usuario']['email'] = $email;
     }
     $_SESSION['success'] = 'Usuario actualizado correctamente.';
-    header('Location: ' . 'admin/index.php?sec=usuarios');
+    header('Location: ' . '../index.php?sec=usuarios');
     exit;
 }
 
 $_SESSION['error'] = 'No se pudo actualizar el usuario.';
 $_SESSION['old_data'] = $old;
-header('Location: ' . 'admin/index.php?sec=usuario_editar&id=' . $id);
+header('Location: ' . '../index.php?sec=usuario_editar&id=' . $id);
 exit;
