@@ -52,7 +52,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
         <div class="empty-icon">🛒</div>
         <h2 class="empty-title">Tu carrito está vacío</h2>
         <p class="empty-text">Explorá el catálogo y agregá power-ups a tu colección</p>
-        <a href="<?php echo url('catalogo'); ?>" class="btn-arc btn-arc--primary">
+        <a href="index.php?sec=catalogo" class="btn-arc btn-arc--primary">
             Ver Catálogo
         </a>
     </div>
@@ -107,7 +107,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
         </div>
         
         <div class="carrito-actions">
-            <a href="<?php echo url('catalogo'); ?>" class="btn-arc btn-arc--secondary">
+            <a href="index.php?sec=catalogo" class="btn-arc btn-arc--secondary">
                 ← Seguir Comprando
             </a>
             <form method="post" action="/tienda_mistica/actions/carrito_actualizar.php" class="inline-form" onsubmit="return confirm('¿Vaciar todo el carrito?');">
@@ -116,7 +116,7 @@ unset($_SESSION['mensaje'], $_SESSION['error']);
                     Vaciar Carrito
                 </button>
             </form>
-            <a href="<?php echo url('checkout'); ?>" class="btn-arc btn-arc--checkout">
+            <a href="index.php?sec=checkout" class="btn-arc btn-arc--checkout">
                 Proceder al Checkout →
             </a>
         </div>

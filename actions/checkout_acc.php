@@ -8,7 +8,7 @@ require_once __DIR__ . '/../classes/Pedido.php';
 
 // Verificar que el usuario esté logueado
 if (empty($_SESSION['usuario'])) {
-    header("Location: " . url('login'));
+    header("Location: ../index.php?sec=login");
     exit;
 }
 
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['old_ciudad'] = $ciudad;
         $_SESSION['old_codigo_postal'] = $codigo_postal;
         $_SESSION['old_telefono'] = $telefono;
-        header("Location: " . url('checkout'));
+        header("Location: ../index.php?sec=checkout");
         exit;
     }
     
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Limpiar datos temporales
             unset($_SESSION['old_nombre'], $_SESSION['old_direccion'], $_SESSION['old_ciudad']);
             unset($_SESSION['old_codigo_postal'], $_SESSION['old_telefono']);
-            header("Location: " . url('checkout'));
+            header("Location: ../index.php?sec=checkout");
             exit;
         } else {
             $_SESSION['error'] = "No se pudo procesar el pedido. Intenta nuevamente.";
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['old_ciudad'] = $ciudad;
             $_SESSION['old_codigo_postal'] = $codigo_postal;
             $_SESSION['old_telefono'] = $telefono;
-            header("Location: " . url('checkout'));
+            header("Location: ../index.php?sec=checkout");
             exit;
         }
     } catch (Exception $e) {
@@ -61,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['old_ciudad'] = $ciudad;
         $_SESSION['old_codigo_postal'] = $codigo_postal;
         $_SESSION['old_telefono'] = $telefono;
-        header("Location: " . url('checkout'));
+        header("Location: ../index.php?sec=checkout");
         exit;
     }
 } else {
-    header("Location: " . url('checkout'));
+    header("Location: ../index.php?sec=checkout");
     exit;
 }

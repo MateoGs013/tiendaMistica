@@ -10,7 +10,7 @@ if (!$duende) {
     <div class="panel-glass rounded-3xl border border-arcade-cyan/35 p-8 text-center shadow-neon">
         <h1 class="text-2xl font-semibold text-white">Duende no encontrado</h1>
         <p class="mt-3 text-sm text-slate-300">El duende solicitado no existe o ya fue retirado del catálogo.</p>
-        <a href="<?php echo admin_url('duendes'); ?>" class="button-arcade mt-6 inline-flex">Volver al listado</a>
+        <a href="admin/index.php?sec=duendes" class="button-arcade mt-6 inline-flex">Volver al listado</a>
     </div>
     <?php
     require_once __DIR__ . '/includes/footer.php';
@@ -34,7 +34,7 @@ if (empty($_POST)) {
             <h1 class="text-3xl font-semibold text-white">Editar duende</h1>
             <p class="text-sm text-slate-300">Ajustá los parámetros mágicos de <?php echo htmlspecialchars($duende['nombre']); ?>.</p>
         </div>
-        <a href="<?php echo admin_url('duendes'); ?>" class="button-ghost">← Volver al listado</a>
+        <a href="admin/index.php?sec=duendes" class="button-ghost">← Volver al listado</a>
     </div>
 
     <?php if ($success): ?>
@@ -199,7 +199,7 @@ if (empty($_POST)) {
 
         <div class="flex flex-wrap items-center gap-4">
             <button type="submit" class="button-arcade">Guardar cambios</button>
-            <a href="<?php echo admin_url('duendes'); ?>" class="button-ghost">Cancelar</a>
+            <a href="admin/index.php?sec=duendes" class="button-ghost">Cancelar</a>
         </div>
     </form>
 </div>

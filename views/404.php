@@ -7,11 +7,11 @@
             El duende guardián no reconoce esta sección. <br>
             Revisá el mapa o regresá al salón principal.
         </p>
-        <div class="error-404__actions">
-            <a href="<?php echo url('inicio'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+        <div class="error-404__a            <a href="index.php?sec=inicio" class="btn-arc btn-arc--primary btn-arc--lg">
+arc--lg">
                 <span>Ir al Inicio</span>
-            </a>
-            <a href="<?php echo url('catalogo'); ?>" class="btn-arc btn-arc--secondary btn-arc--lg">
+                <a href="index.php?sec=catalogo" class="btn-arc btn-arc--secondary btn-arc--lg">
+btn-arc--lg">
                 <span>Ver Catálogo</span>
             </a>
         </div>

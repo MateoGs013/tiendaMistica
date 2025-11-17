@@ -28,7 +28,7 @@
                                 <?php foreach ($seccionesMenu as $seccion): ?>
                                     <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
                                         <li>
-                                            <a href="<?php echo url($seccion['vinculo']); ?>">
+                                            <a href="index.php?sec=<?php echo $seccion['vinculo']; ?>">
                                                 <i class="fas fa-chevron-right"></i>
                                                 <span><?php echo htmlspecialchars($seccion['titulo']); ?></span>
                                             </a>

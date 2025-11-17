@@ -54,8 +54,8 @@ $msg = $_GET['msg'] ?? null;
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($c['fecha_envio'])); ?></td>
                         <td>
-                            <div class="admin-table__actions">
-                                <a href="<?php echo admin_url('contacto_ver', ['id' => $c['id_contacto']]); ?>" class="admin-action-link admin-action-link--edit">
+                            <td class="admin-table__actions">
+                                <a href="admin/index.php?sec=contacto_ver&id=<?php echo $c['id_contacto']; ?>" class="admin-action-link admin-action-link--edit">
                                     👁️ Ver
                                 </a>
                                 <a href="#" onclick="confirmarBorrado(<?php echo $c['id_contacto']; ?>); return false;" class="admin-action-link admin-action-link--delete">
@@ -79,7 +79,7 @@ $msg = $_GET['msg'] ?? null;
 <script>
 function confirmarBorrado(id) {
     if (confirm('¿Estás seguro de que quieres eliminar este mensaje?\n\nEsta acción no se puede deshacer.')) {
-        window.location.href = '/tienda_mistica/admin/contacto/borrar/' + id + '?confirmar=1';
+        window.location.href = '/tienda_mistica/admin/actions/contacto_borrar_acc.php?id=' + id + '&confirmar=1';
     }
 }
 </script>

@@ -14,7 +14,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
         <h1 class="admin-section-title">Crear Duende</h1>
         <p class="admin-section-subtitle">Configurá todos los parámetros del duende antes de abrir el portal de venta</p>
     </div>
-    <a href="<?php echo admin_url('duendes'); ?>" class="btn-arc btn-arc--secondary">
+    <a href="admin/index.php?sec=duendes" class="btn-arc btn-arc--secondary">
         <span>← Volver</span>
     </a>
 </div>
@@ -191,7 +191,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Crear Duende</span>
         </button>
-        <a href="<?php echo admin_url('duendes'); ?>" class="btn-arc btn-arc--secondary btn-arc--lg">
+        <a href="admin/index.php?sec=duendes" class="btn-arc btn-arc--secondary btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>
@@ -329,7 +329,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
 
         <div class="flex flex-wrap items-center gap-4">
             <button type="submit" class="button-arcade">Crear duende</button>
-            <a href="<?php echo admin_url('duendes'); ?>" class="button-ghost">Cancelar</a>
+            <a href="admin/index.php?sec=duendes" class="button-ghost">Cancelar</a>
         </div>
     </form>
 </div>

@@ -76,8 +76,8 @@ $msg = $_GET['msg'] ?? null;
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($p['fecha_pedido'])); ?></td>
                         <td>
-                            <div class="admin-table__actions">
-                                <a href="<?php echo admin_url('pedido_ver', ['id' => $p['id_pedido']]); ?>" class="admin-action-link admin-action-link--edit">
+                            <td class="admin-table__actions">
+                                <a href="admin/index.php?sec=pedido_ver&id=<?php echo $p['id_pedido']; ?>" class="admin-action-link admin-action-link--edit">
                                     👁️ Ver Detalles
                                 </a>
                             </div>

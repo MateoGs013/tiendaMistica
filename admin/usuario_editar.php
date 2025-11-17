@@ -11,7 +11,7 @@ if (!$usuario) {
         <div class="admin-empty-state__icon">⚠️</div>
         <h3 class="admin-empty-state__title">Usuario no encontrado</h3>
         <p class="admin-empty-state__text">El perfil solicitado no existe o fue dado de baja</p>
-        <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Volver al listado</span>
         </a>
     </div>
@@ -34,7 +34,7 @@ $form = array_merge($usuario, $old);
         <h1 class="admin-section-title">Editar Usuario #<?php echo (int)$usuario['id_usuario']; ?></h1>
         <p class="admin-section-subtitle">Actualizá datos, rol o credenciales según corresponda</p>
     </div>
-    <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost">
+    <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>
@@ -117,7 +117,7 @@ $form = array_merge($usuario, $old);
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Guardar Cambios</span>
         </button>
-        <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost btn-arc--lg">
+        <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>

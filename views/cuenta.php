@@ -34,7 +34,7 @@ $pedidos = $idUsuario > 0 ? Pedido::porUsuario($idUsuario) : [];
             </div>
         </div>
         
-        <a href="<?php echo url('logout'); ?>" class="btn-arc btn-arc--danger btn-arc--lg">
+        <a href="index.php?sec=logout" class="btn-arc btn-arc--danger btn-arc--lg">
             <span>Cerrar Sesión</span>
         </a>
     </div>
@@ -46,7 +46,7 @@ $pedidos = $idUsuario > 0 ? Pedido::porUsuario($idUsuario) : [];
         <?php if (empty($pedidos)): ?>
             <div class="cuenta-orders__empty">
                 <p>Aún no registramos pedidos.</p>
-                <p>Volvé al <a href="<?php echo url('catalogo'); ?>" class="link-primary">catálogo</a> y desbloqueá tu primer combo.</p>
+                <p>Volvé al <a href="index.php?sec=catalogo" class="link-primary">catálogo</a> y desbloqueá tu primer combo.</p>
             </div>
         <?php else: ?>
             <div class="cuenta-orders__list">

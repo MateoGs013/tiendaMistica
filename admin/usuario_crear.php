@@ -12,7 +12,7 @@ unset($_SESSION['error'], $_SESSION['old_data']);
         <h1 class="admin-section-title">Crear Usuario</h1>
         <p class="admin-section-subtitle">Asigná credenciales y rol para sumar a la tripulación</p>
     </div>
-    <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost">
+    <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>
@@ -85,7 +85,7 @@ unset($_SESSION['error'], $_SESSION['old_data']);
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Crear Usuario</span>
         </button>
-        <a href="<?php echo admin_url('usuarios'); ?>" class="btn-arc btn-arc--ghost btn-arc--lg">
+        <a href="admin/index.php?sec=usuarios" class="btn-arc btn-arc--ghost btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>

@@ -154,7 +154,7 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
     <header class="arcade-header" id="main-header">
             <div class="arcade-header__inner">
                 <!-- Logo -->
-                <a href="<?php echo url('inicio'); ?>" class="arcade-logo">
+                <a href="index.php?sec=inicio" class="arcade-logo">
                     <div class="arcade-logo__icon">
                         <i class="fas fa-hat-wizard"></i>
                     </div>
@@ -169,7 +169,7 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                     <?php if (!empty($seccionesMenu)): ?>
                         <?php foreach ($seccionesMenu as $seccion): ?>
                             <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
-                                <a href="<?php echo url($seccion['vinculo']); ?>" class="arcade-nav__link">
+                                <a href="index.php?sec=<?php echo $seccion['vinculo']; ?>" class="arcade-nav__link">
                                     <?php echo htmlspecialchars($seccion['titulo']); ?>
                                 </a>
                             <?php endif; ?>
@@ -180,7 +180,7 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                 <!-- User Actions -->
                 <div class="arcade-actions">
                     <!-- Cart -->
-                    <a href="<?php echo url('carrito'); ?>" class="arcade-action-btn arcade-action-btn--cart" title="Carrito">
+                    <a href="index.php?sec=carrito" class="arcade-action-btn arcade-action-btn--cart" title="Carrito">
                         <i class="fas fa-shopping-cart"></i>
                         <?php if ($cantidadCarrito > 0): ?>
                             <span class="arcade-badge"><?php echo $cantidadCarrito; ?></span>
@@ -194,28 +194,28 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                                 <i class="fas fa-user-circle"></i>
                             </button>
                             <div class="arcade-dropdown" id="user-menu" hidden>
-                                <a href="<?php echo url('cuenta'); ?>" class="arcade-dropdown__item">
+                                <a href="index.php?sec=cuenta" class="arcade-dropdown__item">
                                     <i class="fas fa-user"></i>
                                     <span>Mi Cuenta</span>
                                 </a>
                                 <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
-                                    <a href="/tienda_mistica/admin/" class="arcade-dropdown__item">
+                                    <a href="admin/index.php?sec=inicio" class="arcade-dropdown__item">
                                         <i class="fas fa-shield-alt"></i>
                                         <span>Admin</span>
                                     </a>
                                 <?php endif; ?>
                                 <div class="arcade-dropdown__divider"></div>
-                                <a href="<?php echo url('logout'); ?>" class="arcade-dropdown__item arcade-dropdown__item--danger">
+                                <a href="index.php?sec=logout" class="arcade-dropdown__item arcade-dropdown__item--danger">
                                     <i class="fas fa-sign-out-alt"></i>
                                     <span>Salir</span>
                                 </a>
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="<?php echo url('login'); ?>" class="arcade-action-btn" title="Iniciar sesión">
+                        <a href="index.php?sec=login" class="arcade-action-btn" title="Iniciar sesión">
                             <i class="fas fa-sign-in-alt"></i>
                         </a>
-                        <a href="<?php echo url('registro'); ?>" class="arcade-btn arcade-btn--primary">
+                        <a href="index.php?sec=registro" class="arcade-btn arcade-btn--primary">
                             <span>REGISTRARSE</span>
                         </a>
                     <?php endif; ?>
@@ -235,7 +235,7 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                     <?php if (!empty($seccionesMenu)): ?>
                         <?php foreach ($seccionesMenu as $seccion): ?>
                             <?php if (!empty($seccion['vinculo']) && !empty($seccion['titulo'])): ?>
-                                <a href="<?php echo url($seccion['vinculo']); ?>" class="arcade-mobile-nav__link">
+                                <a href="index.php?sec=<?php echo $seccion['vinculo']; ?>" class="arcade-mobile-nav__link">
                                     <span><?php echo htmlspecialchars($seccion['titulo']); ?></span>
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
@@ -245,27 +245,27 @@ $bodyClassAttribute = implode(' ', $bodyClassList);
                     
                     <div class="arcade-mobile-nav__divider"></div>
                     
-                    <?php if (!empty($_SESSION['usuario'])): ?>
-                        <a href="<?php echo url('cuenta'); ?>" class="arcade-mobile-nav__link">
+                    <?php if (isset($_SESSION['usuario'])): ?>
+                        <a href="index.php?sec=cuenta" class="arcade-mobile-nav__link">
                             <span><i class="fas fa-user"></i> Mi Cuenta</span>
                             <i class="fas fa-chevron-right"></i>
                         </a>
                         <?php if ($_SESSION['usuario']['rol'] === 'admin'): ?>
-                            <a href="/tienda_mistica/admin/" class="arcade-mobile-nav__link">
+                            <a href="admin/index.php?sec=inicio" class="arcade-mobile-nav__link">
                                 <span><i class="fas fa-shield-alt"></i> Admin</span>
                                 <i class="fas fa-chevron-right"></i>
                             </a>
                         <?php endif; ?>
-                        <a href="<?php echo url('logout'); ?>" class="arcade-mobile-nav__link arcade-mobile-nav__link--danger">
+                        <a href="index.php?sec=logout" class="arcade-mobile-nav__link arcade-mobile-nav__link--danger">
                             <span><i class="fas fa-sign-out-alt"></i> Salir</span>
                             <i class="fas fa-chevron-right"></i>
                         </a>
                     <?php else: ?>
-                        <a href="<?php echo url('login'); ?>" class="arcade-mobile-nav__link">
+                        <a href="index.php?sec=login" class="arcade-mobile-nav__link">
                             <span><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</span>
                             <i class="fas fa-chevron-right"></i>
                         </a>
-                        <a href="<?php echo url('registro'); ?>" class="arcade-mobile-nav__link arcade-mobile-nav__link--primary">
+                        <a href="index.php?sec=registro" class="arcade-mobile-nav__link arcade-mobile-nav__link--primary">
                             <span><i class="fas fa-user-plus"></i> Registrarse</span>
                             <i class="fas fa-chevron-right"></i>
                         </a>

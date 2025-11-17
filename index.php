@@ -14,7 +14,13 @@ try {
     error_log("Error al cargar secciones en index.php: " . $e->getMessage());
 }
 
-$sec = isset($_GET['sec']) ? $_GET['sec'] : 'inicio';
+// Si no hay parámetro sec, redirigir a inicio con GET explícito
+if (!isset($_GET['sec'])) {
+    header("Location: index.php?sec=inicio");
+    exit;
+}
+
+$sec = $_GET['sec'];
 
 // Handle blog detail with slug
 if ($sec === 'blog' && !empty($_GET['slug'])) {
@@ -32,6 +38,12 @@ if (!in_array($sec, $secciones_validas) && !in_array($sec, [
 }
 
 /* Acciones simples que redirigen a vistas o ejecutan lógica */
+if ($sec === 'logout') {
+    logout_usuario();
+    header("Location: index.php?sec=inicio");
+    exit;
+}
+
 if ($sec === 'agregar_carrito' && !empty($_GET['id'])) {
     require_login();
     require_once "classes/Carrito.php";

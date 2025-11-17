@@ -15,21 +15,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
         $_SESSION['old_mensaje'] = $mensaje;
-        header("Location: " . url('contacto'));
+        header("Location: ../index.php?sec=contacto");
         exit;
     }
     
     try {
         if (Contacto::crear($nombre, $email, $mensaje)) {
             $_SESSION['success'] = "Mensaje enviado correctamente.";
-            header("Location: " . url('contacto'));
+            header("Location: ../index.php?sec=contacto");
             exit;
         } else {
             $_SESSION['error'] = "No se pudo guardar el mensaje.";
             $_SESSION['old_nombre'] = $nombre;
             $_SESSION['old_email'] = $email;
             $_SESSION['old_mensaje'] = $mensaje;
-            header("Location: " . url('contacto'));
+            header("Location: ../index.php?sec=contacto");
             exit;
         }
     } catch (Exception $e) {
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
         $_SESSION['old_mensaje'] = $mensaje;
-        header("Location: " . url('contacto'));
+        header("Location: ../index.php?sec=contacto");
         exit;
     }
 } else {
-    header("Location: " . url('contacto'));
+    header("Location: ../index.php?sec=contacto");
     exit;
 }

@@ -93,8 +93,8 @@
     <section class="nosotros-cta">
         <p class="nosotros-cta__text">
             ¿Listo para elegir tu compañero mágico? 
-            <a href="<?php echo url('catalogo'); ?>" class="link-primary">Explorá el catálogo</a> o 
-            <a href="<?php echo url('contacto'); ?>" class="link-primary">escribinos</a> para recibir una recomendación personalizada.
+            <a href="index.php?sec=catalogo" class="link-primary">Explorá el catálogo</a> o 
+            <a href="index.php?sec=contacto" class="link-primary">escribinos</a> para recibir una recomendación personalizada.
         </p>
     </section>
 </div>

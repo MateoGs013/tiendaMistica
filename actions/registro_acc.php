@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Por favor completa todos los campos";
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
-        header("Location: " . url('registro'));
+        header("Location: ../index.php?sec=registro");
         exit;
     }
     
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Las contraseñas no coinciden";
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
-        header("Location: " . url('registro'));
+        header("Location: ../index.php?sec=registro");
         exit;
     }
     
@@ -31,20 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "La contraseña debe tener al menos 6 caracteres";
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
-        header("Location: " . url('registro'));
+        header("Location: ../index.php?sec=registro");
         exit;
     }
     
     try {
         if (Usuario::create($nombre, $email, $p1)) {
             $_SESSION['success'] = 'Registro exitoso. Ya puedes ingresar.';
-            header("Location: " . url('login'));
+            header("Location: ../index.php?sec=login");
             exit;
         } else {
             $_SESSION['error'] = "No se pudo registrar. El email ya está en uso.";
             $_SESSION['old_nombre'] = $nombre;
             $_SESSION['old_email'] = $email;
-            header("Location: " . url('registro'));
+            header("Location: ../index.php?sec=registro");
             exit;
         }
     } catch (Exception $e) {
@@ -52,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['error'] = "Error al registrar el usuario. Por favor, intenta nuevamente.";
         $_SESSION['old_nombre'] = $nombre;
         $_SESSION['old_email'] = $email;
-        header("Location: " . url('registro'));
+        header("Location: ../index.php?sec=registro");
         exit;
     }
 } else {
-    header("Location: " . url('registro'));
+    header("Location: ../index.php?sec=registro");
     exit;
 }

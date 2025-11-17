@@ -15,7 +15,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
         <h1 class="admin-section-title">Usuarios</h1>
         <p class="admin-section-subtitle">Administrá roles, accesos y estados de la tripulación de la tienda</p>
     </div>
-    <a href="<?php echo admin_url('usuario_crear'); ?>" class="btn-arc btn-arc--primary">
+    <a href="admin/index.php?sec=usuario_crear" class="btn-arc btn-arc--primary">
         <span>+ Crear Usuario</span>
     </a>
 </div>
@@ -75,8 +75,8 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
                         </td>
                         <td><?php echo date('d/m/Y H:i', strtotime($usuario['fecha_alta'] ?? 'now')); ?></td>
                         <td>
-                            <div class="admin-table__actions">
-                                <a href="<?php echo admin_url('usuario_editar', ['id' => $usuario['id_usuario']]); ?>" class="admin-action-link admin-action-link--edit">
+                            <td class="admin-table__actions">
+                                <a href="admin/index.php?sec=usuario_editar&id=<?php echo $usuario['id_usuario']; ?>" class="admin-action-link admin-action-link--edit">
                                     ✏️ Editar
                                 </a>
                                 <?php if ((int)$usuario['id_usuario'] !== (int)$usuarioActual): ?>
@@ -102,7 +102,7 @@ $usuarioActual = $_SESSION['usuario']['id_usuario'] ?? null;
         <div class="admin-empty-state__icon">👥</div>
         <h3 class="admin-empty-state__title">No hay usuarios registrados</h3>
         <p class="admin-empty-state__text">Creá el primero para compartir el control del panel</p>
-        <a href="<?php echo admin_url('usuario_crear'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="admin/index.php?sec=usuario_crear" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>+ Crear Usuario</span>
         </a>
     </div>

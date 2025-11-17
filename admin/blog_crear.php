@@ -14,7 +14,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
         <h1 class="admin-section-title">Crear Blog</h1>
         <p class="admin-section-subtitle">Redactá nueva sabiduría arcade para la comunidad</p>
     </div>
-    <a href="<?php echo admin_url('blogs'); ?>" class="btn-arc btn-arc--ghost">
+    <a href="admin/index.php?sec=blogs" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>
@@ -89,7 +89,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_data']);
         <button type="submit" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Crear Blog</span>
         </button>
-        <a href="<?php echo admin_url('blogs'); ?>" class="btn-arc btn-arc--ghost btn-arc--lg">
+        <a href="admin/index.php?sec=blogs" class="btn-arc btn-arc--ghost btn-arc--lg">
             <span>Cancelar</span>
         </a>
     </div>

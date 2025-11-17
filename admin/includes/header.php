@@ -4,12 +4,12 @@ require_once __DIR__ . '/url.php';
 require_admin();
 
 $adminNav = [
-    ['label' => 'Inicio', 'href' => admin_url('inicio')],
-    ['label' => 'Duendes', 'href' => admin_url('duendes')],
-    ['label' => 'Blogs', 'href' => admin_url('blogs')],
-    ['label' => 'Pedidos', 'href' => admin_url('pedidos')],
-    ['label' => 'Contactos', 'href' => admin_url('contactos')],
-    ['label' => 'Usuarios', 'href' => admin_url('usuarios')],
+    ['label' => 'Inicio', 'href' => 'admin/index.php?sec=inicio'],
+    ['label' => 'Duendes', 'href' => 'admin/index.php?sec=duendes'],
+    ['label' => 'Blogs', 'href' => 'admin/index.php?sec=blogs'],
+    ['label' => 'Pedidos', 'href' => 'admin/index.php?sec=pedidos'],
+    ['label' => 'Contactos', 'href' => 'admin/index.php?sec=contactos'],
+    ['label' => 'Usuarios', 'href' => 'admin/index.php?sec=usuarios'],
 ];
 ?>
 <!doctype html>
@@ -81,8 +81,8 @@ $adminNav = [
                         <?php foreach ($adminNav as $item): ?>
                             <a href="<?php echo $item['href']; ?>" class="nav-link"><?php echo htmlspecialchars($item['label']); ?></a>
                         <?php endforeach; ?>
-                        <a href="/tienda_mistica/" class="nav-link">Volver al sitio</a>
-                        <a href="/tienda_mistica/logout" class="nav-link">Salir</a>
+                        <a href="../index.php?sec=inicio" class="nav-link">Volver al sitio</a>
+                        <a href="index.php?sec=logout" class="nav-link">Salir</a>
                     </div>
                 </div>
             </div>

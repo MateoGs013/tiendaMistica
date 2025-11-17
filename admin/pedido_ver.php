@@ -11,7 +11,7 @@ if (!$pedido) {
         <div class="admin-empty-state__icon">⚠️</div>
         <h3 class="admin-empty-state__title">Pedido no encontrado</h3>
         <p class="admin-empty-state__text">No encontramos la orden solicitada. Puede que haya sido eliminada</p>
-        <a href="<?php echo admin_url('pedidos'); ?>" class="btn-arc btn-arc--primary btn-arc--lg">
+        <a href="admin/index.php?sec=pedidos" class="btn-arc btn-arc--primary btn-arc--lg">
             <span>Volver al listado</span>
         </a>
     </div>
@@ -33,7 +33,7 @@ unset($_SESSION['success'], $_SESSION['error']);
         <h1 class="admin-section-title">Pedido #<?php echo $pedido['id_pedido']; ?></h1>
         <p class="admin-section-subtitle">Revisá la orden y actualizá su estado en la consola arcade</p>
     </div>
-    <a href="<?php echo admin_url('pedidos'); ?>" class="btn-arc btn-arc--ghost">
+    <a href="admin/index.php?sec=pedidos" class="btn-arc btn-arc--ghost">
         <span>← Volver al listado</span>
     </a>
 </div>

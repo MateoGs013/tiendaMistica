@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <?php foreach ($activeChips as $chip): ?>
                     <span class="arcade-chip"><?php echo htmlspecialchars($chip); ?></span>
                 <?php endforeach; ?>
-                <a href="<?php echo url('catalogo'); ?>" class="arcade-chip arcade-chip--clear">
+                <a href="index.php?sec=catalogo" class="arcade-chip arcade-chip--clear">
                     <i class="fas fa-times"></i>
                     <span>Limpiar</span>
                 </a>
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="cards" role="list" data-card-list>
         <?php foreach ($duendes as $duende):
             $id = (int)($duende['id_duende'] ?? 0);
-            $detalleUrl = url('detalle_duende', ['id' => $id]);
+            $detalleUrl = "index.php?sec=detalle_duende&id={$id}";
             $carritoDisponible = $usuarioLogueado;
             $isDisponible = (int)($duende['disponible'] ?? 0) === 1;
             $imagenUrl = $duende['imagen_url'] ?? '';
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     <?php elseif (!$isDisponible): ?>
                         <button type="button" class="btn-arc secondary pixel-font pixel-xs" disabled>Agotado</button>
                     <?php else: ?>
-                        <a href="<?php echo url('login'); ?>" class="btn-arc secondary pixel-font pixel-xs">Ingresá</a>
+                        <a href="index.php?sec=login" class="btn-arc secondary pixel-font pixel-xs">Ingresá</a>
                     <?php endif; ?>
                     <a href="<?php echo $detalleUrl; ?>" class="btn-arc primary pixel-font pixel-xs">👁️ Ver</a>
                 </div>
@@ -480,7 +480,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <?php else: ?>
             <script>
             function agregarAlCarrito() {
-                window.location.href = "<?php echo url('login'); ?>";
+                window.location.href = "index.php?sec=login";
             }
             </script>
         <?php endif; ?>

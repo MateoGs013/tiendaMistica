@@ -14,7 +14,7 @@ try {
 if (!$duende): ?>
     <div class="panel-glass mt-10 p-10 text-center text-slate-200">
         <p class="font-orbitron text-2xl text-arcade-magenta">Duende no encontrado</p>
-        <p class="mt-3 text-sm text-slate-300">La ficha solicitada fue absorbida por la niebla mágica. Volvé al <a class="text-arcade-cyan hover:text-arcade-gold" href="<?php echo url('catalogo'); ?>">catálogo</a> para seguir explorando.</p>
+        <p class="mt-3 text-sm text-slate-300">La ficha solicitada fue absorbida por la niebla mágica. Volvé al <a class="text-arcade-cyan hover:text-arcade-gold" href="index.php?sec=catalogo">catálogo</a> para seguir explorando.</p>
     </div>
 <?php else:
     $imagenUrl = $duende['imagen_url'] ?? '';
@@ -85,7 +85,7 @@ if (!$duende): ?>
                         <button type="submit" class="button-arcade px-6">Agregar al carrito</button>
                     </form>
                 <?php else: ?>
-                    <a href="<?php echo url('login'); ?>" class="button-arcade px-6" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-raro), 0.35), rgba(var(--rareza-rgb-mistico), 0.35));">Ingresá para comprar</a>
+                    <a href="index.php?sec=login" class="button-arcade px-6" style="background: linear-gradient(135deg, rgba(var(--rareza-rgb-raro), 0.35), rgba(var(--rareza-rgb-mistico), 0.35));">Ingresá para comprar</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -164,7 +164,7 @@ if (!$duende): ?>
                     <?php endif; ?>
                     <div class="space-y-3 p-5">
                         <h3 class="font-orbitron text-lg text-white">
-                            <a href="<?php echo url('detalle_duende', ['id' => $reco['id_duende']]); ?>"><?php echo htmlspecialchars($reco['nombre']); ?></a>
+                            <a href="index.php?sec=detalle_duende&id=<?php echo $reco['id_duende']; ?>"><?php echo htmlspecialchars($reco['nombre']); ?></a>
                         </h3>
                         <p class="text-xs uppercase tracking-[0.18em] text-slate-400"><?php echo htmlspecialchars($reco['rareza'] ?? '-'); ?> &bull; <?php echo htmlspecialchars($reco['elemento'] ?? '-'); ?></p>
                         <p class="text-sm text-slate-300 line-clamp-3"><?php echo htmlspecialchars($reco['descripcion'] ?? ''); ?></p>

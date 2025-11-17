@@ -18,11 +18,11 @@
             </p>
             
             <div class="arcade-hero__actions">
-                <a href="<?php echo url('catalogo'); ?>" class="arcade-hero__btn arcade-hero__btn--primary">
+                <a href="index.php?sec=catalogo" class="arcade-hero__btn arcade-hero__btn--primary">
                     <i class="fas fa-play"></i>
                     <span>EXPLORAR CATÁLOGO</span>
                 </a>
-                <a href="<?php echo url('blog'); ?>" class="arcade-hero__btn arcade-hero__btn--secondary">
+                <a href="index.php?sec=blog" class="arcade-hero__btn arcade-hero__btn--secondary">
                     <i class="fas fa-book-open"></i>
                     <span>CRÓNICAS</span>
                 </a>
@@ -137,7 +137,7 @@
                 Más de 20 duendes en stock. Filtra por rareza, elemento, precio o nivel de suerte. 
                 Sistema de poder total y índice de éxito incluido.
             </p>
-            <a href="<?php echo url('catalogo'); ?>" class="arcade-info-card__link">
+            <a href="index.php?sec=catalogo" class="arcade-info-card__link">
                 <span>VER DUENDES</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -152,7 +152,7 @@
                 Descubre cómo preparar tu espacio, activar accesorios y combinar elementos 
                 sin activar alertas de riesgo.
             </p>
-            <a href="<?php echo url('blog'); ?>" class="arcade-info-card__link">
+            <a href="index.php?sec=blog" class="arcade-info-card__link">
                 <span>IR AL BLOG</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -167,7 +167,7 @@
                 Define si buscas fortuna, protección o inspiración. Revisa rareza, elemento 
                 y compatibilidad con accesorios mágicos.
             </p>
-            <a href="<?php echo url('contacto'); ?>" class="arcade-info-card__link">
+            <a href="index.php?sec=contacto" class="arcade-info-card__link">
                 <span>CONSULTAR</span>
                 <i class="fas fa-arrow-right"></i>
             </a>

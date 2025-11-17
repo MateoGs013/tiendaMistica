@@ -45,7 +45,7 @@ unset($_SESSION['error'], $_SESSION['success'], $_SESSION['old_email']);
         </button>
 
         <p class="login-form__link">
-            ¿No tenés cuenta? <a href="<?php echo url('registro'); ?>" class="link-primary">Registrate aquí</a>
+            ¿No tenés cuenta? <a href="index.php?sec=registro" class="link-primary">Registrate aquí</a>
         </p>
     </form>
 </div>

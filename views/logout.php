@@ -1,4 +1,4 @@
 <?php
 logout_usuario();
-header("Location: " . url('inicio'));
+header("Location: index.php?sec=inicio");
 exit;

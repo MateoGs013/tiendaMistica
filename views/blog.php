@@ -34,11 +34,11 @@ if ($categoriaSeleccionada !== '') {
 <!-- Category Filters -->
 <?php if (!empty($categorias)): ?>
     <div class="blog-filters">
-        <a href="<?php echo url('blog'); ?>" class="blog-filter <?php echo $categoriaSeleccionada === '' ? 'blog-filter--active' : ''; ?>">
+        <a href="index.php?sec=blog" class="blog-filter <?php echo $categoriaSeleccionada === '' ? 'blog-filter--active' : ''; ?>">
             Todas
         </a>
         <?php foreach ($categorias as $categoria): ?>
-            <a href="<?php echo url('blog'); ?>?categoria=<?php echo urlencode($categoria); ?>" 
+            <a href="index.php?sec=blog&categoria=<?php echo urlencode($categoria); ?>" 
                class="blog-filter <?php echo $categoriaSeleccionada === $categoria ? 'blog-filter--active' : ''; ?>">
                 <?php echo ucfirst($categoria); ?>
             </a>
@@ -53,7 +53,7 @@ if ($categoriaSeleccionada !== '') {
         <h3 class="blog-empty__title">Sin artículos disponibles</h3>
         <p class="blog-empty__text">
             Pronto cargaremos nuevas crónicas para tu consola mística. 
-            Mientras tanto revisá el <a href="<?php echo url('catalogo'); ?>" class="link-primary">catálogo</a>.
+            Mientras tanto revisá el <a href="index.php?sec=catalogo" class="link-primary">catálogo</a>.
         </p>
     </div>
 <?php else: ?>
@@ -70,7 +70,7 @@ if ($categoriaSeleccionada !== '') {
                     
                     <p class="blog-card__excerpt"><?php echo htmlspecialchars($entrada['descripcion_corta'] ?? ''); ?></p>
                     
-                    <a href="<?php echo url('blog'); ?>/<?php echo urlencode($entrada['slug']); ?>" class="btn-arc btn-arc--secondary">
+                    <a href="index.php?sec=blog&slug=<?php echo urlencode($entrada['slug']); ?>" class="btn-arc btn-arc--secondary">
                         <span>Leer Historia</span>
                     </a>
                 </div>

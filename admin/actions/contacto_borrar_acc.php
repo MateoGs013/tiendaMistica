@@ -8,12 +8,12 @@ require_admin();
 if (!empty($_GET['id']) && isset($_GET['confirmar'])) {
     $id = (int)$_GET['id'];
     if (Contacto::delete($id)) {
-        header('Location: ' . admin_url('contactos', ['msg' => 'eliminado']));
+        header('Location: ' . 'admin/index.php?sec=contactos&msg=eliminado');
     } else {
-        header('Location: ' . admin_url('contactos', ['error' => 'no_eliminar']));
+        header('Location: ' . 'admin/index.php?sec=contactos&error=no_eliminar');
     }
     exit;
 }
 
-header('Location: ' . admin_url('contactos'));
+header('Location: ' . 'admin/index.php?sec=contactos');
 exit;

@@ -4,23 +4,17 @@ if (!defined('APP_BASE_PATH')) {
 }
 
 /**
- * Genera URLs amigables para la aplicación
+ * Genera URLs con parámetros GET estándar
  */
 function url($seccion, $params = []) {
     $base = APP_BASE_PATH;
     
-    // URLs especiales con parámetros
-    if ($seccion === 'detalle_duende' && !empty($params['id'])) {
-        return $base . 'duende/' . $params['id'];
-    }
-    
-    // Para cualquier sección, usar directamente el vínculo
-    // Las secciones están en la BD y el .htaccess las maneja
-    $url = $base . $seccion;
+    // Usar index.php con parámetros GET
+    $url = $base . 'index.php?sec=' . $seccion;
     
     // Agregar parámetros adicionales si existen
     if (!empty($params)) {
-        $url .= '?' . http_build_query($params);
+        $url .= '&' . http_build_query($params);
     }
     
     return $url;

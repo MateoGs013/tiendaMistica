@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../classes/Usuario.php';
 require_admin();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ' . admin_url('usuarios'));
+    header('Location: ' . 'admin/index.php?sec=usuarios');
     exit;
 }
 
@@ -31,42 +31,42 @@ $old = [
 if ($nombre === '' || $email === '' || $password === '' || $password2 === '') {
     $_SESSION['error'] = 'Completá los campos obligatorios.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $_SESSION['error'] = 'El email no tiene un formato válido.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
 if (!in_array($rol, ['usuario', 'admin'], true)) {
     $_SESSION['error'] = 'El rol seleccionado no es válido.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
 if ($password !== $password2) {
     $_SESSION['error'] = 'Las contraseñas no coinciden.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
 if (strlen($password) < 6) {
     $_SESSION['error'] = 'La contraseña debe tener al menos 6 caracteres.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
 if (Usuario::emailExists($email)) {
     $_SESSION['error'] = 'El email ya está registrado.';
     $_SESSION['old_data'] = $old;
-    header('Location: ' . admin_url('usuario_crear'));
+    header('Location: ' . 'admin/index.php?sec=usuario_crear');
     exit;
 }
 
@@ -81,11 +81,11 @@ $data = [
 
 if (Usuario::createAdmin($data)) {
     $_SESSION['success'] = 'Usuario creado correctamente.';
-    header('Location: ' . admin_url('usuarios'));
+    header('Location: ' . 'admin/index.php?sec=usuarios');
     exit;
 }
 
 $_SESSION['error'] = 'No se pudo crear el usuario. Intentá nuevamente.';
 $_SESSION['old_data'] = $old;
-header('Location: ' . admin_url('usuario_crear'));
+header('Location: ' . 'admin/index.php?sec=usuario_crear');
 exit;

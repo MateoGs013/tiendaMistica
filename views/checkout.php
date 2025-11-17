@@ -30,7 +30,7 @@ try {
 
 // Si el carrito está vacío y no hay pedido creado, redirigir
 if (empty($items) && !$pedidoCreado) {
-    header("Location: " . url('carrito'));
+    header("Location: index.php?sec=carrito");
     exit;
 }
 ?>
@@ -42,10 +42,10 @@ if (empty($items) && !$pedidoCreado) {
         <p class="success-message"><?php echo htmlspecialchars($success); ?></p>
         <p class="success-note">Recibirás un correo con los detalles de tu compra</p>
         <div class="success-actions">
-            <a href="<?php echo url('cuenta'); ?>" class="btn-arc btn-arc--primary">
+            <a href="index.php?sec=cuenta" class="btn-arc btn-arc--primary">
                 Ver Mis Pedidos
             </a>
-            <a href="<?php echo url('catalogo'); ?>" class="btn-arc btn-arc--secondary">
+            <a href="index.php?sec=catalogo" class="btn-arc btn-arc--secondary">
                 Seguir Comprando
             </a>
         </div>
@@ -127,7 +127,7 @@ if (empty($items) && !$pedidoCreado) {
                     <button type="submit" class="btn-arc btn-arc--checkout">
                         Confirmar Pedido
                     </button>
-                    <a href="<?php echo url('carrito'); ?>" class="btn-arc btn-arc--secondary">
+                    <a href="index.php?sec=carrito" class="btn-arc btn-arc--secondary">
                         ← Volver al Carrito
                     </a>
                 </div>

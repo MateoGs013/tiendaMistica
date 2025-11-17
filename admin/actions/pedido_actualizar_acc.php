@@ -14,34 +14,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($id <= 0) {
         $_SESSION['error'] = "ID de pedido inválido";
-        header("Location: " . admin_url('pedidos'));
+        header("Location: " . 'admin/index.php?sec=pedidos');
         exit;
     }
     
     $estadosValidos = ['pendiente', 'procesando', 'enviado', 'completado', 'cancelado'];
     if (!in_array($estado, $estadosValidos)) {
         $_SESSION['error'] = "Estado inválido";
-        header("Location: " . admin_url('pedido_ver', ['id' => $id]));
+        header("Location: " . 'admin/index.php?sec=pedido_ver&id=' . $id);
         exit;
     }
     
     try {
         if (Pedido::updateEstado($id, $estado)) {
             $_SESSION['success'] = "Estado del pedido actualizado exitosamente";
-            header("Location: " . admin_url('pedido_ver', ['id' => $id]));
+            header("Location: " . 'admin/index.php?sec=pedido_ver&id=' . $id);
             exit;
         } else {
             $_SESSION['error'] = "Error al actualizar el estado del pedido";
-            header("Location: " . admin_url('pedido_ver', ['id' => $id]));
+            header("Location: " . 'admin/index.php?sec=pedido_ver&id=' . $id);
             exit;
         }
     } catch (Exception $e) {
         error_log("Error al actualizar estado del pedido: " . $e->getMessage());
         $_SESSION['error'] = "Error al actualizar el estado. Por favor, intenta nuevamente.";
-        header("Location: " . admin_url('pedido_ver', ['id' => $id]));
+        header("Location: " . 'admin/index.php?sec=pedido_ver&id=' . $id);
         exit;
     }
 } else {
-    header("Location: " . admin_url('pedidos'));
+    header("Location: " . 'admin/index.php?sec=pedidos');
     exit;
 }

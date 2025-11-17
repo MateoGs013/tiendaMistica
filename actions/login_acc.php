@@ -12,29 +12,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (empty($email) || empty($pass)) {
         $_SESSION['error'] = "Por favor completa todos los campos";
-        header("Location: " . url('login'));
+        header("Location: ../index.php?sec=login");
         exit;
     }
     
     try {
         if (login_usuario($email, $pass)) {
             // Redirigir a la cuenta del usuario después del login
-            header("Location: " . url('cuenta'));
+            header("Location: ../index.php?sec=cuenta");
             exit;
         } else {
             $_SESSION['error'] = "Usuario o contraseña incorrectos";
             $_SESSION['old_email'] = $email;
-            header("Location: " . url('login'));
+            header("Location: ../index.php?sec=login");
             exit;
         }
     } catch (Exception $e) {
         error_log("Error en login: " . $e->getMessage());
         $_SESSION['error'] = "Error al intentar ingresar. Por favor, intenta nuevamente.";
-        header("Location: " . url('login'));
+        header("Location: ../index.php?sec=login");
         exit;
     }
 } else {
     // Si no es POST, redirigir al login
-    header("Location: " . url('login'));
+    header("Location: ../index.php?sec=login");
     exit;
 }

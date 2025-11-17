@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($id <= 0) {
         $_SESSION['error'] = "ID de duende inválido";
-        header("Location: " . admin_url('duendes'));
+        header("Location: " . 'admin/index.php?sec=duendes');
         exit;
     }
     
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if (empty($data['nombre'])) {
         $_SESSION['error'] = "El nombre es obligatorio";
-        header("Location: " . admin_url('duende_editar', ['id' => $id]));
+        header("Location: " . 'admin/index.php?sec=duende_editar&id=' . $id);
         exit;
     }
     
@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } catch (RuntimeException $e) {
             $_SESSION['error'] = $e->getMessage();
-            header("Location: " . admin_url('duende_editar', ['id' => $id]));
+            header("Location: " . 'admin/index.php?sec=duende_editar&id=' . $id);
             exit;
         }
     } else {
@@ -100,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Imagen::borrar($ruta);
             }
             $_SESSION['success'] = "Duende actualizado exitosamente";
-            header("Location: " . admin_url('duendes'));
+            header("Location: " . 'admin/index.php?sec=duendes');
             exit;
         } else {
             if ($nuevaImagenLocal) {
                 Imagen::borrar($nuevaImagenLocal);
             }
             $_SESSION['error'] = "Error al actualizar el duende";
-            header("Location: " . admin_url('duende_editar', ['id' => $id]));
+            header("Location: " . 'admin/index.php?sec=duende_editar&id=' . $id);
             exit;
         }
     } catch (Exception $e) {
@@ -116,10 +116,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         error_log("Error al actualizar duende: " . $e->getMessage());
         $_SESSION['error'] = "Error al actualizar el duende. Por favor, intenta nuevamente.";
-        header("Location: " . admin_url('duende_editar', ['id' => $id]));
+        header("Location: " . 'admin/index.php?sec=duende_editar&id=' . $id);
         exit;
     }
 } else {
-    header("Location: " . admin_url('duendes'));
+    header("Location: " . 'admin/index.php?sec=duendes');
     exit;
 }

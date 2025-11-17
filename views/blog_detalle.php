@@ -5,14 +5,14 @@ require_once "classes/Blog.php";
 $slug = $_GET['slug'] ?? '';
 
 if (empty($slug)) {
-    header('Location: ' . url('blog'));
+    header('Location: index.php?sec=blog');
     exit;
 }
 
 $blog = Blog::findBySlug($slug);
 
 if (!$blog) {
-    header('Location: ' . url('404'));
+    header('Location: index.php?sec=404');
     exit;
 }
 
@@ -20,7 +20,7 @@ if (!$blog) {
 
 <!-- Blog Detail Hero -->
 <div class="blog-detalle-hero">
-    <a href="<?php echo url('blog'); ?>" class="blog-detalle-back">
+    <a href="index.php?sec=blog" class="blog-detalle-back">
         <span>←</span> Volver al Blog
     </a>
 </div>
@@ -73,7 +73,7 @@ if (!$blog) {
                 <strong>Slug:</strong> <?php echo htmlspecialchars($blog['slug']); ?>
             </div>
         </div>
-        <a href="<?php echo url('blog'); ?>" class="btn-arc btn-arc--primary">
+        <a href="index.php?sec=blog" class="btn-arc btn-arc--primary">
             <span>← Volver al Blog</span>
         </a>
     </footer>
@@ -108,7 +108,7 @@ try {
                         <span class="blog-card__category"><?php echo htmlspecialchars($relacionado['categoria'] ?? ''); ?></span>
                         <h3 class="blog-card__title"><?php echo htmlspecialchars($relacionado['titulo'] ?? 'Sin título'); ?></h3>
                         <p class="blog-card__excerpt"><?php echo htmlspecialchars($relacionado['descripcion_corta'] ?? ''); ?></p>
-                        <a href="<?php echo url('blog'); ?>/<?php echo urlencode($relacionado['slug']); ?>" class="btn-arc btn-arc--secondary">
+                        <a href="index.php?sec=blog&slug=<?php echo urlencode($relacionado['slug']); ?>" class="btn-arc btn-arc--secondary">
                             <span>Leer Historia</span>
                         </a>
                     </div>
